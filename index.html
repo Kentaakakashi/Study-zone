@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Study Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #020617;
+      padding: 20px;
+      border-radius: 12px;
+      width: 320px;
+      text-align: center;
+    }
+    button {
+      padding: 10px;
+      margin: 8px;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .login { background: #2563eb; color: white; }
+    .start { background: #16a34a; color: white; }
+    .stop { background: #dc2626; color: white; }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h2>📚 Study Hub</h2>
+
+    <button id="loginBtn" class="login">Login with Google</button>
+
+    <p id="userName"></p>
+    <h3 id="timer">25:00</h3>
+
+    <button id="startBtn" class="start">Start Pomodoro</button>
+    <button id="stopBtn" class="stop">Stop</button>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

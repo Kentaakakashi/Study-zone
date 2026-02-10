@@ -27,3 +27,12 @@ onAuthStateChanged(auth, user => {
     dashboard.style.display = "block";
   }
 });
+
+document.getElementById("start").onclick = () => {
+  startTime = Date.now();
+};
+
+document.getElementById("stop").onclick = () => {
+  const mins = Math.floor((Date.now() - startTime) / 60000);
+  document.getElementById("time").innerText = `${mins} mins studied`;
+};

@@ -2,52 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Study Hub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .card {
-      background: #020617;
-      padding: 20px;
-      border-radius: 12px;
-      width: 320px;
-      text-align: center;
-    }
-    button {
-      padding: 10px;
-      margin: 8px;
-      width: 100%;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .login { background: #2563eb; color: white; }
-    .start { background: #16a34a; color: white; }
-    .stop { background: #dc2626; color: white; }
-  </style>
+  <title>Study Zone</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <div class="card">
-    <h2>📚 Study Hub</h2>
 
-    <button id="loginBtn" class="login">Login with Google</button>
+  <h1>📚 Study Zone</h1>
 
-    <p id="userName"></p>
-    <h3 id="timer">25:00</h3>
+  <div id="auth">
+    <input id="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Password" />
+    <button id="signup">Sign Up</button>
+    <button id="login">Login</button>
+  </div>
 
-    <button id="startBtn" class="start">Start Pomodoro</button>
-    <button id="stopBtn" class="stop">Stop</button>
+  <div id="dashboard" style="display:none;">
+    <h2>Welcome back 👀</h2>
+    <button id="start">Start Study</button>
+    <button id="stop">Stop</button>
+    <p id="time">0 mins</p>
   </div>
 
   <script type="module" src="app.js"></script>

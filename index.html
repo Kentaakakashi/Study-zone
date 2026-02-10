@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Study Zone</title>
-  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <h1>📚 Study Zone</h1>
 
-  <div id="auth">
-    <input id="email" placeholder="Email" />
-    <input id="password" type="password" placeholder="Password" />
-    <button id="signup">Sign Up</button>
-    <button id="login">Login</button>
-  </div>
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
 
-  <div id="dashboard" style="display:none;">
-    <h2>Welcome back 👀</h2>
-    <button id="start">Start Study</button>
-    <button id="stop">Stop</button>
-    <p id="time">0 mins</p>
-  </div>
+  <button id="signup">Sign Up</button>
+  <button id="login">Login</button>
 
+  <!-- MAIN SCRIPT -->
   <script type="module" src="app.js"></script>
 </body>
 </html>

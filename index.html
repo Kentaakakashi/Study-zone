@@ -3,356 +3,621 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyZen - Modern Study Platform</title>
-    <!-- Tailwind via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
+    <title>StudyZen • Master Your Learning</title>
+    
+    <!-- ONLY ONE external dependency - Font Awesome (it's reliable) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&display=swap');
-        
-        * {
+        /* RESET - Extreme version */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Clash Display', sans-serif;
-            background: #0a0a0f;
-            color: white;
+        /* Font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        /* BASE - Force everything */
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
         }
         
-        /* Modern gradient background */
-        .hero-gradient {
-            background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                        linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A0F;
+            color: white;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
             min-height: 100vh;
         }
         
-        /* Brutalist card design */
-        .brutal-card {
+        /* Background - Fixed */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(120% 120% at 20% 20%, rgba(99, 102, 241, 0.15), transparent 50%),
+                        radial-gradient(120% 120% at 80% 80%, rgba(139, 92, 246, 0.15), transparent 50%),
+                        linear-gradient(135deg, #0A0A0F, #1A1A2E);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+        
+        /* Navigation */
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-icon i {
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366F1, #A855F7, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #9CA3AF;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: white;
+        }
+        
+        /* Feature Pill */
+        .feature-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .pill-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .pill-text {
+            color: #9CA3AF;
+            font-size: 0.875rem;
+        }
+        
+        /* Headline */
+        .headline {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .headline {
+                font-size: 5rem;
+            }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #6366F1, #A855F7, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        /* Description */
+        .description {
+            font-size: 1.25rem;
+            color: #9CA3AF;
+            margin-bottom: 2rem;
+            max-width: 32rem;
+            line-height: 1.6;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-icon.purple { color: #A855F7; }
+        .stat-icon.blue { color: #3B82F6; }
+        .stat-icon.pink { color: #EC4899; }
+        .stat-icon.indigo { color: #6366F1; }
+        
+        .stat-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+        
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         
-        .brutal-card:hover {
-            border-color: rgba(99, 102, 241, 0.5);
-            transform: scale(1.02);
-            box-shadow: 0 30px 60px -15px rgba(99, 102, 241, 0.3);
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
         
-        /* Modern input fields */
-        .modern-input {
+        .card-icon {
+            display: inline-block;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-icon i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-subtitle {
+            color: #6B7280;
+        }
+        
+        /* Form */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .input-group {
+            width: 100%;
+        }
+        
+        .input {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
             border: 1.5px solid rgba(255, 255, 255, 0.05);
-            border-radius: 1.2rem;
+            border-radius: 1rem;
             padding: 1rem 1.5rem;
             color: white;
             font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
         
-        .modern-input:focus {
+        .input:focus {
             outline: none;
-            border-color: #6366f1;
+            border-color: #6366F1;
             background: rgba(255, 255, 255, 0.05);
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
         
-        .modern-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+        .input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
         }
         
-        /* Bold gradient button */
-        .gradient-btn {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        .btn {
+            width: 100%;
+            background: linear-gradient(135deg, #6366F1, #A855F7);
             border: none;
-            border-radius: 1.2rem;
-            padding: 1rem 2rem;
+            border-radius: 1rem;
+            padding: 1rem;
             color: white;
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
+            transition: all 0.2s;
             position: relative;
             overflow: hidden;
         }
         
-        .gradient-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .gradient-btn:hover::before {
-            left: 100%;
-        }
-        
-        .gradient-btn:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 40px -10px #6366f1;
+            box-shadow: 0 20px 40px -10px #6366F1;
         }
         
-        /* Feature pill */
-        .feature-pill {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 100px;
-            padding: 0.75rem 1.5rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            transition: all 0.3s;
+        .btn:active {
+            transform: translateY(0);
         }
         
-        .feature-pill:hover {
-            background: rgba(99, 102, 241, 0.1);
-            border-color: #6366f1;
-            transform: translateX(10px);
+        /* Divider */
+        .divider {
+            position: relative;
+            margin: 1.5rem 0;
         }
         
-        /* Stats card */
-        .stat-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            transition: all 0.3s;
+        .divider-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
         }
         
-        .stat-card:hover {
-            border-color: #6366f1;
-            transform: translateY(-5px);
+        .divider-text {
+            position: relative;
+            display: flex;
+            justify-content: center;
         }
         
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #6366f1 0%, #c084fc 50%, #f472b6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradientFlow 5s ease infinite;
+        .divider-text span {
+            background: transparent;
+            padding: 0 1rem;
+            color: #6B7280;
+            font-size: 0.875rem;
         }
         
-        @keyframes gradientFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        /* Floating animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        .float {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        /* Social button */
+        /* Social Button */
         .social-btn {
+            width: 100%;
             background: rgba(255, 255, 255, 0.03);
-            border: 1.5px solid rgba(255, 255, 255, 0.05);
-            border-radius: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
             padding: 1rem;
             color: white;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
+            margin-bottom: 1.5rem;
         }
         
         .social-btn:hover {
             background: rgba(255, 255, 255, 0.05);
-            border-color: #6366f1;
+            border-color: #6366F1;
         }
         
-        /* Toggle button */
-        .toggle-btn {
+        .google-icon {
+            color: #3B82F6;
+        }
+        
+        /* Toggle Link */
+        .toggle-link {
+            text-align: center;
+            color: #6B7280;
+        }
+        
+        .toggle-link button {
             background: none;
             border: none;
-            color: #6366f1;
+            color: #6366F1;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
             text-decoration: underline;
             text-underline-offset: 4px;
         }
         
-        .toggle-btn:hover {
-            color: #8b5cf6;
-            text-decoration-thickness: 2px;
+        .toggle-link button:hover {
+            color: #A855F7;
         }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* Utilities */
+        .mt-8 { margin-top: 2rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
     </style>
 </head>
 <body>
-    <div class="hero-gradient">
-        <!-- Navigation -->
-        <nav class="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center">
-                    <i class="fas fa-brain text-white text-xl"></i>
+    <!-- Navigation -->
+    <div class="container">
+        <nav class="nav">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
                 </div>
-                <span class="text-2xl font-bold gradient-text">StudyZen</span>
+                <span class="logo-text">StudyZen</span>
             </div>
-            <div class="flex gap-4">
-                <button class="px-6 py-2 text-gray-300 hover:text-white transition">About</button>
-                <button class="px-6 py-2 bg-white/5 rounded-full hover:bg-white/10 transition">Features</button>
+            <div class="nav-links">
+                <a href="#">About</a>
+                <a href="#">Features</a>
             </div>
         </nav>
+    </div>
 
-        <!-- Main Content -->
-        <div class="max-w-7xl mx-auto px-8 py-12">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <!-- Left Column -->
-                <div>
-                    <div class="inline-block mb-6">
-                        <span class="feature-pill">
-                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                            <span class="text-sm">Join 10,000+ students</span>
-                        </span>
+    <!-- Main Content -->
+    <div class="container py-12">
+        <div class="grid">
+            <!-- Left Column -->
+            <div>
+                <div class="feature-pill">
+                    <span class="pill-dot"></span>
+                    <span class="pill-text">Join 10,000+ students</span>
+                </div>
+                
+                <h1 class="headline">
+                    Master Your<br>
+                    <span class="gradient-text">Study Journey</span>
+                </h1>
+                
+                <p class="description">
+                    The ultimate study platform with AI tutoring, smart timers, and a community that actually helps you grow.
+                </p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-clock stat-icon purple"></i>
+                        <div class="stat-number">25/50</div>
+                        <div class="stat-label">Pomodoro</div>
                     </div>
-                    
-                    <h1 class="text-6xl font-bold mb-6 leading-tight">
-                        Master Your<br>
-                        <span class="gradient-text">Study Journey</span>
-                    </h1>
-                    
-                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
-                        The ultimate study platform with AI tutoring, smart timers, 
-                        and a community that actually helps you grow.
-                    </p>
-                    
-                    <!-- Feature Grid -->
-                    <div class="grid grid-cols-2 gap-4 mb-12">
-                        <div class="stat-card">
-                            <i class="fas fa-clock text-2xl text-indigo-400 mb-3"></i>
-                            <div class="text-2xl font-bold">25/50</div>
-                            <div class="text-gray-400 text-sm">Pomodoro Timer</div>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-robot text-2xl text-purple-400 mb-3"></i>
-                            <div class="text-2xl font-bold">24/7</div>
-                            <div class="text-gray-400 text-sm">AI Assistant</div>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-users text-2xl text-pink-400 mb-3"></i>
-                            <div class="text-2xl font-bold">Live</div>
-                            <div class="text-gray-400 text-sm">Community</div>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-chart-line text-2xl text-blue-400 mb-3"></i>
-                            <div class="text-2xl font-bold">Analytics</div>
-                            <div class="text-gray-400 text-sm">Track Progress</div>
-                        </div>
+                    <div class="stat-item">
+                        <i class="fas fa-robot stat-icon blue"></i>
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">AI Tutor</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-users stat-icon pink"></i>
+                        <div class="stat-number">Live</div>
+                        <div class="stat-label">Community</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chart-line stat-icon indigo"></i>
+                        <div class="stat-number">Track</div>
+                        <div class="stat-label">Progress</div>
                     </div>
                 </div>
-
-                <!-- Right Column - Auth Card -->
-                <div>
-                    <div class="brutal-card p-8">
-                        <!-- Logo -->
-                        <div class="text-center mb-8">
-                            <div class="inline-block p-4 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-3xl mb-4">
-                                <i class="fas fa-graduation-cap text-4xl gradient-text"></i>
-                            </div>
-                            <h2 class="text-3xl font-bold mb-2">Get Started</h2>
-                            <p class="text-gray-400">Your study journey begins here</p>
+            </div>
+            
+            <!-- Right Column -->
+            <div>
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
-
-                        <!-- Login Form -->
-                        <form id="loginForm" class="space-y-4">
-                            <div>
-                                <input type="email" id="email" required 
-                                       class="modern-input" 
-                                       placeholder="Email address">
-                            </div>
-                            <div>
-                                <input type="password" id="password" required 
-                                       class="modern-input" 
-                                       placeholder="Password">
-                            </div>
-                            <button type="submit" class="gradient-btn">
-                                <i class="fas fa-sign-in-alt mr-2"></i>
-                                Login
-                            </button>
-                        </form>
-
-                        <!-- Signup Form -->
-                        <form id="signupForm" class="space-y-4 hidden">
-                            <div>
-                                <input type="text" id="signupName" required 
-                                       class="modern-input" 
-                                       placeholder="Full name">
-                            </div>
-                            <div>
-                                <input type="email" id="signupEmail" required 
-                                       class="modern-input" 
-                                       placeholder="Email address">
-                            </div>
-                            <div>
-                                <input type="password" id="signupPassword" required 
-                                       class="modern-input" 
-                                       placeholder="Password (min. 6 characters)">
-                            </div>
-                            <button type="submit" class="gradient-btn">
-                                <i class="fas fa-user-plus mr-2"></i>
-                                Create Account
-                            </button>
-                        </form>
-
-                        <!-- Divider -->
-                        <div class="relative my-6">
-                            <div class="absolute inset-0 flex items-center">
-                                <div class="w-full border-t border-white/10"></div>
-                            </div>
-                            <div class="relative flex justify-center text-sm">
-                                <span class="px-4 bg-transparent text-gray-500">or</span>
-                            </div>
+                        <h2 class="card-title">Get Started</h2>
+                        <p class="card-subtitle">Your study journey begins here</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm" class="form">
+                        <div class="input-group">
+                            <input type="email" id="email" class="input" placeholder="Email address" required>
                         </div>
-
-                        <!-- Google Login -->
-                        <button id="googleLogin" class="social-btn mb-6">
-                            <i class="fab fa-google text-xl text-blue-400"></i>
-                            Continue with Google
+                        <div class="input-group">
+                            <input type="password" id="password" class="input" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>
+                            Login
                         </button>
-
-                        <!-- Toggle Links -->
-                        <p class="text-center text-gray-400" id="loginToggle">
-                            Don't have an account? 
-                            <button id="showSignup" class="toggle-btn">Sign up</button>
-                        </p>
-                        <p class="text-center text-gray-400 hidden" id="signupToggle">
-                            Already have an account? 
-                            <button id="showLogin" class="toggle-btn">Login</button>
-                        </p>
+                    </form>
+                    
+                    <!-- Signup Form (Hidden) -->
+                    <form id="signupForm" class="form hidden">
+                        <div class="input-group">
+                            <input type="text" id="signupName" class="input" placeholder="Full name" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="signupEmail" class="input" placeholder="Email address" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="signupPassword" class="input" placeholder="Password (min. 6)" required>
+                        </div>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-user-plus" style="margin-right: 0.5rem;"></i>
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <!-- Divider -->
+                    <div class="divider">
+                        <div class="divider-line"></div>
+                        <div class="divider-text">
+                            <span>or</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Google Button -->
+                    <button id="googleLogin" class="social-btn">
+                        <i class="fab fa-google google-icon"></i>
+                        <span>Continue with Google</span>
+                    </button>
+                    
+                    <!-- Toggle Links -->
+                    <div id="loginToggle" class="toggle-link">
+                        Don't have an account? 
+                        <button id="showSignup">Sign up</button>
+                    </div>
+                    <div id="signupToggle" class="toggle-link hidden">
+                        Already have an account? 
+                        <button id="showLogin">Login</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase Scripts -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="firebase.js"></script>
-    <script src="auth.js"></script>
+    
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+            authDomain: "study-zone-438c4.firebaseapp.com",
+            projectId: "study-zone-438c4",
+            storageBucket: "study-zone-438c4.firebasestorage.app",
+            messagingSenderId: "320895535749",
+            appId: "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const showSignup = document.getElementById('showSignup');
+        const showLogin = document.getElementById('showLogin');
+        const loginToggle = document.getElementById('loginToggle');
+        const signupToggle = document.getElementById('signupToggle');
+        const googleLogin = document.getElementById('googleLogin');
+
+        // Toggle Forms
+        showSignup.addEventListener('click', () => {
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+            loginToggle.classList.add('hidden');
+            signupToggle.classList.remove('hidden');
+        });
+
+        showLogin.addEventListener('click', () => {
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            signupToggle.classList.add('hidden');
+            loginToggle.classList.remove('hidden');
+        });
+
+        // Login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Signup
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            try {
+                const result = await auth.createUserWithEmailAndPassword(email, password);
+                await result.user.updateProfile({ displayName: name });
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Google Login
+        googleLogin.addEventListener('click', async () => {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                await auth.signInWithPopup(provider);
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
 </body>
 </html>

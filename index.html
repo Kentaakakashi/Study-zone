@@ -3,165 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyZen - Master Your Learning Journey</title>
-    <!-- Tailwind CSS -->
+    <title>StudyZen - Modern Study Platform</title>
+    <!-- Tailwind via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&display=swap');
         
         * {
-            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            background: #0f0c1f;
-            position: relative;
-            overflow-x: hidden;
+            font-family: 'Clash Display', sans-serif;
+            background: #0a0a0f;
+            color: white;
         }
         
-        /* Animated background */
-        .gradient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
-            z-index: -1;
+        /* Modern gradient background */
+        .hero-gradient {
+            background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                        linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+            min-height: 100vh;
         }
         
-        /* Floating particles */
-        .particle {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float-particle 20s infinite linear;
-            z-index: -1;
-        }
-        
-        @keyframes float-particle {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-        
-        /* Glassmorphism card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
+        /* Brutalist card design */
+        .brutal-card {
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .glass-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
-            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.3);
+        .brutal-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            transform: scale(1.02);
+            box-shadow: 0 30px 60px -15px rgba(99, 102, 241, 0.3);
         }
         
-        /* 3D floating animation */
-        .float-3d {
-            animation: float-3d 6s ease-in-out infinite;
-            transform-style: preserve-3d;
-        }
-        
-        @keyframes float-3d {
-            0%, 100% {
-                transform: translateY(0) rotateX(0) rotateY(0);
-            }
-            25% {
-                transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
-            }
-            50% {
-                transform: translateY(0) rotateX(0) rotateY(0);
-            }
-            75% {
-                transform: translateY(20px) rotateX(-5deg) rotateY(-5deg);
-            }
-        }
-        
-        /* Neon glow effect */
-        .neon-glow {
-            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5),
-                         0 0 20px rgba(139, 92, 246, 0.3),
-                         0 0 30px rgba(139, 92, 246, 0.1);
-        }
-        
-        .neon-border {
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3),
-                        inset 0 0 20px rgba(139, 92, 246, 0.1);
-        }
-        
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #c084fc 0%, #818cf8 50%, #60a5fa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradient-shift 8s ease infinite;
-        }
-        
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        /* Input fields */
-        .premium-input {
+        /* Modern input fields */
+        .modern-input {
+            width: 100%;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.2rem;
             padding: 1rem 1.5rem;
             color: white;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
         
-        .premium-input:focus {
+        .modern-input:focus {
             outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+            border-color: #6366f1;
             background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
         
-        .premium-input::placeholder {
+        .modern-input::placeholder {
             color: rgba(255, 255, 255, 0.3);
         }
         
-        /* Premium button */
-        .premium-btn {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
-            border-radius: 16px;
-            padding: 1rem;
+        /* Bold gradient button */
+        .gradient-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border: none;
+            border-radius: 1.2rem;
+            padding: 1rem 2rem;
             color: white;
             font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
         }
         
-        .premium-btn::before {
+        .gradient-btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -169,270 +93,265 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+            transition: left 0.5s;
         }
         
-        .premium-btn:hover::before {
+        .gradient-btn:hover::before {
             left: 100%;
         }
         
-        .premium-btn:hover {
+        .gradient-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 40px -10px #6366f1;
         }
         
-        /* Feature list items */
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem;
-            border-radius: 16px;
+        /* Feature pill */
+        .feature-pill {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            border-radius: 100px;
+            padding: 0.75rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
         }
         
-        .feature-item:hover {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: rgba(139, 92, 246, 0.3);
+        .feature-pill:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: #6366f1;
             transform: translateX(10px);
         }
         
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+        /* Stats card */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
         }
         
-        /* Social buttons */
+        .stat-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-5px);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #c084fc 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientFlow 5s ease infinite;
+        }
+        
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Social button */
         .social-btn {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.2rem;
             padding: 1rem;
             color: white;
             font-weight: 500;
-            transition: all 0.3s ease;
             cursor: pointer;
+            transition: all 0.3s;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
         }
         
         .social-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #8b5cf6;
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #6366f1;
         }
         
-        /* Toggle link */
-        .toggle-link {
-            color: rgba(255, 255, 255, 0.6);
-            transition: all 0.3s ease;
+        /* Toggle button */
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #6366f1;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
         
-        .toggle-link:hover {
+        .toggle-btn:hover {
             color: #8b5cf6;
-            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+            text-decoration-thickness: 2px;
         }
     </style>
 </head>
-<body class="text-white">
-    <!-- Animated Background -->
-    <div class="gradient-bg"></div>
-    
-    <!-- Particles -->
-    <div id="particles"></div>
+<body>
+    <div class="hero-gradient">
+        <!-- Navigation -->
+        <nav class="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center">
+                    <i class="fas fa-brain text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold gradient-text">StudyZen</span>
+            </div>
+            <div class="flex gap-4">
+                <button class="px-6 py-2 text-gray-300 hover:text-white transition">About</button>
+                <button class="px-6 py-2 bg-white/5 rounded-full hover:bg-white/10 transition">Features</button>
+            </div>
+        </nav>
 
-    <div class="min-h-screen flex items-center justify-center p-4 relative z-10">
-        <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-8 items-center">
-            <!-- Left Side - Hero Section -->
-            <div data-aos="fade-right" data-aos-duration="1000">
-                <div class="float-3d">
-                    <h1 class="text-7xl font-bold mb-6">
-                        <span class="gradient-text">StudyZen</span>
-                    </h1>
-                    <p class="text-2xl text-gray-300 mb-8 neon-glow">Your All-in-One Study Operating System</p>
-                    
-                    <!-- Feature List -->
-                    <div class="space-y-4 mb-12">
-                        <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
-                            <div class="feature-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg">Smart Timer & Analytics</h3>
-                                <p class="text-gray-400 text-sm">Track your focus with precision</p>
-                            </div>
-                        </div>
-                        
-                        <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
-                            <div class="feature-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg">AI Study Assistant</h3>
-                                <p class="text-gray-400 text-sm">24/7 help with any subject</p>
-                            </div>
-                        </div>
-                        
-                        <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
-                            <div class="feature-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg">Community Support</h3>
-                                <p class="text-gray-400 text-sm">Learn together, grow together</p>
-                            </div>
-                        </div>
-                        
-                        <div class="feature-item" data-aos="fade-up" data-aos-delay="400">
-                            <div class="feature-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-lg">Progress Tracking</h3>
-                                <p class="text-gray-400 text-sm">Visualize your improvement</p>
-                            </div>
-                        </div>
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-8 py-12">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <!-- Left Column -->
+                <div>
+                    <div class="inline-block mb-6">
+                        <span class="feature-pill">
+                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            <span class="text-sm">Join 10,000+ students</span>
+                        </span>
                     </div>
                     
-                    <!-- Stats -->
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="text-center p-4 glass-card" data-aos="zoom-in" data-aos-delay="500">
-                            <div class="text-3xl font-bold gradient-text">10k+</div>
-                            <div class="text-gray-400 text-sm">Active Users</div>
+                    <h1 class="text-6xl font-bold mb-6 leading-tight">
+                        Master Your<br>
+                        <span class="gradient-text">Study Journey</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        The ultimate study platform with AI tutoring, smart timers, 
+                        and a community that actually helps you grow.
+                    </p>
+                    
+                    <!-- Feature Grid -->
+                    <div class="grid grid-cols-2 gap-4 mb-12">
+                        <div class="stat-card">
+                            <i class="fas fa-clock text-2xl text-indigo-400 mb-3"></i>
+                            <div class="text-2xl font-bold">25/50</div>
+                            <div class="text-gray-400 text-sm">Pomodoro Timer</div>
                         </div>
-                        <div class="text-center p-4 glass-card" data-aos="zoom-in" data-aos-delay="600">
-                            <div class="text-3xl font-bold gradient-text">50k+</div>
-                            <div class="text-gray-400 text-sm">Study Hours</div>
+                        <div class="stat-card">
+                            <i class="fas fa-robot text-2xl text-purple-400 mb-3"></i>
+                            <div class="text-2xl font-bold">24/7</div>
+                            <div class="text-gray-400 text-sm">AI Assistant</div>
                         </div>
-                        <div class="text-center p-4 glass-card" data-aos="zoom-in" data-aos-delay="700">
-                            <div class="text-3xl font-bold gradient-text">4.9</div>
-                            <div class="text-gray-400 text-sm">User Rating</div>
+                        <div class="stat-card">
+                            <i class="fas fa-users text-2xl text-pink-400 mb-3"></i>
+                            <div class="text-2xl font-bold">Live</div>
+                            <div class="text-gray-400 text-sm">Community</div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-chart-line text-2xl text-blue-400 mb-3"></i>
+                            <div class="text-2xl font-bold">Analytics</div>
+                            <div class="text-gray-400 text-sm">Track Progress</div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Right Side - Login/Signup Card -->
-            <div data-aos="fade-left" data-aos-duration="1000">
-                <div class="glass-card p-8 neon-border">
-                    <!-- Logo -->
-                    <div class="text-center mb-8">
-                        <div class="inline-block p-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 mb-4">
-                            <i class="fas fa-brain text-4xl text-white"></i>
+                <!-- Right Column - Auth Card -->
+                <div>
+                    <div class="brutal-card p-8">
+                        <!-- Logo -->
+                        <div class="text-center mb-8">
+                            <div class="inline-block p-4 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-3xl mb-4">
+                                <i class="fas fa-graduation-cap text-4xl gradient-text"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold mb-2">Get Started</h2>
+                            <p class="text-gray-400">Your study journey begins here</p>
                         </div>
-                        <h2 class="text-3xl font-bold gradient-text">Welcome Back</h2>
-                        <p class="text-gray-400 mt-2">Continue your journey to mastery</p>
-                    </div>
 
-                    <!-- Login Form -->
-                    <form id="loginForm" class="space-y-4">
-                        <div class="space-y-2">
-                            <label class="text-gray-300 text-sm">Email</label>
-                            <input type="email" id="email" required 
-                                   class="premium-input w-full"
-                                   placeholder="Enter your email">
+                        <!-- Login Form -->
+                        <form id="loginForm" class="space-y-4">
+                            <div>
+                                <input type="email" id="email" required 
+                                       class="modern-input" 
+                                       placeholder="Email address">
+                            </div>
+                            <div>
+                                <input type="password" id="password" required 
+                                       class="modern-input" 
+                                       placeholder="Password">
+                            </div>
+                            <button type="submit" class="gradient-btn">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                Login
+                            </button>
+                        </form>
+
+                        <!-- Signup Form -->
+                        <form id="signupForm" class="space-y-4 hidden">
+                            <div>
+                                <input type="text" id="signupName" required 
+                                       class="modern-input" 
+                                       placeholder="Full name">
+                            </div>
+                            <div>
+                                <input type="email" id="signupEmail" required 
+                                       class="modern-input" 
+                                       placeholder="Email address">
+                            </div>
+                            <div>
+                                <input type="password" id="signupPassword" required 
+                                       class="modern-input" 
+                                       placeholder="Password (min. 6 characters)">
+                            </div>
+                            <button type="submit" class="gradient-btn">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                Create Account
+                            </button>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-white/10"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-4 bg-transparent text-gray-500">or</span>
+                            </div>
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-gray-300 text-sm">Password</label>
-                            <input type="password" id="password" required 
-                                   class="premium-input w-full"
-                                   placeholder="••••••••">
-                        </div>
-                        <button type="submit" class="premium-btn w-full">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+
+                        <!-- Google Login -->
+                        <button id="googleLogin" class="social-btn mb-6">
+                            <i class="fab fa-google text-xl text-blue-400"></i>
+                            Continue with Google
                         </button>
-                    </form>
 
-                    <!-- Signup Form -->
-                    <form id="signupForm" class="space-y-4 hidden">
-                        <div class="space-y-2">
-                            <label class="text-gray-300 text-sm">Full Name</label>
-                            <input type="text" id="signupName" required 
-                                   class="premium-input w-full"
-                                   placeholder="John Doe">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-gray-300 text-sm">Email</label>
-                            <input type="email" id="signupEmail" required 
-                                   class="premium-input w-full"
-                                   placeholder="your@email.com">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-gray-300 text-sm">Password</label>
-                            <input type="password" id="signupPassword" required 
-                                   class="premium-input w-full"
-                                   placeholder="•••••••• (min. 6)">
-                        </div>
-                        <button type="submit" class="premium-btn w-full">
-                            <i class="fas fa-user-plus mr-2"></i>Create Account
-                        </button>
-                    </form>
-
-                    <!-- Divider -->
-                    <div class="relative my-6">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-gray-800"></div>
-                        </div>
-                        <div class="relative flex justify-center text-sm">
-                            <span class="px-4 bg-transparent text-gray-400">Or continue with</span>
-                        </div>
+                        <!-- Toggle Links -->
+                        <p class="text-center text-gray-400" id="loginToggle">
+                            Don't have an account? 
+                            <button id="showSignup" class="toggle-btn">Sign up</button>
+                        </p>
+                        <p class="text-center text-gray-400 hidden" id="signupToggle">
+                            Already have an account? 
+                            <button id="showLogin" class="toggle-btn">Login</button>
+                        </p>
                     </div>
-
-                    <!-- Google Login -->
-                    <button id="googleLogin" class="social-btn mb-4">
-                        <i class="fab fa-google mr-2 text-blue-400"></i>
-                        Continue with Google
-                    </button>
-
-                    <!-- Toggle Links -->
-                    <p class="text-center text-gray-400 mt-6" id="loginToggle">
-                        Don't have an account? 
-                        <button id="showSignup" class="toggle-link font-semibold">Sign up</button>
-                    </p>
-                    <p class="text-center text-gray-400 mt-6 hidden" id="signupToggle">
-                        Already have an account? 
-                        <button id="showLogin" class="toggle-link font-semibold">Login</button>
-                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
-    <script>
-        // Initialize AOS
-        AOS.init({
-            once: true,
-            duration: 1000
-        });
-        
-        // Create particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-        createParticles();
-    </script>
     <script src="firebase.js"></script>
     <script src="auth.js"></script>
 </body>

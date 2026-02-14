@@ -1,22 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Study Zone</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyZen - Login</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
 </head>
-<body>
+<body class="flex items-center justify-center p-4">
+    <div class="max-w-6xl w-full grid md:grid-cols-2 gap-8 items-center">
+        <!-- Left Side - Hero -->
+        <div class="text-white hidden md:block">
+            <h1 class="text-5xl font-bold mb-6 float-animation">StudyZen</h1>
+            <p class="text-2xl mb-4">Your All-in-One Study Operating System</p>
+            <ul class="space-y-4 text-lg">
+                <li><i class="fas fa-check-circle mr-3"></i> Smart Timer & Analytics</li>
+                <li><i class="fas fa-check-circle mr-3"></i> AI Study Assistant</li>
+                <li><i class="fas fa-check-circle mr-3"></i> Community Support</li>
+                <li><i class="fas fa-check-circle mr-3"></i> Schedule Planning</li>
+                <li><i class="fas fa-check-circle mr-3"></i> Progress Tracking</li>
+            </ul>
+        </div>
 
-  <h1>📚 Study Zone</h1>
+        <!-- Right Side - Login Form -->
+        <div class="glass-card p-8 w-full max-w-md mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+                    Welcome Back!
+                </h2>
+                <p class="text-gray-600 mt-2">Login to continue your study journey</p>
+            </div>
 
-  <input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+            <!-- Email/Password Login -->
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" id="email" required 
+                           class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                           placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Password</label>
+                    <input type="password" id="password" required 
+                           class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                           placeholder="••••••••">
+                </div>
+                <button type="submit" 
+                        class="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+            </form>
 
-<button onclick="signup()">Sign Up</button>
-<button onclick="login()">Login</button>
-<button onclick="googleLogin()">Sign in with Google</button>
+            <!-- Sign Up Form (hidden by default) -->
+            <form id="signupForm" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="signupName" required 
+                           class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                           placeholder="John Doe">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" id="signupEmail" required 
+                           class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                           placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Password</label>
+                    <input type="password" id="signupPassword" required 
+                           class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                           placeholder="•••••••• (min. 6 characters)">
+                </div>
+                <button type="submit" 
+                        class="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-user-plus mr-2"></i>Create Account
+                </button>
+            </form>
 
-<script src="auth.js" type="module"></script>
-  <!-- MAIN SCRIPT -->
-  <script type="module" src="app.js"></script>
+            <!-- Divider -->
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                </div>
+            </div>
+
+            <!-- Google Login -->
+            <button id="googleLogin" 
+                    class="w-full bg-white border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition mb-4">
+                <i class="fab fa-google mr-2 text-red-500"></i>
+                Continue with Google
+            </button>
+
+            <!-- Toggle between Login/Signup -->
+            <p class="text-center text-gray-600 mt-4">
+                Don't have an account? 
+                <button id="showSignup" class="text-purple-600 font-semibold hover:underline">Sign up</button>
+            </p>
+            <p class="text-center text-gray-600 mt-2 hidden" id="showLoginContainer">
+                Already have an account? 
+                <button id="showLogin" class="text-purple-600 font-semibold hover:underline">Login</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>

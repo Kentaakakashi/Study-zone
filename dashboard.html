@@ -10,89 +10,261 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        * { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
         
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        body {
+            background: #0f0c1f;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        /* Glassmorphism */
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border-color: #667eea;
-        }
-        
-        .timer-btn {
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
             transition: all 0.3s ease;
         }
         
-        .timer-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Navigation */
+        .nav-glass {
+            background: rgba(15, 12, 31, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .nav-link {
             position: relative;
-            padding-bottom: 5px;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
         
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #667eea;
-            transition: width 0.3s ease;
+        .nav-link:hover {
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
         }
         
-        .nav-link:hover::after {
+        .nav-link.active {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            color: white;
+        }
+        
+        /* Stats cards */
+        .stat-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 40px -15px #8b5cf6;
+        }
+        
+        /* Timer */
+        .timer-display {
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+        }
+        
+        .timer-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .timer-btn:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+        
+        .timer-btn.primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            border: none;
+        }
+        
+        .timer-btn.primary:hover {
+            box-shadow: 0 10px 30px -10px #8b5cf6;
+        }
+        
+        /* Mode buttons */
+        .mode-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .mode-btn.active {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            border: none;
+        }
+        
+        /* Chat */
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .chat-container::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .chat-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            border-radius: 10px;
+        }
+        
+        .message {
+            padding: 1rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            margin-left: auto;
+        }
+        
+        .message.ai {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Schedule items */
+        .schedule-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .schedule-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: #8b5cf6;
+        }
+        
+        /* Community posts */
+        .post-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .post-card:hover {
+            border-color: #8b5cf6;
+            transform: translateX(5px);
+        }
+        
+        /* Input fields */
+        .premium-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: white;
+            transition: all 0.3s ease;
             width: 100%;
         }
         
-        body {
-            background: #f5f7fa;
+        .premium-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        .premium-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body>
+    <!-- Background -->
+    <div class="gradient-bg"></div>
+
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <nav class="nav-glass sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-8">
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">StudyZen</h1>
-                    <div class="hidden md:flex space-x-6">
-                        <a href="#" class="nav-link text-gray-700 hover:text-purple-600 transition">Dashboard</a>
-                        <a href="#" class="nav-link text-gray-700 hover:text-purple-600 transition">Timer</a>
-                        <a href="#" class="nav-link text-gray-700 hover:text-purple-600 transition">Community</a>
-                        <a href="#" class="nav-link text-gray-700 hover:text-purple-600 transition">AI Tutor</a>
-                        <a href="#" class="nav-link text-gray-700 hover:text-purple-600 transition">Schedule</a>
-                        <a href="#" class="nav-link text-gray-700 hover:text-purple-600 transition">Analytics</a>
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-12">
+                    <h1 class="text-2xl font-bold gradient-text">StudyZen</h1>
+                    <div class="hidden md:flex space-x-2">
+                        <a href="#" class="nav-link active"><i class="fas fa-home mr-2"></i>Dashboard</a>
+                        <a href="#" class="nav-link"><i class="fas fa-clock mr-2"></i>Timer</a>
+                        <a href="#" class="nav-link"><i class="fas fa-users mr-2"></i>Community</a>
+                        <a href="#" class="nav-link"><i class="fas fa-robot mr-2"></i>AI Tutor</a>
+                        <a href="#" class="nav-link"><i class="fas fa-calendar mr-2"></i>Schedule</a>
+                        <a href="#" class="nav-link"><i class="fas fa-chart-line mr-2"></i>Analytics</a>
                     </div>
                 </div>
+                
                 <div class="flex items-center space-x-4">
-                    <div id="userProfile" class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-full">
                         <img id="userAvatar" src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full border-2 border-purple-500">
                         <span id="userName" class="font-medium"></span>
                     </div>
-                    <button id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                    <button id="logoutBtn" class="bg-red-500/10 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/20 transition border border-red-500/20">
                         <i class="fas fa-sign-out-alt mr-2"></i>Logout
                     </button>
                 </div>
@@ -103,96 +275,99 @@
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 py-8">
         <!-- Welcome Banner -->
-        <div class="glass-card p-6 mb-8">
-            <h2 class="text-2xl font-bold mb-2">Welcome back, <span id="welcomeName">Student</span>! 👋</h2>
-            <p class="text-gray-600">Ready to crush your study goals today?</p>
+        <div class="glass-card p-8 mb-8" data-aos="fade-up">
+            <h2 class="text-3xl font-bold mb-2">Welcome back, <span id="welcomeName" class="gradient-text">Student</span>! 👋</h2>
+            <p class="text-gray-400 text-lg">Ready to crush your study goals today? You're doing amazing! ✨</p>
         </div>
 
         <!-- Stats Overview -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="feature-card">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500 text-sm">Today's Study</p>
-                        <p class="text-3xl font-bold" id="todayStudy">0 min</p>
+                        <p class="text-gray-400 text-sm">Today's Study</p>
+                        <p class="text-4xl font-bold gradient-text" id="todayStudy">0 min</p>
                     </div>
-                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
-                        <i class="fas fa-clock text-2xl"></i>
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 text-2xl">
+                        <i class="fas fa-clock"></i>
                     </div>
                 </div>
             </div>
-            <div class="feature-card">
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500 text-sm">Current Streak</p>
-                        <p class="text-3xl font-bold" id="currentStreak">0 days</p>
+                        <p class="text-gray-400 text-sm">Current Streak</p>
+                        <p class="text-4xl font-bold gradient-text" id="currentStreak">0 days</p>
                     </div>
-                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-500">
-                        <i class="fas fa-fire text-2xl"></i>
+                    <div class="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center text-green-400 text-2xl">
+                        <i class="fas fa-fire"></i>
                     </div>
                 </div>
             </div>
-            <div class="feature-card">
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500 text-sm">Total Hours</p>
-                        <p class="text-3xl font-bold" id="totalHours">0 hrs</p>
+                        <p class="text-gray-400 text-sm">Total Hours</p>
+                        <p class="text-4xl font-bold gradient-text" id="totalHours">0 hrs</p>
                     </div>
-                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-500">
-                        <i class="fas fa-chart-line text-2xl"></i>
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 text-2xl">
+                        <i class="fas fa-chart-line"></i>
                     </div>
                 </div>
             </div>
-            <div class="feature-card">
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500 text-sm">Goals Completed</p>
-                        <p class="text-3xl font-bold" id="goalsCompleted">0/3</p>
+                        <p class="text-gray-400 text-sm">Goals Completed</p>
+                        <p class="text-4xl font-bold gradient-text" id="goalsCompleted">0/3</p>
                     </div>
-                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-500">
-                        <i class="fas fa-trophy text-2xl"></i>
+                    <div class="w-14 h-14 bg-yellow-500/20 rounded-2xl flex items-center justify-center text-yellow-400 text-2xl">
+                        <i class="fas fa-trophy"></i>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Features Grid -->
+        <!-- Main Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Timer Section -->
-            <div class="lg:col-span-2">
-                <div class="feature-card">
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-hourglass-half text-purple-600 mr-2"></i>
+            <div class="lg:col-span-2" data-aos="fade-right">
+                <div class="glass-card p-8">
+                    <h3 class="text-xl font-bold mb-6 flex items-center">
+                        <i class="fas fa-hourglass-half text-purple-400 mr-2"></i>
                         Focus Timer
                     </h3>
                     
                     <!-- Timer Display -->
-                    <div class="text-center mb-6">
-                        <div class="text-7xl font-bold text-purple-600 mb-4" id="timerDisplay">25:00</div>
+                    <div class="text-center mb-8">
+                        <div class="timer-display mb-6" id="timerDisplay">25:00</div>
                         <div class="flex justify-center space-x-4">
-                            <button id="startTimer" class="timer-btn bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600">
+                            <button id="startTimer" class="timer-btn primary">
                                 <i class="fas fa-play mr-2"></i>Start
                             </button>
-                            <button id="pauseTimer" class="timer-btn bg-yellow-500 text-white px-6 py-2 rounded-full hover:bg-yellow-600">
+                            <button id="pauseTimer" class="timer-btn">
                                 <i class="fas fa-pause mr-2"></i>Pause
                             </button>
-                            <button id="resetTimer" class="timer-btn bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600">
+                            <button id="resetTimer" class="timer-btn">
                                 <i class="fas fa-stop mr-2"></i>Reset
                             </button>
                         </div>
                     </div>
                     
                     <!-- Timer Modes -->
-                    <div class="flex justify-center space-x-3 mb-4">
-                        <button class="timer-mode px-4 py-2 rounded-full bg-purple-100 text-purple-600" data-time="25">Pomodoro (25)</button>
-                        <button class="timer-mode px-4 py-2 rounded-full bg-gray-100 text-gray-600" data-time="50">Deep Work (50)</button>
-                        <button class="timer-mode px-4 py-2 rounded-full bg-gray-100 text-gray-600" data-time="15">Short Break (15)</button>
+                    <div class="flex justify-center space-x-3 mb-6">
+                        <button class="mode-btn active" data-time="25">Pomodoro (25)</button>
+                        <button class="mode-btn" data-time="50">Deep Work (50)</button>
+                        <button class="mode-btn" data-time="15">Short Break (15)</button>
                     </div>
                     
                     <!-- Session Notes -->
-                    <div class="mt-4">
-                        <textarea id="sessionNotes" class="w-full p-3 border rounded-lg" placeholder="What did you study this session? (e.g., Math - Chapter 3)"></textarea>
-                        <button id="saveSession" class="mt-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                    <div class="mt-6">
+                        <textarea id="sessionNotes" class="premium-input" rows="2" placeholder="What did you study? (e.g., Calculus - Chapter 3)"></textarea>
+                        <button id="saveSession" class="mt-3 timer-btn primary w-full">
                             <i class="fas fa-save mr-2"></i>Save Session
                         </button>
                     </div>
@@ -200,20 +375,22 @@
             </div>
             
             <!-- AI Chat -->
-            <div class="lg:col-span-1">
-                <div class="feature-card h-full flex flex-col">
+            <div class="lg:col-span-1" data-aos="fade-left">
+                <div class="glass-card p-6 h-full flex flex-col">
                     <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-robot text-purple-600 mr-2"></i>
+                        <i class="fas fa-robot text-purple-400 mr-2"></i>
                         AI Study Buddy
                     </h3>
-                    <div class="flex-1 overflow-y-auto mb-4 h-64 space-y-2" id="chatMessages">
-                        <div class="bg-purple-100 p-3 rounded-lg">
-                            <strong>AI:</strong> Hi! I'm your study assistant. Ask me anything about your studies!
+                    
+                    <div class="chat-container flex-1 mb-4" id="chatMessages">
+                        <div class="message ai">
+                            <strong>AI:</strong> Hi! I'm your study assistant. Ask me anything!
                         </div>
                     </div>
+                    
                     <div class="flex space-x-2">
-                        <input type="text" id="chatInput" placeholder="Ask a doubt..." class="flex-1 p-2 border rounded-lg">
-                        <button id="sendChat" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                        <input type="text" id="chatInput" placeholder="Ask a doubt..." class="premium-input">
+                        <button id="sendChat" class="timer-btn primary px-6">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
@@ -221,30 +398,32 @@
             </div>
             
             <!-- Schedule Planner -->
-            <div class="lg:col-span-1">
-                <div class="feature-card">
+            <div class="lg:col-span-1" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass-card p-6">
                     <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-calendar-alt text-purple-600 mr-2"></i>
+                        <i class="fas fa-calendar-alt text-purple-400 mr-2"></i>
                         Today's Schedule
                     </h3>
-                    <div id="scheduleList" class="space-y-2 mb-4 max-h-60 overflow-y-auto">
-                        <!-- Schedule items will be added here -->
+                    
+                    <div id="scheduleList" class="space-y-2 mb-4 max-h-60 overflow-y-auto custom-scroll">
+                        <!-- Schedule items -->
                     </div>
+                    
                     <div class="flex space-x-2">
-                        <input type="text" id="newTask" placeholder="Add task..." class="flex-1 p-2 border rounded-lg">
-                        <input type="time" id="taskTime" class="p-2 border rounded-lg" value="09:00">
-                        <button id="addTask" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                        <input type="text" id="newTask" placeholder="Add task..." class="premium-input">
+                        <input type="time" id="taskTime" class="premium-input w-24" value="09:00">
+                        <button id="addTask" class="timer-btn primary px-4">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
             
-            <!-- Study Analytics Chart -->
-            <div class="lg:col-span-2">
-                <div class="feature-card">
+            <!-- Progress Chart -->
+            <div class="lg:col-span-2" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass-card p-6">
                     <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-chart-bar text-purple-600 mr-2"></i>
+                        <i class="fas fa-chart-bar text-purple-400 mr-2"></i>
                         Weekly Progress
                     </h3>
                     <canvas id="studyChart" class="w-full h-64"></canvas>
@@ -252,18 +431,20 @@
             </div>
 
             <!-- Community Board -->
-            <div class="lg:col-span-1">
-                <div class="feature-card">
+            <div class="lg:col-span-1" data-aos="fade-up" data-aos-delay="300">
+                <div class="glass-card p-6">
                     <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-users text-purple-600 mr-2"></i>
-                        Community Doubts
+                        <i class="fas fa-users text-purple-400 mr-2"></i>
+                        Community
                     </h3>
-                    <div id="communityPosts" class="space-y-4 max-h-80 overflow-y-auto mb-4">
-                        <!-- Posts will be added here -->
+                    
+                    <div id="communityPosts" class="space-y-3 max-h-80 overflow-y-auto custom-scroll mb-4">
+                        <!-- Posts -->
                     </div>
+                    
                     <div class="mt-4">
-                        <textarea id="newPost" placeholder="Ask a doubt..." class="w-full p-3 border rounded-lg"></textarea>
-                        <button id="postQuestion" class="mt-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 w-full">
+                        <textarea id="newPost" placeholder="Ask the community..." class="premium-input" rows="2"></textarea>
+                        <button id="postQuestion" class="mt-2 timer-btn primary w-full">
                             <i class="fas fa-paper-plane mr-2"></i>Post Question
                         </button>
                     </div>
@@ -272,10 +453,18 @@
         </div>
     </div>
 
-    <!-- Firebase Scripts -->
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
     <script src="firebase.js"></script>
     <script src="app.js"></script>
 </body>

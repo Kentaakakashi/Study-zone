@@ -253,10 +253,6 @@
     font-size:12px;
   }
 
-  /* Mobile thread modal-ish behavior */
-  .mobileThreadTop{
-    display:none;
-  }
   @media (max-width: 980px){
     .threadWrap{min-height:auto}
     .threadBody{max-height: 46vh}
@@ -394,11 +390,10 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
   import {
-    getFirestore, collection, doc, getDoc, setDoc, addDoc,
+    getFirestore, collection, doc, getDoc, addDoc,
     serverTimestamp, query, orderBy, limit, onSnapshot
   } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-  // ✅ Your Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
     authDomain: "study-zone-438c4.firebaseapp.com",
@@ -412,7 +407,6 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // UI refs
   const toastEl = document.getElementById("toast");
   const postsEl = document.getElementById("posts");
   const listInfo = document.getElementById("listInfo");
@@ -432,14 +426,12 @@
   const copyLinkBtn = document.getElementById("copyLinkBtn");
   const refreshBtn = document.getElementById("refreshBtn");
 
-  // State
   let currentUser = null;
   let myProfile = null;
   let selectedPostId = null;
-  let selectedPostData = null;
   let unsubReplies = null;
   let latestPosts = [];
-  const profileCache = new Map(); // uid -> profile
+  const profileCache = new Map();
 
   function toast(msg){
     toastEl.textContent = msg;
@@ -471,28 +463,29 @@
     return `${d}d ago`;
   }
 
-  async function getProfile(uid){
-  try{
-    if(!uid) return null;
-    if(profileCache.has(uid)) return profileCache.get(uid);
-
-    const snap = await getDoc(doc(db, "profiles", uid));
-    const profile = snap.exists() ? snap.data() : null;
-
-    profileCache.set(uid, profile);
-    return profile;
-  }catch(err){
-    // If profile can't be read for any reason, don't break the chat.
-    profileCache.set(uid, null);
-    return null;
+  function escapeHtml(s){
+    return String(s || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
   }
-}
 
+  async function getProfile(uid){
+    try{
+      if(!uid) return null;
+      if(profileCache.has(uid)) return profileCache.get(uid);
 
-  function requireProfileOrRedirect(){
-    // If user has no username set, community still works, but shows fallback
-    // You can enforce redirect if you want:
-    // if(!myProfile?.username) window.location.href="/settings/index.html";
+      const snap = await getDoc(doc(db, "profiles", uid));
+      const profile = snap.exists() ? snap.data() : null;
+
+      profileCache.set(uid, profile);
+      return profile;
+    }catch(err){
+      profileCache.set(uid, null);
+      return null;
+    }
   }
 
   function renderPosts(){
@@ -513,11 +506,6 @@
       el.className = `postItem ${active}`;
       el.dataset.id = p.id;
 
-      // placeholders until profile loads
-      const avatar = dice(p.authorUid || "user");
-      const dn = "Loading…";
-      const un = "@user";
-
       const created = tsToDate(p.createdAt);
       const when = timeAgo(created);
 
@@ -525,10 +513,10 @@
         <div class="count">${p.replyCount || 0} replies</div>
         <div class="postTop">
           <div class="postMeta">
-            <img class="avatar" data-avatar src="${avatar}">
+            <img class="avatar" data-avatar src="${dice(p.authorUid || "user")}">
             <div class="names">
-              <div class="displayName" data-dn>${dn}</div>
-              <div class="username" data-un>${un}</div>
+              <div class="displayName" data-dn>Loading…</div>
+              <div class="username" data-un>@user</div>
             </div>
           </div>
           <div class="time">${when}</div>
@@ -542,14 +530,15 @@
       el.addEventListener("click", ()=> openThread(p.id));
       postsEl.appendChild(el);
 
-      // async fill author profile
       getProfile(p.authorUid).then(profile=>{
         const avEl = el.querySelector("[data-avatar]");
         const dnEl = el.querySelector("[data-dn]");
         const unEl = el.querySelector("[data-un]");
+
         const disp = profile?.displayName || "User";
         const uname = profile?.username ? `@${profile.username}` : "@no-username";
         const pfp = profile?.pfp || profile?.photoURL || dice(profile?.username || disp);
+
         avEl.src = pfp;
         dnEl.textContent = disp;
         unEl.textContent = uname;
@@ -561,35 +550,23 @@
     }
   }
 
-  function escapeHtml(s){
-    return String(s || "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
   async function openThread(postId){
     if(!postId) return;
     const p = latestPosts.find(x=>x.id===postId);
     if(!p) return;
 
     selectedPostId = postId;
-    selectedPostData = p;
-
-    // highlight
     renderPosts();
 
-    // thread header
-    threadTitleEl.textContent = p.title || "Untitled";
     const created = tsToDate(p.createdAt);
+    threadTitleEl.textContent = p.title || "Untitled";
     threadSubEl.textContent = `${p.tag || "General"} • ${created ? created.toLocaleString() : "just now"}`;
+
     copyLinkBtn.disabled = false;
     replyTextEl.disabled = false;
     replyBtn.disabled = false;
 
-    // render main post at top
+    // Build main post
     threadBodyEl.innerHTML = "";
     const mainWrap = document.createElement("div");
     mainWrap.className = "msg";
@@ -606,40 +583,44 @@
     `;
     threadBodyEl.appendChild(mainWrap);
 
-    // fill author
     const authorProfile = await getProfile(p.authorUid);
     document.getElementById("mainName").textContent = authorProfile?.displayName || "User";
     document.getElementById("mainUser").textContent = authorProfile?.username ? `@${authorProfile.username}` : "@no-username";
     document.getElementById("mainAvatar").src = (authorProfile?.pfp || authorProfile?.photoURL || dice(authorProfile?.username || authorProfile?.displayName || "user"));
 
-    // replies live
+    // Live replies (FULL FIXED BLOCK)
     if(unsubReplies) unsubReplies();
+
     const repliesRef = collection(db, "posts", postId, "replies");
     const q = query(repliesRef, orderBy("createdAt","asc"));
-    unsubReplies = onSnapshot(q, async (snap)=>{
-      // remove old rendered replies but keep main post first
-      // easiest: rebuild below main post
-      const keep = [mainWrap];
-      threadBodyEl.innerHTML = "";
-      keep.forEach(k=>threadBodyEl.appendChild(k));
 
-      if(snap.empty){
+    unsubReplies = onSnapshot(q, async (snap) => {
+      // Rebuild thread: keep main post always
+      threadBodyEl.innerHTML = "";
+      threadBodyEl.appendChild(mainWrap);
+
+      // remove any old placeholder (defensive)
+      threadBodyEl.querySelectorAll("[data-empty]").forEach(e => e.remove());
+
+      if (snap.empty) {
         const empty = document.createElement("div");
         empty.className = "small";
         empty.textContent = "No replies yet. Be the first to reply.";
+        empty.dataset.empty = "1";
         threadBodyEl.appendChild(empty);
       } else {
-        for(const docSnap of snap.docs){
+        for (const docSnap of snap.docs) {
           const r = { id: docSnap.id, ...docSnap.data() };
           const rDate = tsToDate(r.createdAt);
-          const profile = await getProfile(r.authorUid);
 
-          const msg = document.createElement("div");
-          msg.className = "msg";
+          // Always render even if profile fails
+          const profile = await getProfile(r.authorUid);
           const disp = profile?.displayName || "User";
           const uname = profile?.username ? `@${profile.username}` : "@no-username";
           const pfp = profile?.pfp || profile?.photoURL || dice(profile?.username || disp);
 
+          const msg = document.createElement("div");
+          msg.className = "msg";
           msg.innerHTML = `
             <img class="avatar" src="${pfp}">
             <div class="msgMain">
@@ -655,11 +636,10 @@
         }
       }
 
-      // auto scroll to bottom
-      threadBodyEl.scrollTop = threadBodyEl.scrollHeight;
+      // Smooth scroll to bottom
+      threadBodyEl.scrollTo({ top: threadBodyEl.scrollHeight, behavior: "smooth" });
     });
 
-    // update hint bar
     const me = myProfile?.username ? `@${myProfile.username}` : "no username yet";
     hintBar.textContent = `You are replying as ${myProfile?.displayName || "User"} (${me}). Shift+Enter = new line.`;
   }
@@ -712,9 +692,6 @@
       });
       replyTextEl.value = "";
       toast("Sent ✅");
-      // We keep replyCount simple: not updating here to avoid rules complexity.
-      // If you want replyCount updated reliably, we can add a Cloud Function later
-      // OR allow update with security rules based on request.auth (advanced).
     }catch(e){
       toast(e.message || "Failed to send.");
     }finally{
@@ -722,18 +699,16 @@
     }
   }
 
-  // Character counter
   bodyEl.addEventListener("input", ()=>{
     charCount.textContent = `${bodyEl.value.length} / 1200`;
   });
 
-  // Buttons
   postBtn.addEventListener("click", createPost);
   replyBtn.addEventListener("click", sendReply);
+
   refreshBtn.addEventListener("click", ()=> renderPosts());
   searchEl.addEventListener("input", ()=> renderPosts());
 
-  // Enter to send reply (Shift+Enter for newline)
   replyTextEl.addEventListener("keydown", (e)=>{
     if(e.key === "Enter" && !e.shiftKey){
       e.preventDefault();
@@ -741,7 +716,6 @@
     }
   });
 
-  // Copy link
   copyLinkBtn.addEventListener("click", async()=>{
     if(!selectedPostId) return;
     const url = `${window.location.origin}${window.location.pathname}?post=${encodeURIComponent(selectedPostId)}`;
@@ -753,7 +727,6 @@
     }
   });
 
-  // Auth guard + load my profile
   onAuthStateChanged(auth, async(user)=>{
     if(!user){
       window.location.href = "/index.html";
@@ -764,15 +737,10 @@
     const snap = await getDoc(doc(db,"profiles", user.uid));
     myProfile = snap.exists() ? snap.data() : null;
 
-    // if profile missing username, they can still read/post, but name will show fallback
-    // If you want to force them:
-    // if(!myProfile?.username) window.location.href="/settings/index.html";
-
-    requireProfileOrRedirect();
-    hintBar.textContent = "Loading…";
+    hintBar.textContent = "Ready ✅";
   });
 
-  // Live posts feed
+  // Live posts feed (real-time)
   const postsQuery = query(collection(db,"posts"), orderBy("createdAt","desc"), limit(80));
   onSnapshot(postsQuery, (snap)=>{
     latestPosts = snap.docs.map(d=>({ id:d.id, ...d.data() }));

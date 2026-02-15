@@ -8,146 +8,196 @@
 :root{
   --bg:#0b1020; --card:#0f1730; --card2:#101a3a; --text:#e8ecff; --muted:#a8b0d8;
   --brand:#7c5cff; --brand2:#19c37d; --danger:#ff4d6d;
-  --ring:rgba(124,92,255,.35); --shadow: 0 10px 35px rgba(0,0,0,.35); --radius:18px;
+  --ring:rgba(124,92,255,.35); --shadow: 0 18px 45px rgba(0,0,0,.40); --radius:22px;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
-  background: radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
+  background: radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.28), transparent 60%),
               radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
               radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.12), transparent 55%),
               var(--bg);
   color:var(--text);
+  overflow-x:hidden;
 }
-a{color:inherit; text-decoration:none}
-.container{max-width:1050px; margin:0 auto; padding:24px}
-.nav{
-  display:flex; align-items:center; justify-content:space-between; gap:14px;
-  padding:14px 16px; border:1px solid rgba(255,255,255,.08);
-  background: rgba(15,23,48,.65); backdrop-filter: blur(10px);
-  border-radius: var(--radius); box-shadow: var(--shadow);
-  position:sticky; top:12px; z-index:50;
+.container{max-width:1080px; margin:0 auto; padding:28px}
+.hero{
+  display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; align-items:stretch;
 }
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
-.badge{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.12); padding:4px 8px; border-radius:999px}
-.navlinks{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
-.pill{
-  padding:9px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.10);
-  background: rgba(16,26,58,.55); color:var(--text); font-size:13px;
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+.card{
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(15,23,48,.65);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding:18px;
+  position:relative;
+  overflow:hidden;
 }
-.pill:hover{border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring)}
+.card::before{
+  content:"";
+  position:absolute; inset:-120px -120px auto auto;
+  width:280px; height:280px;
+  background: radial-gradient(circle, rgba(124,92,255,.45), transparent 65%);
+  filter: blur(10px);
+  transform: rotate(20deg);
+  pointer-events:none;
+}
+.brandbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(15,23,48,.55);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  font-weight:900; letter-spacing:.3px;
+}
+.badge{
+  font-size:12px; color:var(--muted);
+  border:1px solid rgba(255,255,255,.12);
+  padding:4px 10px; border-radius:999px;
+}
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:11px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
-  background: rgba(16,26,58,.75); color:var(--text); cursor:pointer; font-weight:650;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(16,26,58,.75);
+  color:var(--text);
+  cursor:pointer;
+  font-weight:750;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.btn:hover{border-color: rgba(124,92,255,.6); box-shadow:0 0 0 4px var(--ring)}
+.btn:hover{border-color: rgba(124,92,255,.60); box-shadow:0 0 0 5px var(--ring); transform: translateY(-1px)}
 .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.55)); border-color: transparent}
 .btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.45)); border-color: transparent}
-.btn.danger{background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,77,109,.45)); border-color: transparent}
-.grid{display:grid; gap:16px}
-.grid.cols2{grid-template-columns: repeat(2, minmax(0,1fr))}
-.grid.cols3{grid-template-columns: repeat(3, minmax(0,1fr))}
-@media (max-width:900px){.grid.cols3{grid-template-columns:1fr 1fr}}
-@media (max-width:700px){.grid.cols2,.grid.cols3{grid-template-columns:1fr} .nav{position:static}}
-.card{
-  border:1px solid rgba(255,255,255,.10); background: rgba(15,23,48,.65);
-  backdrop-filter: blur(10px); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding:16px;
-}
-.card h2{margin:0 0 6px 0}
-.muted{color:var(--muted)}
-.kpi{display:flex; gap:12px; align-items:baseline}
-.kpi .big{font-size:36px; font-weight:900}
 .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-input, textarea, select{
-  width:100%; padding:12px 12px; border-radius:12px;
-  border:1px solid rgba(255,255,255,.12); background: rgba(16,26,58,.65);
-  color:var(--text); outline:none;
+.grid{display:grid; gap:12px}
+input{
+  width:100%;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(16,26,58,.65);
+  color:var(--text);
+  outline:none;
 }
-input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 4px var(--ring)}
-.small{font-size:12px}
-.hr{height:1px; background: rgba(255,255,255,.10); margin:14px 0}
+input:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 5px var(--ring)}
+.small{font-size:12px; color:var(--muted); line-height:1.45}
+.h1{
+  margin:0;
+  font-size:40px;
+  letter-spacing:-.6px;
+}
+.muted{color:var(--muted)}
+.kpi{
+  display:grid; gap:10px;
+}
+.k{
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(16,26,58,.55);
+  border-radius:18px;
+  padding:14px;
+  transition: transform .18s ease, border-color .18s ease;
+}
+.k:hover{transform: translateY(-2px); border-color: rgba(124,92,255,.45)}
 .toast{
   position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
   background: rgba(15,23,48,.88); border:1px solid rgba(255,255,255,.12);
   padding:10px 12px; border-radius:999px; box-shadow: var(--shadow);
   color:var(--text); display:none; z-index:1000;
 }
+.loaderDot{
+  display:inline-block; width:8px; height:8px; border-radius:50%;
+  background: rgba(255,255,255,.8);
+  box-shadow: 0 0 0 0 rgba(124,92,255,.55);
+  animation: pulse 1.2s infinite;
+  margin-left:8px;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(124,92,255,.55)}
+  70%{box-shadow:0 0 0 12px rgba(124,92,255,0)}
+  100%{box-shadow:0 0 0 0 rgba(124,92,255,0)}
+}
 </style>
 </head>
+
 <body>
 <div class="container">
-  <div class="nav">
+  <div class="brandbar">
     <div class="brand">📚 Study Zone <span class="badge">beta</span></div>
-    <div class="navlinks">
-      <a class="pill" href="/home/index.html">Home</a>
-      <a class="pill" href="/focus/pomodoro.html">Pomodoro</a>
-      <a class="pill" href="/focus/stopwatch.html">Stopwatch</a>
-      <a class="pill" href="/planner/index.html">Planner</a>
-      <a class="pill" href="/stats/index.html">Stats</a>
-      <a class="pill" href="/community/index.html">Community</a>
-      <a class="pill" href="/settings/index.html">Settings</a>
-    </div>
+    <div class="small">Login only — features unlock after you’re in.</div>
   </div>
+
   <div style="height:16px"></div>
-  
-<div class="grid cols2">
-  <div class="card">
-    <h2>Welcome 👋</h2>
-    <p class="muted">Login to access timers, planner, stats, and the community board.</p>
-    <div class="hr"></div>
-    <div class="grid" style="gap:10px">
-      <input id="email" type="email" placeholder="Email" autocomplete="email"/>
-      <input id="password" type="password" placeholder="Password (6+ chars)" autocomplete="current-password"/>
-      <div class="row">
-        <button class="btn primary" id="signupBtn">Create account</button>
-        <button class="btn" id="loginBtn">Login</button>
+
+  <div class="hero">
+    <div class="card">
+      <h1 class="h1">Lock in. Track it. Win.</h1>
+      <p class="muted">Login to access timers, planner, stats, and the community.</p>
+
+      <div style="height:10px"></div>
+
+      <div class="grid">
+        <input id="email" type="email" placeholder="Email" autocomplete="email"/>
+        <input id="password" type="password" placeholder="Password (6+ chars)" autocomplete="current-password"/>
+
+        <div class="row">
+          <button class="btn primary" id="signupBtn">Create account</button>
+          <button class="btn" id="loginBtn">Login</button>
+        </div>
+
+        <button class="btn green" id="googleBtn">Continue with Google</button>
+
+        <div class="small">
+          If Google login fails on Netlify, add your domain in Firebase → Auth → Settings → Authorized domains.
+        </div>
       </div>
-      <button class="btn green" id="googleBtn">Continue with Google</button>
-      <div class="small muted">If login fails on Netlify, add your domain in Firebase → Auth → Settings → Authorized domains.</div>
+
+      <div id="busy" class="small" style="margin-top:10px; display:none;">
+        Checking profile… <span class="loaderDot"></span>
+      </div>
     </div>
-  </div>
-  <div class="card">
-    <h2>What you get</h2>
-    <div class="grid" style="gap:10px">
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <div class="kpi"><div class="big">⏱️</div><div><b>Focus Tools</b><div class="muted small">Pomodoro + Stopwatch</div></div></div>
-      </div>
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <div class="kpi"><div class="big">🗓️</div><div><b>Planner</b><div class="muted small">Tasks + weekly plan</div></div></div>
-      </div>
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <div class="kpi"><div class="big">📈</div><div><b>Stats</b><div class="muted small">Daily totals + streaks</div></div></div>
+
+    <div class="card">
+      <h2 style="margin:0 0 10px 0;">What Study Zone gives you</h2>
+      <div class="kpi">
+        <div class="k">⏱️ <b>Focus Tools</b><div class="small">Pomodoro + Stopwatch + session logging</div></div>
+        <div class="k">🗓️ <b>Planner</b><div class="small">Tasks + weekly plan + priorities</div></div>
+        <div class="k">📈 <b>Stats</b><div class="small">Daily totals + streaks + weekly chart</div></div>
+        <div class="k">💬 <b>Community</b><div class="small">Ask doubts + reply threads like Discord</div></div>
       </div>
     </div>
   </div>
 </div>
 
-</div>
 <div id="toast" class="toast"></div>
-<script type="module">
 
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import {
-  getAuth, onAuthStateChanged, signOut,
+  getAuth, onAuthStateChanged,
   GoogleAuthProvider, signInWithPopup,
   signInWithEmailAndPassword, createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 import {
-  getFirestore, doc, setDoc, getDoc, increment,
-  collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
+  getFirestore, doc, setDoc, getDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  "apiKey": "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
-  "authDomain": "study-zone-438c4.firebaseapp.com",
-  "projectId": "study-zone-438c4",
-  "storageBucket": "study-zone-438c4.firebasestorage.app",
-  "messagingSenderId": "320895535749",
-  "appId": "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+  apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+  authDomain: "study-zone-438c4.firebaseapp.com",
+  projectId: "study-zone-438c4",
+  storageBucket: "study-zone-438c4.firebasestorage.app",
+  messagingSenderId: "320895535749",
+  appId: "1:320895535749:web:cab35a214ef7c22ae2f7ec"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -155,52 +205,52 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const toastEl = document.getElementById("toast");
+const busyEl = document.getElementById("busy");
 function toast(msg){
-  if(!toastEl) return;
   toastEl.textContent = msg;
   toastEl.style.display="block";
-  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2200);
+  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2400);
+}
+function setBusy(v){ busyEl.style.display = v ? "block" : "none"; }
+
+async function routeAfterLogin(user){
+  setBusy(true);
+  const pSnap = await getDoc(doc(db, "profiles", user.uid));
+  const profile = pSnap.exists() ? pSnap.data() : null;
+
+  // If profile missing OR missing username -> force setup in Settings page
+  if(!profile || !profile.username){
+    setBusy(false);
+    window.location.href = "/settings/index.html";
+    return;
+  }
+
+  setBusy(false);
+  window.location.href = "/home/index.html";
 }
 
-function requireAuth(redirectTo="/index.html"){
-  return new Promise((resolve)=>{
-    onAuthStateChanged(auth, (user)=>{
-      if(!user){
-        window.location.href = redirectTo;
-        return;
-      }
-      resolve(user);
-    });
-  });
-}
-
-function wireLogout(btnId="logoutBtn"){
-  const b = document.getElementById(btnId);
-  if(!b) return;
-  b.addEventListener("click", async()=>{
-    await signOut(auth);
-    window.location.href="/index.html";
-  });
-}
-
-// If already logged in, go home
+// If already logged in, route properly (not instantly to home)
 onAuthStateChanged(auth, (user)=>{
-  if(user) window.location.href = "/home/index.html";
+  if(user) routeAfterLogin(user);
 });
 
 const emailEl = document.getElementById("email");
-const passEl = document.getElementById("password");
+const passEl  = document.getElementById("password");
 
 document.getElementById("signupBtn").addEventListener("click", async()=>{
   try{
     const cred = await createUserWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+
+    // Create minimal profile doc. Username setup happens in settings.
     await setDoc(doc(db, "profiles", cred.user.uid), {
       uid: cred.user.uid,
-      email: cred.user.email,
+      email: cred.user.email || "",
       displayName: cred.user.displayName || "New User",
+      photoURL: cred.user.photoURL || "",
       createdAt: serverTimestamp()
     }, { merge:true });
-    window.location.href = "/home/index.html";
+
+    await routeAfterLogin(cred.user);
   }catch(e){
     toast(e.message);
   }
@@ -208,8 +258,8 @@ document.getElementById("signupBtn").addEventListener("click", async()=>{
 
 document.getElementById("loginBtn").addEventListener("click", async()=>{
   try{
-    await signInWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
-    window.location.href = "/home/index.html";
+    const cred = await signInWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+    await routeAfterLogin(cred.user);
   }catch(e){
     toast(e.message);
   }
@@ -219,19 +269,20 @@ document.getElementById("googleBtn").addEventListener("click", async()=>{
   try{
     const provider = new GoogleAuthProvider();
     const cred = await signInWithPopup(auth, provider);
+
     await setDoc(doc(db, "profiles", cred.user.uid), {
       uid: cred.user.uid,
-      email: cred.user.email,
+      email: cred.user.email || "",
       displayName: cred.user.displayName || "User",
       photoURL: cred.user.photoURL || "",
       createdAt: serverTimestamp()
     }, { merge:true });
-    window.location.href = "/home/index.html";
+
+    await routeAfterLogin(cred.user);
   }catch(e){
     toast(e.message);
   }
 });
-
 </script>
 </body>
 </html>

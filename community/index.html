@@ -50,7 +50,7 @@
     border:1px solid rgba(255,255,255,.12);
     padding:4px 10px;border-radius:999px
   }
-  .navlinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .navlinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;align-items:center}
   .pill{
     padding:9px 11px;border-radius:999px;
     border:1px solid rgba(255,255,255,.10);
@@ -106,7 +106,7 @@
     padding:11px 12px;border-radius:14px;
     border:1px solid rgba(255,255,255,.12);
     background:rgba(16,26,58,.75);
-    color:var(--text);cursor:pointer;font-weight:800;
+    color:var(--text);cursor:pointer;font-weight:900;
     transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
     user-select:none;
   }
@@ -121,7 +121,7 @@
 
   .posts{
     display:flex; flex-direction:column; gap:10px;
-    max-height: 60vh; overflow:auto; padding-right:4px;
+    max-height: 56vh; overflow:auto; padding-right:4px;
   }
   .posts::-webkit-scrollbar{width:10px}
   .posts::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:999px}
@@ -166,10 +166,8 @@
     background:rgba(0,0,0,.10);
     padding:4px 9px;border-radius:999px;
   }
-  .chip.solved{
-    border-color: rgba(25,195,125,.45);
-    background: rgba(25,195,125,.14);
-  }
+  .chip.solved{border-color: rgba(25,195,125,.45); background: rgba(25,195,125,.14);}
+  .chip.hot{border-color: rgba(124,92,255,.55); background: rgba(124,92,255,.15);}
   .count{
     position:absolute; top:10px; right:10px;
     font-size:11px; color:rgba(232,236,255,.95);
@@ -227,10 +225,7 @@
     word-wrap:break-word;
     white-space:pre-wrap;
   }
-  .bubble.deleted{
-    opacity:.75;
-    font-style:italic;
-  }
+  .bubble.deleted{opacity:.75;font-style:italic}
 
   .composer{
     border-top:1px solid rgba(255,255,255,.08);
@@ -245,6 +240,21 @@
     font-size:12px;
   }
 
+  .reactRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .reactBtn{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 10px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(0,0,0,.10);
+    font-size:12px;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    user-select:none;
+  }
+  .reactBtn:hover{transform: translateY(-1px); border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring)}
+  .reactBtn.active{border-color: rgba(25,195,125,.65); box-shadow:0 0 0 4px rgba(25,195,125,.15)}
+  .reactCount{color:var(--muted);font-weight:900}
+
   .toast{
     position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
     background: rgba(15,23,48,.88);
@@ -255,16 +265,25 @@
     color:var(--text);
     display:none; z-index:1000;
   }
-  .glowDot{
-    width:9px;height:9px;border-radius:50%;
-    background:rgba(25,195,125,.95);
-    box-shadow: 0 0 0 0 rgba(25,195,125,.45);
-    animation: pulse 1.3s infinite;
+
+  .iconBtn{
+    position:relative;
+    width:40px;height:40px;border-radius:14px;
+    display:inline-flex;align-items:center;justify-content:center;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(16,26,58,.55);
+    cursor:pointer;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(25,195,125,.45)}
-    70%{box-shadow:0 0 0 12px rgba(25,195,125,0)}
-    100%{box-shadow:0 0 0 0 rgba(25,195,125,0)}
+  .iconBtn:hover{border-color: rgba(124,92,255,.60); box-shadow:0 0 0 4px var(--ring); transform: translateY(-1px)}
+  .dotBadge{
+    position:absolute;top:-6px;right:-6px;
+    min-width:18px;height:18px;border-radius:999px;
+    display:none;align-items:center;justify-content:center;
+    background:rgba(255,77,109,.95);
+    border:1px solid rgba(255,255,255,.18);
+    font-size:11px;font-weight:900;
+    padding:0 6px;
   }
 
   /* Simple modal */
@@ -277,7 +296,7 @@
     padding:16px;
   }
   .modal{
-    width:min(680px, 100%);
+    width:min(760px, 100%);
     border:1px solid rgba(255,255,255,.12);
     background: rgba(15,23,48,.92);
     backdrop-filter: blur(12px);
@@ -291,6 +310,14 @@
     display:flex;justify-content:space-between;align-items:center;gap:10px;
   }
   .modalBody{padding:14px}
+  .leaderList{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+  .leaderItem{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(16,26,58,.55);
+    border-radius:16px;
+    padding:10px;
+  }
 </style>
 </head>
 
@@ -306,6 +333,13 @@
       <a class="pill" href="/stats/index.html">Stats</a>
       <a class="pill" href="/community/index.html">Community</a>
       <a class="pill" href="/settings/index.html">Settings</a>
+
+      <button class="iconBtn" id="bellBtn" title="Notifications">
+        🔔
+        <div class="dotBadge" id="bellBadge">0</div>
+      </button>
+
+      <button class="iconBtn" id="leaderBtn" title="Helper leaderboard">👑</button>
     </div>
   </div>
 
@@ -316,19 +350,19 @@
       <div class="cardHeader">
         <div>
           <h3 class="title">Community</h3>
-          <div class="sub">Doubts + threads. Now with edit/delete + “edited” tags.</div>
+          <div class="sub">Now with reactions, filters, accepted answers, leaderboard, notifications.</div>
         </div>
         <div class="row" style="gap:8px">
-          <div class="glowDot" title="Online"></div>
           <button class="btn ghost" id="refreshBtn" title="Refresh list">↻</button>
         </div>
       </div>
 
       <div class="content">
+        <!-- Create post -->
         <div class="card" style="background:var(--card2); box-shadow:none; margin-bottom:12px;">
           <div class="content">
             <div class="row" style="justify-content:space-between; align-items:flex-end;">
-              <div style="flex:1; min-width:240px;">
+              <div style="flex:1; min-width:220px;">
                 <label class="small">Subject tag</label>
                 <select id="tag">
                   <option value="General">General</option>
@@ -340,7 +374,7 @@
                   <option value="English">English</option>
                 </select>
               </div>
-              <div style="flex:1; min-width:240px;">
+              <div style="flex:1; min-width:220px;">
                 <label class="small">Title</label>
                 <input id="title" placeholder="Short title (e.g., 'Need help with vectors')" maxlength="90">
               </div>
@@ -355,18 +389,45 @@
           </div>
         </div>
 
-        <div class="row" style="justify-content:space-between;">
-          <div class="small" id="listInfo">Loading posts…</div>
-          <div class="row" style="gap:8px">
-            <input id="search" placeholder="Search…" style="width:220px">
+        <!-- Filters -->
+        <div class="card" style="background:rgba(16,26,58,.40); box-shadow:none; margin-bottom:12px;">
+          <div class="content">
+            <div class="row" style="justify-content:space-between">
+              <div class="small" id="listInfo">Loading posts…</div>
+              <input id="search" placeholder="Search…" style="width:220px">
+            </div>
+            <div style="height:10px"></div>
+            <div class="row">
+              <select id="filterTag" style="max-width:240px">
+                <option value="ALL">All tags</option>
+                <option value="General">General</option>
+                <option value="Maths">Maths</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Tamil">Tamil</option>
+                <option value="English">English</option>
+              </select>
+              <select id="filterStatus" style="max-width:260px">
+                <option value="ALL">All</option>
+                <option value="UNANSWERED">Unanswered</option>
+                <option value="SOLVED">Solved</option>
+              </select>
+              <select id="sortBy" style="max-width:220px">
+                <option value="NEW">Newest</option>
+                <option value="ACTIVE">Most active</option>
+              </select>
+            </div>
+            <div class="small" style="margin-top:8px">
+              Note: “Unanswered/Active” uses reply tracking stored on new replies. Old replies may not count until new messages happen.
+            </div>
           </div>
         </div>
 
-        <div style="height:10px"></div>
         <div class="posts" id="posts"></div>
 
         <div class="small" style="margin-top:10px;">
-          Tip: If you haven’t set a username yet, go to <b>Settings</b> first.
+          Tip: If you haven’t set a username yet, go to <b>Settings</b>.
         </div>
       </div>
     </div>
@@ -394,7 +455,7 @@
         <textarea id="replyText" placeholder="Write a reply… (Shift+Enter = new line)" disabled></textarea>
         <button class="btn green" id="replyBtn" disabled>Send</button>
       </div>
-      <div class="hintBar" id="hintBar">Log in required. Profile required for full display.</div>
+      <div class="hintBar" id="hintBar">Log in required.</div>
     </div>
 
   </div>
@@ -419,15 +480,46 @@
   </div>
 </div>
 
+<!-- Leaderboard Modal -->
+<div class="modalBack" id="leaderBack">
+  <div class="modal">
+    <div class="modalHead">
+      <div style="font-weight:900">👑 Helper Leaderboard (last 7 days)</div>
+      <button class="btn sm" id="leaderClose">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="small" id="leaderInfo">Loading…</div>
+      <div class="leaderList" id="leaderList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modalBack" id="notifBack">
+  <div class="modal">
+    <div class="modalHead">
+      <div style="font-weight:900">🔔 Notifications</div>
+      <button class="btn sm" id="notifClose">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="small">These are new replies on your posts since you last opened notifications.</div>
+      <div class="leaderList" id="notifList" style="margin-top:10px"></div>
+      <div class="row" style="justify-content:flex-end; margin-top:12px">
+        <button class="btn sm green" id="notifMarkRead">Mark all read</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
   import {
-    getFirestore, collection, doc, getDoc, addDoc,
-    updateDoc, serverTimestamp,
-    query, orderBy, limit, onSnapshot
+    getFirestore, collection, collectionGroup, doc, getDoc, getDocs, addDoc,
+    setDoc, updateDoc, deleteDoc, serverTimestamp,
+    query, where, orderBy, limit, onSnapshot
   } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -443,6 +535,7 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
+  // UI
   const toastEl = document.getElementById("toast");
   const postsEl = document.getElementById("posts");
   const listInfo = document.getElementById("listInfo");
@@ -452,6 +545,10 @@
   const tagEl = document.getElementById("tag");
   const postBtn = document.getElementById("postBtn");
   const charCount = document.getElementById("charCount");
+
+  const filterTagEl = document.getElementById("filterTag");
+  const filterStatusEl = document.getElementById("filterStatus");
+  const sortByEl = document.getElementById("sortBy");
 
   const threadTitleEl = document.getElementById("threadTitle");
   const threadSubEl = document.getElementById("threadSub");
@@ -466,7 +563,7 @@
   const editPostBtn = document.getElementById("editPostBtn");
   const deletePostBtn = document.getElementById("deletePostBtn");
 
-  // Modal
+  // Modal edit
   const modalBack = document.getElementById("modalBack");
   const modalTitle = document.getElementById("modalTitle");
   const modalLabel = document.getElementById("modalLabel");
@@ -476,17 +573,42 @@
   const modalCancel = document.getElementById("modalCancel");
   const modalSave = document.getElementById("modalSave");
 
+  // Leaderboard
+  const leaderBtn = document.getElementById("leaderBtn");
+  const leaderBack = document.getElementById("leaderBack");
+  const leaderClose = document.getElementById("leaderClose");
+  const leaderInfo = document.getElementById("leaderInfo");
+  const leaderList = document.getElementById("leaderList");
+
+  // Notifications
+  const bellBtn = document.getElementById("bellBtn");
+  const bellBadge = document.getElementById("bellBadge");
+  const notifBack = document.getElementById("notifBack");
+  const notifClose = document.getElementById("notifClose");
+  const notifList = document.getElementById("notifList");
+  const notifMarkRead = document.getElementById("notifMarkRead");
+
+  // State
   let currentUser = null;
   let myProfile = null;
 
   let selectedPostId = null;
   let selectedPostData = null;
-  let unsubReplies = null;
+  let unsubThread = null;         // listener for replies + accepted answer etc (we rebuild)
+  let unsubPostReacts = null;     // listener for post reactions
+  let unsubNotif = null;          // notifications listener
+
   let latestPosts = [];
   const profileCache = new Map();
 
+  // Derived maps
+  const replyCountByPost = new Map();    // postId -> count (from recent replies)
+  const lastReplyAtByPost = new Map();   // postId -> timestamp millis
+  const unreadNotifs = new Map();        // key: replyDocPath -> data
+
+  // Modal state
   let modalMode = null; // "editPost" | "editReply"
-  let modalTarget = null; // { postId, replyId? }
+  let modalTarget = null;
 
   function toast(msg){
     toastEl.textContent = msg;
@@ -531,10 +653,10 @@
     try{
       if(!uid) return null;
       if(profileCache.has(uid)) return profileCache.get(uid);
-      const snap = await getDoc(doc(db, "profiles", uid));
-      const profile = snap.exists() ? snap.data() : null;
-      profileCache.set(uid, profile);
-      return profile;
+      const snap = await getDoc(doc(db,"profiles",uid));
+      const p = snap.exists() ? snap.data() : null;
+      profileCache.set(uid, p);
+      return p;
     }catch{
       profileCache.set(uid, null);
       return null;
@@ -565,35 +687,20 @@
 
   modalClose.onclick = closeModal;
   modalCancel.onclick = closeModal;
-  modalBack.addEventListener("click", (e)=>{
-    if(e.target === modalBack) closeModal();
-  });
+  modalBack.addEventListener("click", (e)=>{ if(e.target === modalBack) closeModal(); });
 
   modalSave.addEventListener("click", async ()=>{
     const newText = modalText.value.trim();
     if(newText.length < 1){ toast("Text can’t be empty."); return; }
-
     try{
       modalSave.disabled = true;
-
       if(modalMode === "editPost"){
-        const pRef = doc(db, "posts", modalTarget.postId);
-        await updateDoc(pRef, {
-          body: newText,
-          editedAt: serverTimestamp()
-        });
+        await updateDoc(doc(db,"posts", modalTarget.postId), { body:newText, editedAt:serverTimestamp() });
         toast("Post edited ✅");
-      }
-
-      if(modalMode === "editReply"){
-        const rRef = doc(db, "posts", modalTarget.postId, "replies", modalTarget.replyId);
-        await updateDoc(rRef, {
-          text: newText,
-          editedAt: serverTimestamp()
-        });
+      } else if(modalMode === "editReply"){
+        await updateDoc(doc(db,"posts", modalTarget.postId, "replies", modalTarget.replyId), { text:newText, editedAt:serverTimestamp() });
         toast("Reply edited ✅");
       }
-
       closeModal();
     }catch(e){
       toast(e.message || "Edit failed.");
@@ -602,19 +709,108 @@
     }
   });
 
-  function renderPosts(){
-    const q = searchEl.value.trim().toLowerCase();
-    const filtered = !q ? latestPosts : latestPosts.filter(p=>{
-      const t = (p.title||"").toLowerCase();
-      const b = (p.body||"").toLowerCase();
-      const tg = (p.tag||"").toLowerCase();
-      return t.includes(q) || b.includes(q) || tg.includes(q);
-    });
+  // ---- Reactions helpers ----
+  const REACTS = ["🔥","✅","💀","❤️"];
 
-    listInfo.textContent = `${filtered.length} post(s)`;
+  function countReacts(docs){
+    const c = new Map(REACTS.map(x=>[x,0]));
+    let my = null;
+    docs.forEach(d=>{
+      const data = d.data();
+      const em = data.emoji;
+      if(c.has(em)) c.set(em, c.get(em)+1);
+      if(currentUser && d.id === currentUser.uid) my = em;
+    });
+    return { counts:c, mine:my };
+  }
+
+  function renderReactBar({container, countsMap, mineEmoji, onClick}){
+    container.innerHTML = "";
+    REACTS.forEach(em=>{
+      const cnt = countsMap.get(em) || 0;
+      const b = document.createElement("button");
+      b.className = `reactBtn ${mineEmoji===em ? "active":""}`;
+      b.innerHTML = `<span>${em}</span> <span class="reactCount">${cnt}</span>`;
+      b.onclick = ()=> onClick(em, mineEmoji);
+      container.appendChild(b);
+    });
+  }
+
+  async function toggleReaction({type, postId, replyId=null, emoji, currentMine}){
+    if(!currentUser){ toast("Login required."); return; }
+
+    // doc id = uid (one reaction per user per message)
+    let rRef;
+    if(type === "post"){
+      rRef = doc(db,"posts",postId,"reactions",currentUser.uid);
+    }else{
+      rRef = doc(db,"posts",postId,"replies",replyId,"reactions",currentUser.uid);
+    }
+
+    try{
+      if(currentMine === emoji){
+        await deleteDoc(rRef);
+      }else{
+        await setDoc(rRef, {
+          emoji,
+          type,
+          postId,
+          replyId: replyId || null,
+          uid: currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+      }
+    }catch(e){
+      toast(e.message || "Reaction failed.");
+    }
+  }
+
+  // ---- Posts rendering with filters ----
+  function getPostScoreForSort(p){
+    const last = lastReplyAtByPost.get(p.id) || (tsToDate(p.createdAt)?.getTime() || 0);
+    return last;
+  }
+
+  function renderPosts(){
+    const textQ = searchEl.value.trim().toLowerCase();
+    const tag = filterTagEl.value;
+    const status = filterStatusEl.value;
+    const sortBy = sortByEl.value;
+
+    let list = latestPosts.slice();
+
+    // filters
+    if(tag !== "ALL"){
+      list = list.filter(p => (p.tag || "General") === tag);
+    }
+    if(status === "SOLVED"){
+      list = list.filter(p => !!p.solved);
+    }
+    if(status === "UNANSWERED"){
+      list = list.filter(p => (replyCountByPost.get(p.id) || 0) === 0);
+    }
+    if(textQ){
+      list = list.filter(p=>{
+        const t = (p.title||"").toLowerCase();
+        const b = (p.body||"").toLowerCase();
+        const tg = (p.tag||"").toLowerCase();
+        return t.includes(textQ) || b.includes(textQ) || tg.includes(textQ);
+      });
+    }
+
+    // sort
+    if(sortBy === "NEW"){
+      // newest by createdAt (already from query), but we keep it stable
+      // do nothing
+    } else {
+      // active: last reply time desc
+      list.sort((a,b)=> getPostScoreForSort(b) - getPostScoreForSort(a));
+    }
+
+    listInfo.textContent = `${list.length} post(s)`;
     postsEl.innerHTML = "";
 
-    filtered.forEach(p=>{
+    list.forEach(p=>{
       const active = p.id === selectedPostId ? "active" : "";
       const el = document.createElement("div");
       el.className = `postItem ${active}`;
@@ -623,14 +819,19 @@
       const created = tsToDate(p.createdAt);
       const when = timeAgo(created);
 
+      const replies = replyCountByPost.get(p.id) || 0;
+      const hot = (sortBy === "ACTIVE" && replies > 0) ? `<span class="chip hot">⚡ active</span>` : "";
+
       const chips = [];
       chips.push(`<span class="chip">${escapeHtml(p.tag || "General")}</span>`);
       if(p.solved) chips.push(`<span class="chip solved">✅ Solved</span>`);
+      if(p.acceptedReplyId) chips.push(`<span class="chip">🏆 Answer accepted</span>`);
       if(p.editedAt) chips.push(`<span class="chip">✏️ Edited</span>`);
       if(p.deleted) chips.push(`<span class="chip">🗑️ Deleted</span>`);
+      if(hot) chips.push(hot);
 
       el.innerHTML = `
-        <div class="count">${p.replyCount || 0} replies</div>
+        <div class="count">${replies} replies</div>
         <div class="postTop">
           <div class="postMeta">
             <img class="avatar" data-avatar src="${dice(p.authorUid || "user")}">
@@ -662,11 +863,12 @@
       });
     });
 
-    if(filtered.length === 0){
-      postsEl.innerHTML = `<div class="small">No posts yet. Be the first to ask something.</div>`;
+    if(list.length === 0){
+      postsEl.innerHTML = `<div class="small">No matching posts. Try changing filters.</div>`;
     }
   }
 
+  // ---- Thread view ----
   async function openThread(postId){
     const p = latestPosts.find(x=>x.id===postId);
     if(!p) return;
@@ -681,18 +883,23 @@
     threadSubEl.textContent = `${p.tag || "General"} • ${created ? created.toLocaleString() : "just now"}`;
 
     copyLinkBtn.disabled = false;
-    replyTextEl.disabled = !!p.deleted;
-    replyBtn.disabled = !!p.deleted;
 
-    // Enable post tools only if mine
     const minePost = isMine(p.authorUid);
     editPostBtn.disabled = !minePost || !!p.deleted;
     deletePostBtn.disabled = !minePost || !!p.deleted;
     solveBtn.disabled = !minePost || !!p.deleted;
     solveBtn.textContent = p.solved ? "Unmark solved" : "Mark solved";
 
-    // Main post block
+    replyTextEl.disabled = !!p.deleted;
+    replyBtn.disabled = !!p.deleted;
+
+    // clear previous listeners
+    if(unsubThread) unsubThread();
+    if(unsubPostReacts) unsubPostReacts();
+
+    // Build main post node
     threadBodyEl.innerHTML = "";
+
     const mainWrap = document.createElement("div");
     mainWrap.className = "msg";
     mainWrap.innerHTML = `
@@ -705,29 +912,46 @@
             <span class="msgTime">${timeAgo(created)}</span>
             ${p.editedAt ? `<span class="editedTag">edited</span>` : ``}
             ${p.solved ? `<span class="editedTag">✅ solved</span>` : ``}
+            ${p.acceptedReplyId ? `<span class="editedTag">🏆 accepted</span>` : ``}
           </div>
           <div class="row" style="gap:8px"></div>
         </div>
         <div class="bubble ${p.deleted ? "deleted":""}">${escapeHtml(p.deleted ? "(This post was deleted.)" : (p.body || ""))}</div>
+        <div class="reactRow" id="postReactRow"></div>
       </div>
     `;
     threadBodyEl.appendChild(mainWrap);
 
+    // fill author
     const authorProfile = await getProfile(p.authorUid);
     document.getElementById("mainName").textContent = authorProfile?.displayName || "User";
     document.getElementById("mainUser").textContent = authorProfile?.username ? `@${authorProfile.username}` : "@no-username";
     document.getElementById("mainAvatar").src = (authorProfile?.pfp || authorProfile?.photoURL || dice(authorProfile?.username || authorProfile?.displayName || "user"));
 
-    // Replies live
-    if(unsubReplies) unsubReplies();
+    // Post reactions live
+    const postReactRow = document.getElementById("postReactRow");
+    unsubPostReacts = onSnapshot(collection(db,"posts",postId,"reactions"), (snap)=>{
+      const {counts, mine} = countReacts(snap.docs);
+      renderReactBar({
+        container: postReactRow,
+        countsMap: counts,
+        mineEmoji: mine,
+        onClick: (emoji, currentMine)=> toggleReaction({type:"post", postId, emoji, currentMine})
+      });
+    });
 
+    // Replies live + accepted answer view
     const repliesRef = collection(db, "posts", postId, "replies");
     const q = query(repliesRef, orderBy("createdAt","asc"));
 
-    unsubReplies = onSnapshot(q, async (snap) => {
+    unsubThread = onSnapshot(q, async (snap) => {
+      // rebuild thread, keep mainWrap top
       threadBodyEl.innerHTML = "";
       threadBodyEl.appendChild(mainWrap);
-      threadBodyEl.querySelectorAll("[data-empty]").forEach(e => e.remove());
+
+      // accepted answer pinned
+      const acceptedId = (selectedPostData && selectedPostData.acceptedReplyId) ? selectedPostData.acceptedReplyId : null;
+      let acceptedNode = null;
 
       if (snap.empty) {
         const empty = document.createElement("div");
@@ -748,9 +972,11 @@
           const mine = isMine(r.authorUid);
           const edited = !!r.editedAt;
           const deleted = !!r.deleted;
+          const isAccepted = acceptedId && r.id === acceptedId;
 
           const msg = document.createElement("div");
           msg.className = "msg";
+
           msg.innerHTML = `
             <img class="avatar" src="${pfp}">
             <div class="msgMain">
@@ -760,22 +986,23 @@
                   <span class="msgUser">${escapeHtml(uname)}</span>
                   <span class="msgTime">${timeAgo(rDate)}</span>
                   ${edited ? `<span class="editedTag">edited</span>` : ``}
+                  ${isAccepted ? `<span class="editedTag">🏆 accepted answer</span>` : ``}
                 </div>
                 <div class="row" style="gap:8px">
+                  ${minePost && !deleted ? `<button class="btn sm green" data-accept="${r.id}">${isAccepted ? "Unaccept" : "Accept"}</button>` : ``}
                   ${mine && !deleted ? `<button class="btn sm" data-edit-reply="${r.id}">Edit</button>` : ``}
                   ${mine && !deleted ? `<button class="btn sm danger" data-del-reply="${r.id}">Delete</button>` : ``}
                 </div>
               </div>
               <div class="bubble ${deleted ? "deleted":""}">${escapeHtml(deleted ? "(This message was deleted.)" : (r.text || ""))}</div>
+              <div class="reactRow" data-react-row="${r.id}"></div>
             </div>
           `;
-          threadBodyEl.appendChild(msg);
 
-          // wire buttons
+          // wire edit/delete/accept
           if(mine && !deleted){
             const eBtn = msg.querySelector(`[data-edit-reply="${r.id}"]`);
             const dBtn = msg.querySelector(`[data-del-reply="${r.id}"]`);
-
             if(eBtn){
               eBtn.onclick = () => openModal({
                 title: "Edit reply",
@@ -786,16 +1013,14 @@
                 target: { postId, replyId: r.id }
               });
             }
-
             if(dBtn){
-              dBtn.onclick = async () => {
+              dBtn.onclick = async()=>{
                 if(!confirm("Delete this reply?")) return;
                 try{
-                  const rRef = doc(db, "posts", postId, "replies", r.id);
-                  await updateDoc(rRef, {
-                    deleted: true,
-                    text: "(This message was deleted.)",
-                    editedAt: serverTimestamp()
+                  await updateDoc(doc(db,"posts",postId,"replies",r.id), {
+                    deleted:true,
+                    text:"(This message was deleted.)",
+                    editedAt:serverTimestamp()
                   });
                   toast("Reply deleted ✅");
                 }catch(e){
@@ -804,7 +1029,56 @@
               };
             }
           }
+
+          if(minePost && !deleted){
+            const aBtn = msg.querySelector(`[data-accept="${r.id}"]`);
+            if(aBtn){
+              aBtn.onclick = async()=>{
+                try{
+                  await updateDoc(doc(db,"posts",postId), {
+                    acceptedReplyId: isAccepted ? null : r.id,
+                    editedAt: serverTimestamp()
+                  });
+                  toast(isAccepted ? "Unaccepted" : "Accepted answer ✅");
+                }catch(e){
+                  toast(e.message || "Failed.");
+                }
+              };
+            }
+          }
+
+          // reactions on reply (live via per-reply snapshot)
+          const reactRow = msg.querySelector(`[data-react-row="${r.id}"]`);
+          onSnapshot(collection(db,"posts",postId,"replies",r.id,"reactions"), (rsnap)=>{
+            const {counts, mine} = countReacts(rsnap.docs);
+            renderReactBar({
+              container: reactRow,
+              countsMap: counts,
+              mineEmoji: mine,
+              onClick: (emoji, currentMine)=> toggleReaction({type:"reply", postId, replyId:r.id, emoji, currentMine})
+            });
+          });
+
+          if(isAccepted){
+            acceptedNode = msg;
+          } else {
+            threadBodyEl.appendChild(msg);
+          }
         }
+      }
+
+      // Pin accepted at top (below mainWrap)
+      if(acceptedNode){
+        const pin = document.createElement("div");
+        pin.className = "card";
+        pin.style.background = "rgba(25,195,125,.10)";
+        pin.style.borderColor = "rgba(25,195,125,.35)";
+        pin.style.boxShadow = "none";
+        pin.style.padding = "10px";
+        pin.style.borderRadius = "18px";
+        pin.innerHTML = `<div class="small" style="margin-bottom:8px">🏆 Accepted answer</div>`;
+        pin.appendChild(acceptedNode);
+        threadBodyEl.insertBefore(pin, threadBodyEl.children[1] || null);
       }
 
       threadBodyEl.scrollTo({ top: threadBodyEl.scrollHeight, behavior: "smooth" });
@@ -814,6 +1088,7 @@
     hintBar.textContent = `You are replying as ${myProfile?.displayName || "User"} (${me}). Shift+Enter = new line.`;
   }
 
+  // ---- Create post / reply ----
   async function createPost(){
     if(!currentUser) { toast("Login required."); return; }
     if(!myProfile) { toast("Profile loading…"); return; }
@@ -833,9 +1108,10 @@
         body,
         tag,
         createdAt: serverTimestamp(),
-        replyCount: 0,
         solved: false,
-        deleted: false
+        deleted: false,
+        acceptedReplyId: null,
+        editedAt: null
       });
       titleEl.value = "";
       bodyEl.value = "";
@@ -850,8 +1126,8 @@
 
   async function sendReply(){
     if(!currentUser) { toast("Login required."); return; }
-    if(!selectedPostId) { toast("Select a post first."); return; }
-    if(selectedPostData?.deleted){ toast("This post is deleted."); return; }
+    if(!selectedPostId || !selectedPostData) { toast("Select a post first."); return; }
+    if(selectedPostData.deleted){ toast("This post is deleted."); return; }
 
     const text = replyTextEl.value.trim();
     if(text.length < 1) return;
@@ -863,8 +1139,13 @@
         text,
         createdAt: serverTimestamp(),
         editedAt: null,
-        deleted: false
+        deleted: false,
+
+        // 🔥 added for filters/notifications/leaderboard
+        postId: selectedPostId,
+        postAuthorUid: selectedPostData.authorUid
       });
+
       replyTextEl.value = "";
       toast("Sent ✅");
     }catch(e){
@@ -874,7 +1155,7 @@
     }
   }
 
-  // Post tools
+  // ---- Post tools ----
   editPostBtn.addEventListener("click", ()=>{
     if(!selectedPostId || !selectedPostData) return;
     openModal({
@@ -889,14 +1170,12 @@
 
   deletePostBtn.addEventListener("click", async ()=>{
     if(!selectedPostId || !selectedPostData) return;
-    if(!confirm("Delete this post? (Replies will stay but post becomes deleted.)")) return;
-
+    if(!confirm("Delete this post?")) return;
     try{
-      const pRef = doc(db, "posts", selectedPostId);
-      await updateDoc(pRef, {
-        deleted: true,
-        body: "(This post was deleted.)",
-        editedAt: serverTimestamp()
+      await updateDoc(doc(db,"posts",selectedPostId), {
+        deleted:true,
+        body:"(This post was deleted.)",
+        editedAt:serverTimestamp()
       });
       toast("Post deleted ✅");
     }catch(e){
@@ -907,8 +1186,7 @@
   solveBtn.addEventListener("click", async ()=>{
     if(!selectedPostId || !selectedPostData) return;
     try{
-      const pRef = doc(db, "posts", selectedPostId);
-      await updateDoc(pRef, {
+      await updateDoc(doc(db,"posts",selectedPostId), {
         solved: !selectedPostData.solved,
         editedAt: serverTimestamp()
       });
@@ -918,16 +1196,224 @@
     }
   });
 
-  // Character counter
-  bodyEl.addEventListener("input", ()=>{
-    charCount.textContent = `${bodyEl.value.length} / 1200`;
-  });
+  // ---- Leaderboard ----
+  function openLeader(){
+    leaderBack.style.display = "flex";
+    buildLeaderboard();
+  }
+  function closeLeader(){ leaderBack.style.display = "none"; }
+  leaderBtn.onclick = openLeader;
+  leaderClose.onclick = closeLeader;
+  leaderBack.addEventListener("click",(e)=>{ if(e.target===leaderBack) closeLeader(); });
 
-  // Buttons
+  async function buildLeaderboard(){
+    leaderInfo.textContent = "Loading…";
+    leaderList.innerHTML = "";
+
+    try{
+      const since = new Date(Date.now() - 7*24*60*60*1000);
+
+      // Pull recent replies (limited for cost)
+      const q = query(
+        collectionGroup(db,"replies"),
+        orderBy("createdAt","desc"),
+        limit(500)
+      );
+
+      const snap = await getDocs(q);
+
+      const counts = new Map(); // uid -> count
+      for(const d of snap.docs){
+        const r = d.data();
+        const dt = tsToDate(r.createdAt);
+        if(!dt || dt < since) continue;
+        const uid = r.authorUid;
+        if(!uid) continue;
+        counts.set(uid, (counts.get(uid)||0) + 1);
+      }
+
+      const top = [...counts.entries()].sort((a,b)=> b[1]-a[1]).slice(0,10);
+      if(top.length === 0){
+        leaderInfo.textContent = "No replies in the last 7 days yet.";
+        return;
+      }
+      leaderInfo.textContent = `Top helpers: ${top.length}`;
+
+      for(const [uid, c] of top){
+        const prof = await getProfile(uid);
+        const disp = prof?.displayName || "User";
+        const uname = prof?.username ? `@${prof.username}` : "@no-username";
+        const pfp = prof?.pfp || prof?.photoURL || dice(prof?.username || disp);
+
+        const item = document.createElement("div");
+        item.className = "leaderItem";
+        item.innerHTML = `
+          <div class="row" style="gap:10px;flex-wrap:nowrap">
+            <img class="avatar" src="${pfp}">
+            <div style="min-width:0">
+              <div style="font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(disp)}</div>
+              <div class="small">${escapeHtml(uname)}</div>
+            </div>
+          </div>
+          <div class="chip hot">💬 ${c} replies</div>
+        `;
+        leaderList.appendChild(item);
+      }
+    }catch(e){
+      leaderInfo.textContent = "Failed to load leaderboard.";
+    }
+  }
+
+  // ---- Notifications ----
+  const NOTIF_KEY = "sz_notify_lastSeen";
+  function getLastSeenMillis(){
+    const v = localStorage.getItem(NOTIF_KEY);
+    const n = v ? Number(v) : 0;
+    return Number.isFinite(n) ? n : 0;
+  }
+  function setLastSeenNow(){
+    localStorage.setItem(NOTIF_KEY, String(Date.now()));
+  }
+
+  function openNotif(){
+    notifBack.style.display = "flex";
+    renderNotifList();
+  }
+  function closeNotif(){ notifBack.style.display = "none"; }
+  bellBtn.onclick = openNotif;
+  notifClose.onclick = closeNotif;
+  notifBack.addEventListener("click",(e)=>{ if(e.target===notifBack) closeNotif(); });
+
+  notifMarkRead.onclick = ()=>{
+    unreadNotifs.clear();
+    setLastSeenNow();
+    updateBellBadge();
+    renderNotifList();
+    toast("Marked read ✅");
+  };
+
+  function updateBellBadge(){
+    const n = unreadNotifs.size;
+    if(n > 0){
+      bellBadge.style.display = "flex";
+      bellBadge.textContent = String(n > 99 ? "99+" : n);
+    }else{
+      bellBadge.style.display = "none";
+    }
+  }
+
+  async function renderNotifList(){
+    notifList.innerHTML = "";
+    if(unreadNotifs.size === 0){
+      notifList.innerHTML = `<div class="small">No new replies on your posts 🎉</div>`;
+      return;
+    }
+
+    // show latest 12
+    const arr = [...unreadNotifs.values()]
+      .sort((a,b)=> (b._ms||0) - (a._ms||0))
+      .slice(0,12);
+
+    for(const r of arr){
+      const prof = await getProfile(r.authorUid);
+      const disp = prof?.displayName || "User";
+      const uname = prof?.username ? `@${prof.username}` : "@no-username";
+      const pfp = prof?.pfp || prof?.photoURL || dice(prof?.username || disp);
+
+      const item = document.createElement("div");
+      item.className = "leaderItem";
+      item.innerHTML = `
+        <div class="row" style="gap:10px;flex-wrap:nowrap">
+          <img class="avatar" src="${pfp}">
+          <div style="min-width:0">
+            <div style="font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(disp)} <span class="small">${escapeHtml(uname)}</span></div>
+            <div class="small" style="margin-top:4px">${escapeHtml(r.text || "")}</div>
+          </div>
+        </div>
+        <button class="btn sm" data-open="${r.postId}">Open</button>
+      `;
+      item.querySelector(`[data-open="${r.postId}"]`).onclick = ()=>{
+        closeNotif();
+        openThread(r.postId);
+      };
+      notifList.appendChild(item);
+    }
+  }
+
+  function startNotifListener(){
+    if(unsubNotif) unsubNotif();
+    if(!currentUser) return;
+
+    const lastSeen = getLastSeenMillis();
+
+    // Listen to replies that target MY posts (requires reply docs to include postAuthorUid)
+    const q = query(
+      collectionGroup(db,"replies"),
+      where("postAuthorUid","==", currentUser.uid),
+      orderBy("createdAt","desc"),
+      limit(120)
+    );
+
+    unsubNotif = onSnapshot(q, (snap)=>{
+      unreadNotifs.clear();
+
+      snap.docs.forEach(d=>{
+        const r = d.data();
+        const dt = tsToDate(r.createdAt);
+        const ms = dt ? dt.getTime() : 0;
+        if(ms <= lastSeen) return;
+        // don't notify on my own replies
+        if(r.authorUid && currentUser && r.authorUid === currentUser.uid) return;
+
+        unreadNotifs.set(d.ref.path, {...r, _ms: ms});
+      });
+
+      updateBellBadge();
+      if(notifBack.style.display === "flex"){
+        renderNotifList();
+      }
+    });
+  }
+
+  // ---- Reply count + active sorting tracker ----
+  // We track recent replies across app and map them to postId (works for new replies with postId set).
+  function startReplyTracker(){
+    const q = query(
+      collectionGroup(db,"replies"),
+      orderBy("createdAt","desc"),
+      limit(600)
+    );
+
+    onSnapshot(q, (snap)=>{
+      replyCountByPost.clear();
+      lastReplyAtByPost.clear();
+
+      snap.docs.forEach(d=>{
+        const r = d.data();
+        const pid = r.postId;
+        if(!pid) return;
+        replyCountByPost.set(pid, (replyCountByPost.get(pid)||0) + 1);
+        const dt = tsToDate(r.createdAt);
+        const ms = dt ? dt.getTime() : 0;
+        const prev = lastReplyAtByPost.get(pid) || 0;
+        if(ms > prev) lastReplyAtByPost.set(pid, ms);
+      });
+
+      renderPosts();
+    });
+  }
+
+  // ---- Events ----
+  bodyEl.addEventListener("input", ()=>{ charCount.textContent = `${bodyEl.value.length} / 1200`; });
+
   postBtn.addEventListener("click", createPost);
   replyBtn.addEventListener("click", sendReply);
   refreshBtn.addEventListener("click", ()=> renderPosts());
-  searchEl.addEventListener("input", ()=> renderPosts());
+
+  searchEl.addEventListener("input", renderPosts);
+  filterTagEl.addEventListener("change", renderPosts);
+  filterStatusEl.addEventListener("change", renderPosts);
+  sortByEl.addEventListener("change", renderPosts);
 
   replyTextEl.addEventListener("keydown", (e)=>{
     if(e.key === "Enter" && !e.shiftKey){
@@ -947,7 +1433,7 @@
     }
   });
 
-  // Auth + my profile
+  // ---- Auth + feed ----
   onAuthStateChanged(auth, async(user)=>{
     if(!user){
       window.location.href = "/index.html";
@@ -959,24 +1445,27 @@
     myProfile = snap.exists() ? snap.data() : null;
 
     hintBar.textContent = "Ready ✅";
+
+    startNotifListener();
+    startReplyTracker();
   });
 
-  // Live posts feed
-  const postsQuery = query(collection(db,"posts"), orderBy("createdAt","desc"), limit(80));
+  // Posts feed (real-time)
+  const postsQuery = query(collection(db,"posts"), orderBy("createdAt","desc"), limit(120));
   onSnapshot(postsQuery, (snap)=>{
     latestPosts = snap.docs.map(d=>({ id:d.id, ...d.data() }));
     renderPosts();
 
-    // keep selectedPostData updated live (for solved/delete button state)
+    // keep selectedPostData fresh
     if(selectedPostId){
       const fresh = latestPosts.find(p=>p.id===selectedPostId);
       if(fresh){
         selectedPostData = fresh;
+        const mine = isMine(fresh.authorUid);
+        editPostBtn.disabled = !mine || !!fresh.deleted;
+        deletePostBtn.disabled = !mine || !!fresh.deleted;
+        solveBtn.disabled = !mine || !!fresh.deleted;
         solveBtn.textContent = fresh.solved ? "Unmark solved" : "Mark solved";
-        const minePost = isMine(fresh.authorUid);
-        editPostBtn.disabled = !minePost || !!fresh.deleted;
-        deletePostBtn.disabled = !minePost || !!fresh.deleted;
-        solveBtn.disabled = !minePost || !!fresh.deleted;
         replyTextEl.disabled = !!fresh.deleted;
         replyBtn.disabled = !!fresh.deleted;
       }
@@ -991,6 +1480,13 @@
     }
   });
 
+  // When opening notifications, mark as read optionally
+  bellBtn.addEventListener("dblclick", ()=>{
+    setLastSeenNow();
+    unreadNotifs.clear();
+    updateBellBadge();
+    toast("All read ✅");
+  });
 </script>
 </body>
 </html>

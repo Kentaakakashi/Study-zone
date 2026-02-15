@@ -8,7 +8,7 @@
 :root{
   --bg:#0b1020; --card:#0f1730; --card2:#101a3a; --text:#e8ecff; --muted:#a8b0d8;
   --brand:#7c5cff; --brand2:#19c37d; --danger:#ff4d6d;
-  --ring:rgba(124,92,255,.35); --shadow: 0 10px 35px rgba(0,0,0,.35); --radius:18px;
+  --ring:rgba(124,92,255,.35); --shadow: 0 18px 45px rgba(0,0,0,.40); --radius:22px;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -21,7 +21,7 @@ body{
               var(--bg);
   color:var(--text);
 }
-a{color:inherit; text-decoration:none}
+a{color:inherit;text-decoration:none}
 .container{max-width:1050px; margin:0 auto; padding:24px}
 .nav{
   display:flex; align-items:center; justify-content:space-between; gap:14px;
@@ -30,54 +30,73 @@ a{color:inherit; text-decoration:none}
   border-radius: var(--radius); box-shadow: var(--shadow);
   position:sticky; top:12px; z-index:50;
 }
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
-.badge{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.12); padding:4px 8px; border-radius:999px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:900}
+.badge{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.12); padding:4px 10px; border-radius:999px}
 .navlinks{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
 .pill{
   padding:9px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.10);
   background: rgba(16,26,58,.55); color:var(--text); font-size:13px;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
-.pill:hover{border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring)}
+.pill:hover{border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring); transform: translateY(-1px)}
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:11px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
-  background: rgba(16,26,58,.75); color:var(--text); cursor:pointer; font-weight:650;
+  padding:11px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.12);
+  background: rgba(16,26,58,.75); color:var(--text); cursor:pointer; font-weight:750;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.btn:hover{border-color: rgba(124,92,255,.6); box-shadow:0 0 0 4px var(--ring)}
+.btn:hover{border-color: rgba(124,92,255,.6); box-shadow:0 0 0 4px var(--ring); transform: translateY(-1px)}
 .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.55)); border-color: transparent}
 .btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.45)); border-color: transparent}
 .btn.danger{background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,77,109,.45)); border-color: transparent}
 .grid{display:grid; gap:16px}
 .grid.cols2{grid-template-columns: repeat(2, minmax(0,1fr))}
-.grid.cols3{grid-template-columns: repeat(3, minmax(0,1fr))}
-@media (max-width:900px){.grid.cols3{grid-template-columns:1fr 1fr}}
-@media (max-width:700px){.grid.cols2,.grid.cols3{grid-template-columns:1fr} .nav{position:static}}
+@media (max-width:850px){.grid.cols2{grid-template-columns:1fr} .nav{position:static}}
 .card{
   border:1px solid rgba(255,255,255,.10); background: rgba(15,23,48,.65);
   backdrop-filter: blur(10px); border-radius: var(--radius);
   box-shadow: var(--shadow); padding:16px;
 }
-.card h2{margin:0 0 6px 0}
+.h2{margin:0 0 8px 0}
 .muted{color:var(--muted)}
-.kpi{display:flex; gap:12px; align-items:baseline}
-.kpi .big{font-size:36px; font-weight:900}
 .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-input, textarea, select{
-  width:100%; padding:12px 12px; border-radius:12px;
+input{
+  width:100%; padding:12px 12px; border-radius:14px;
   border:1px solid rgba(255,255,255,.12); background: rgba(16,26,58,.65);
   color:var(--text); outline:none;
 }
-input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 4px var(--ring)}
-.small{font-size:12px}
+input:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 5px var(--ring)}
 .hr{height:1px; background: rgba(255,255,255,.10); margin:14px 0}
+.small{font-size:12px; color:var(--muted); line-height:1.45}
+.avatarWrap{
+  display:flex; gap:14px; align-items:center;
+}
+.avatar{
+  width:84px; height:84px; border-radius:50%;
+  object-fit:cover; border:2px solid rgba(124,92,255,.75);
+  box-shadow: 0 0 0 8px rgba(124,92,255,.12);
+  transition: transform .2s ease;
+}
+.avatar:hover{transform: scale(1.03) rotate(-1deg)}
 .toast{
   position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
   background: rgba(15,23,48,.88); border:1px solid rgba(255,255,255,.12);
   padding:10px 12px; border-radius:999px; box-shadow: var(--shadow);
   color:var(--text); display:none; z-index:1000;
 }
+.shimmer{
+  position:relative; overflow:hidden;
+}
+.shimmer::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  transform: translateX(-100%);
+  animation: sh 1.2s infinite;
+}
+@keyframes sh{to{transform: translateX(100%)}}
 </style>
 </head>
+
 <body>
 <div class="container">
   <div class="nav">
@@ -92,77 +111,77 @@ input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); bo
       <a class="pill" href="/settings/index.html">Settings</a>
     </div>
   </div>
+
   <div style="height:16px"></div>
-  
-<div class="grid cols2">
-  <div class="card">
-    <h2>⚙️ Settings</h2>
-    <p class="muted">Profile + quick controls.</p>
-    <div class="hr"></div>
 
-    <div class="row" style="align-items:flex-start">
-      <img id="avatar" alt="avatar" style="width:64px;height:64px;border-radius:16px;border:1px solid rgba(255,255,255,.12);object-fit:cover;background:rgba(16,26,58,.55)" />
-      <div style="flex:1">
-        <div><b id="name">Loading…</b></div>
-        <div class="muted small" id="emailTxt"></div>
+  <div class="grid cols2">
+    <div class="card" id="profileCard">
+      <h2 class="h2">Profile</h2>
+      <div class="muted" id="who"></div>
+      <div class="hr"></div>
+
+      <div class="avatarWrap">
+        <img id="avatar" class="avatar" src="">
+        <div style="flex:1">
+          <div class="small">Profile picture (stored in Firestore as compressed base64)</div>
+          <input id="pfpFile" type="file" accept="image/*">
+          <div class="small">Tip: pick a normal photo, not 4K wallpaper 💀</div>
+        </div>
       </div>
+
+      <div style="height:12px"></div>
+
+      <label class="small">Unique username (one time set)</label>
+      <input id="username" placeholder="e.g. kenta_kakashi" autocomplete="off">
+
+      <label class="small">Display name (editable)</label>
+      <input id="displayName" placeholder="e.g. Kenta" autocomplete="off">
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn primary" id="saveBtn">Save changes</button>
+        <button class="btn danger" id="logoutBtn">Logout</button>
+      </div>
+
+      <div class="small" id="hint" style="margin-top:10px;"></div>
     </div>
 
-    <div class="hr"></div>
-
-    <div class="grid" style="gap:10px">
-      <input id="displayName" placeholder="Update display name"/>
-      <button class="btn primary" id="saveName">Save</button>
-      <button class="btn danger" id="logoutBtn">Logout</button>
-    </div>
-
-    <div class="small muted" style="margin-top:10px">
-      Future ideas: theme switcher, notification settings, Discord link, privacy toggles.
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Feature map</h2>
-    <div class="hr"></div>
-    <div class="grid" style="gap:10px">
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <b>Focus</b><div class="muted small">Pomodoro, Stopwatch, Focus music (later)</div>
+    <div class="card">
+      <h2 class="h2">First time setup</h2>
+      <p class="muted">If you don’t have a username yet, you must set it here before using the community replies. This makes profiles show like Discord/WhatsApp (pfp + name + @username).</p>
+      <div class="hr"></div>
+      <div class="small">
+        <b>Rules:</b><br>
+        • username must be unique<br>
+        • only letters/numbers/underscore<br>
+        • 3–20 chars<br>
+        • username is locked once set (so no chaos)
       </div>
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <b>Planner</b><div class="muted small">Tasks, routine, exam countdown (later)</div>
-      </div>
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <b>Community</b><div class="muted small">Posts now; replies + votes later</div>
-      </div>
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <b>AI</b><div class="muted small">Add later with daily limits</div>
+      <div class="hr"></div>
+      <div class="small shimmer" style="padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(16,26,58,.55)">
+        After you save, you’ll be redirected automatically if everything’s set.
       </div>
     </div>
   </div>
 </div>
 
-</div>
 <div id="toast" class="toast"></div>
-<script type="module">
 
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import {
-  getAuth, onAuthStateChanged, signOut,
-  GoogleAuthProvider, signInWithPopup,
-  signInWithEmailAndPassword, createUserWithEmailAndPassword
+  getAuth, onAuthStateChanged, signOut
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 import {
-  getFirestore, doc, setDoc, getDoc, increment,
-  collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
+  getFirestore, doc, getDoc, setDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  "apiKey": "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
-  "authDomain": "study-zone-438c4.firebaseapp.com",
-  "projectId": "study-zone-438c4",
-  "storageBucket": "study-zone-438c4.firebasestorage.app",
-  "messagingSenderId": "320895535749",
-  "appId": "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+  apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+  authDomain: "study-zone-438c4.firebaseapp.com",
+  projectId: "study-zone-438c4",
+  storageBucket: "study-zone-438c4.firebasestorage.app",
+  messagingSenderId: "320895535749",
+  appId: "1:320895535749:web:cab35a214ef7c22ae2f7ec"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -171,62 +190,152 @@ const db = getFirestore(app);
 
 const toastEl = document.getElementById("toast");
 function toast(msg){
-  if(!toastEl) return;
   toastEl.textContent = msg;
   toastEl.style.display="block";
-  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2200);
+  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2400);
 }
 
-function requireAuth(redirectTo="/index.html"){
-  return new Promise((resolve)=>{
-    onAuthStateChanged(auth, (user)=>{
-      if(!user){
-        window.location.href = redirectTo;
-        return;
-      }
-      resolve(user);
-    });
-  });
-}
+const elWho = document.getElementById("who");
+const elAvatar = document.getElementById("avatar");
+const elFile = document.getElementById("pfpFile");
+const elUsername = document.getElementById("username");
+const elDisplay = document.getElementById("displayName");
+const elHint = document.getElementById("hint");
 
-function wireLogout(btnId="logoutBtn"){
-  const b = document.getElementById(btnId);
-  if(!b) return;
-  b.addEventListener("click", async()=>{
-    await signOut(auth);
-    window.location.href="/index.html";
-  });
-}
-
-const user = await requireAuth("/index.html");
-wireLogout("logoutBtn");
-
-document.getElementById("name").textContent = user.displayName || "User";
-document.getElementById("emailTxt").textContent = user.email || "";
-document.getElementById("avatar").src = user.photoURL || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='100%25' height='100%25' fill='%23101a3a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23e8ecff' font-size='28'%3E🙂%3C/text%3E%3C/svg%3E";
-
-const profRef = doc(db, "profiles", user.uid);
-const profSnap = await getDoc(profRef);
-if(profSnap.exists()){
-  const p = profSnap.data();
-  if(p.displayName) document.getElementById("displayName").value = p.displayName;
-} else {
-  await setDoc(profRef, {
-    uid:user.uid,
-    email:user.email,
-    displayName:user.displayName || "User",
-    photoURL:user.photoURL || "",
-    createdAt: serverTimestamp()
-  });
-}
-
-document.getElementById("saveName").addEventListener("click", async()=>{
-  const name = document.getElementById("displayName").value.trim();
-  if(!name) return toast("Enter a name");
-  await setDoc(profRef, { displayName:name, updatedAt: serverTimestamp() }, { merge:true });
-  toast("Saved ✅ (refresh to see everywhere)");
+document.getElementById("logoutBtn").addEventListener("click", async()=>{
+  await signOut(auth);
+  window.location.href = "/index.html";
 });
 
+function dice(username){
+  const seed = encodeURIComponent(username || "user");
+  return `https://api.dicebear.com/7.x/initials/svg?seed=${seed}`;
+}
+
+function compressImage(file){
+  return new Promise((resolve)=>{
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = ()=>{
+      const size = 256;
+      const canvas = document.createElement("canvas");
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, size, size);
+      resolve(canvas.toDataURL("image/jpeg", 0.7));
+    };
+  });
+}
+
+let currentUser = null;
+let currentProfile = null;
+
+onAuthStateChanged(auth, async(user)=>{
+  if(!user){
+    window.location.href = "/index.html";
+    return;
+  }
+  currentUser = user;
+
+  elWho.textContent = user.email ? `Signed in as ${user.email}` : "Signed in";
+  const snap = await getDoc(doc(db, "profiles", user.uid));
+  currentProfile = snap.exists() ? snap.data() : {};
+
+  // Pre-fill
+  elDisplay.value = currentProfile.displayName || user.displayName || "";
+  elUsername.value = currentProfile.username || "";
+  elUsername.disabled = !!currentProfile.username; // lock if already set
+
+  // Avatar priority: pfp(base64) > photoURL (google) > dicebear
+  const avatarSrc = currentProfile.pfp || currentProfile.photoURL || user.photoURL || dice(currentProfile.username || elDisplay.value || "user");
+  elAvatar.src = avatarSrc;
+
+  if(!currentProfile.username){
+    elHint.innerHTML = "👀 <b>You must set a unique username</b> (one time) to unlock full community features.";
+  } else {
+    elHint.innerHTML = `✅ Username locked as <b>@${currentProfile.username}</b>`;
+  }
+});
+
+// Live preview on file select
+elFile.addEventListener("change", async()=>{
+  if(elFile.files.length > 0){
+    const compressed = await compressImage(elFile.files[0]);
+    elAvatar.src = compressed;
+  }
+});
+
+// Username rules
+function validUsername(u){
+  return /^[a-z0-9_]{3,20}$/.test(u);
+}
+
+document.getElementById("saveBtn").addEventListener("click", async()=>{
+  try{
+    if(!currentUser) return;
+
+    const desiredUsername = elUsername.value.trim().toLowerCase();
+    const displayName = elDisplay.value.trim();
+
+    if(!displayName){
+      toast("Display name required.");
+      return;
+    }
+
+    // If username not set yet, enforce rules + uniqueness
+    if(!currentProfile?.username){
+      if(!desiredUsername){
+        toast("Set a username (one time).");
+        return;
+      }
+      if(!validUsername(desiredUsername)){
+        toast("Username must be 3–20 chars: a-z, 0-9, underscore.");
+        return;
+      }
+
+      // Check uniqueness: usernames/{username}
+      const uref = doc(db, "usernames", desiredUsername);
+      const usnap = await getDoc(uref);
+      if(usnap.exists()){
+        toast("Username taken. Try another.");
+        return;
+      }
+
+      // Reserve username + save profile
+      const pfpData = (elFile.files.length > 0) ? await compressImage(elFile.files[0]) : (currentProfile?.pfp || null);
+
+      await setDoc(doc(db, "profiles", currentUser.uid), {
+        uid: currentUser.uid,
+        email: currentUser.email || "",
+        displayName,
+        username: desiredUsername,
+        pfp: pfpData,
+        photoURL: currentUser.photoURL || currentProfile?.photoURL || "",
+        updatedAt: serverTimestamp(),
+        createdAt: currentProfile?.createdAt || serverTimestamp()
+      }, { merge:true });
+
+      await setDoc(uref, { uid: currentUser.uid, createdAt: serverTimestamp() }, { merge:false });
+
+      toast("Profile created ✅");
+      setTimeout(()=> window.location.href = "/home/index.html", 700);
+      return;
+    }
+
+    // If username already set: only update display name + pfp
+    const pfpData = (elFile.files.length > 0) ? await compressImage(elFile.files[0]) : (currentProfile?.pfp || null);
+
+    await setDoc(doc(db, "profiles", currentUser.uid), {
+      displayName,
+      pfp: pfpData,
+      updatedAt: serverTimestamp()
+    }, { merge:true });
+
+    toast("Saved ✅");
+  }catch(e){
+    toast(e.message || "Failed to save.");
+  }
+});
 </script>
 </body>
 </html>

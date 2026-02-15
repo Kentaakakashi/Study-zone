@@ -3,286 +3,506 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Study Zone • Login</title>
+<title>Study Zone • Home</title>
 <style>
-:root{
-  --bg:#0b1020; --card:#0f1730; --card2:#101a3a; --text:#e8ecff; --muted:#a8b0d8;
-  --brand:#7c5cff; --brand2:#19c37d; --danger:#ff4d6d;
-  --ring:rgba(124,92,255,.35); --shadow: 0 18px 45px rgba(0,0,0,.40); --radius:22px;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
-  background: radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.28), transparent 60%),
-              radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
-              radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.12), transparent 55%),
-              var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-}
-.container{max-width:1080px; margin:0 auto; padding:28px}
-.hero{
-  display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; align-items:stretch;
-}
-@media (max-width:900px){.hero{grid-template-columns:1fr}}
-.card{
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(15,23,48,.65);
-  backdrop-filter: blur(12px);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding:18px;
-  position:relative;
-  overflow:hidden;
-}
-.card::before{
-  content:"";
-  position:absolute; inset:-120px -120px auto auto;
-  width:280px; height:280px;
-  background: radial-gradient(circle, rgba(124,92,255,.45), transparent 65%);
-  filter: blur(10px);
-  transform: rotate(20deg);
-  pointer-events:none;
-}
-.brandbar{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px;
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(15,23,48,.55);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.brand{
-  display:flex; align-items:center; gap:10px;
-  font-weight:900; letter-spacing:.3px;
-}
-.badge{
-  font-size:12px; color:var(--muted);
-  border:1px solid rgba(255,255,255,.12);
-  padding:4px 10px; border-radius:999px;
-}
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:12px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(16,26,58,.75);
-  color:var(--text);
-  cursor:pointer;
-  font-weight:750;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.btn:hover{border-color: rgba(124,92,255,.60); box-shadow:0 0 0 5px var(--ring); transform: translateY(-1px)}
-.btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.55)); border-color: transparent}
-.btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.45)); border-color: transparent}
-.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-.grid{display:grid; gap:12px}
-input{
-  width:100%;
-  padding:12px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(16,26,58,.65);
-  color:var(--text);
-  outline:none;
-}
-input:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 5px var(--ring)}
-.small{font-size:12px; color:var(--muted); line-height:1.45}
-.h1{
-  margin:0;
-  font-size:40px;
-  letter-spacing:-.6px;
-}
-.muted{color:var(--muted)}
-.kpi{
-  display:grid; gap:10px;
-}
-.k{
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(16,26,58,.55);
-  border-radius:18px;
-  padding:14px;
-  transition: transform .18s ease, border-color .18s ease;
-}
-.k:hover{transform: translateY(-2px); border-color: rgba(124,92,255,.45)}
-.toast{
-  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
-  background: rgba(15,23,48,.88); border:1px solid rgba(255,255,255,.12);
-  padding:10px 12px; border-radius:999px; box-shadow: var(--shadow);
-  color:var(--text); display:none; z-index:1000;
-}
-.loaderDot{
-  display:inline-block; width:8px; height:8px; border-radius:50%;
-  background: rgba(255,255,255,.8);
-  box-shadow: 0 0 0 0 rgba(124,92,255,.55);
-  animation: pulse 1.2s infinite;
-  margin-left:8px;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(124,92,255,.55)}
-  70%{box-shadow:0 0 0 12px rgba(124,92,255,0)}
-  100%{box-shadow:0 0 0 0 rgba(124,92,255,0)}
-}
+  :root{
+    --bg:#0b1020;
+    --card:rgba(15,23,48,.68);
+    --card2:rgba(16,26,58,.58);
+    --stroke:rgba(255,255,255,.10);
+    --text:#e8ecff;
+    --muted:#a8b0d8;
+    --brand:#7c5cff;
+    --brand2:#19c37d;
+    --danger:#ff4d6d;
+    --ring:rgba(124,92,255,.33);
+    --shadow: 0 20px 55px rgba(0,0,0,.42);
+    --r:22px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+    background:
+      radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
+      radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
+      radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.10), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:18px}
+
+  /* Nav */
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 16px;
+    border:1px solid var(--stroke);
+    background:rgba(15,23,48,.62);
+    backdrop-filter: blur(12px);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    position:sticky;top:12px;z-index:50;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
+  .badge{
+    font-size:12px;color:var(--muted);
+    border:1px solid rgba(255,255,255,.12);
+    padding:4px 10px;border-radius:999px
+  }
+  .navlinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .pill{
+    padding:9px 11px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(16,26,58,.55);
+    font-size:13px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .pill:hover{border-color: rgba(124,92,255,.55); box-shadow: 0 0 0 4px var(--ring); transform: translateY(-1px)}
+
+  /* Layout */
+  .hero{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap:14px;
+    align-items:stretch;
+  }
+  @media (max-width: 980px){
+    .hero{grid-template-columns:1fr}
+  }
+
+  .card{
+    border:1px solid var(--stroke);
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .cardHeader{
+    padding:14px 14px 10px 14px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  }
+  .title{ margin:0; font-size:16px; letter-spacing:.2px; font-weight:900;}
+  .sub{color:var(--muted);font-size:12px;line-height:1.4;margin-top:4px}
+  .content{padding:14px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .small{font-size:12px;color:var(--muted);line-height:1.45}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 12px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(16,26,58,.75);
+    color:var(--text);cursor:pointer;font-weight:900;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
+    user-select:none;
+  }
+  .btn:hover{border-color: rgba(124,92,255,.60); box-shadow:0 0 0 4px var(--ring); transform: translateY(-1px)}
+  .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.50)); border-color: transparent}
+  .btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.40)); border-color: transparent}
+  .btn.ghost{background: transparent}
+  .btn.sm{padding:8px 10px;border-radius:12px;font-weight:900;font-size:12px}
+  .btn:disabled{opacity:.6;cursor:not-allowed;filter:saturate(.3)}
+
+  /* Feature grid */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:12px;
+  }
+  @media (max-width: 540px){
+    .grid{grid-template-columns:1fr}
+  }
+
+  .tile{
+    position:relative;
+    border:1px solid rgba(255,255,255,.10);
+    background: rgba(16,26,58,.55);
+    border-radius:18px;
+    padding:14px;
+    cursor:pointer;
+    overflow:hidden;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    min-height: 106px;
+  }
+  .tile:hover{
+    transform: translateY(-2px);
+    border-color: rgba(124,92,255,.55);
+    box-shadow: 0 0 0 4px var(--ring);
+  }
+  .tile:active{transform: translateY(0)}
+  .tileTop{
+    display:flex;align-items:center;justify-content:space-between;gap:10px
+  }
+  .tileIcon{
+    width:40px;height:40px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    background: rgba(124,92,255,.16);
+    border:1px solid rgba(124,92,255,.25);
+    font-size:18px;
+  }
+  .tileTitle{font-weight:1000;letter-spacing:.2px}
+  .tileDesc{margin-top:8px;color:rgba(232,236,255,.88);font-size:12px;line-height:1.4}
+  .tileHint{margin-top:10px;color:var(--muted);font-size:11px}
+  .shine{
+    position:absolute; inset:-60px -60px auto auto;
+    width:160px; height:160px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 62%);
+    transform: rotate(25deg);
+    pointer-events:none;
+  }
+
+  /* Placeholder that holds the grid position when tile is docked */
+  .placeholder{
+    border:1px dashed rgba(255,255,255,.18);
+    background: rgba(0,0,0,.08);
+    border-radius:18px;
+    min-height: 106px;
+  }
+
+  /* Dock area */
+  .dock{
+    margin-top:14px;
+    border:1px solid rgba(255,255,255,.10);
+    background: rgba(16,26,58,.38);
+    border-radius: var(--r);
+    overflow:hidden;
+    box-shadow: var(--shadow);
+  }
+  .dockHead{
+    padding:12px 14px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .dockTitle{
+    display:flex;align-items:center;gap:10px;
+    font-weight:1000;
+  }
+  .dockBody{
+    height: 520px;
+    background: rgba(0,0,0,.12);
+  }
+  @media (max-width: 980px){
+    .dockBody{height: 520px}
+  }
+  .dockEmpty{
+    height:100%;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:10px;
+    color:var(--muted);
+    text-align:center;
+    padding:26px;
+  }
+  iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+  }
+
+  /* Floating clone animation */
+  .ghostTile{
+    position:fixed;
+    z-index:9999;
+    border-radius:18px;
+    overflow:hidden;
+    pointer-events:none;
+    box-shadow: 0 30px 70px rgba(0,0,0,.55);
+    transform: translate3d(0,0,0);
+    will-change: transform, width, height, left, top;
+  }
+  .ghostInner{
+    border:1px solid rgba(255,255,255,.10);
+    background: rgba(16,26,58,.72);
+    backdrop-filter: blur(12px);
+    border-radius:18px;
+    padding:14px;
+  }
+
+  /* Tiny animations */
+  @keyframes floaty {
+    0%,100%{transform: translateY(0)}
+    50%{transform: translateY(-2px)}
+  }
+  .floaty{animation: floaty 3.2s ease-in-out infinite}
+
 </style>
 </head>
 
 <body>
 <div class="container">
-  <div class="brandbar">
-    <div class="brand">📚 Study Zone <span class="badge">beta</span></div>
-    <div class="small">Login only — features unlock after you’re in.</div>
-  </div>
 
-  <div style="height:16px"></div>
+  <div class="nav">
+    <div class="brand">📚 Study Zone <span class="badge">beta</span></div>
+    <div class="navlinks">
+      <a class="pill" href="/home/index.html">Home</a>
+      <a class="pill" href="/focus/pomodoro.html">Pomodoro</a>
+      <a class="pill" href="/focus/stopwatch.html">Stopwatch</a>
+      <a class="pill" href="/planner/index.html">Planner</a>
+      <a class="pill" href="/stats/index.html">Stats</a>
+      <a class="pill" href="/community/index.html">Community</a>
+      <a class="pill" href="/settings/index.html">Settings</a>
+    </div>
+  </div>
 
   <div class="hero">
+
+    <!-- LEFT: Feature launcher -->
     <div class="card">
-      <h1 class="h1">Lock in. Track it. Win.</h1>
-      <p class="muted">Login to access timers, planner, stats, and the community.</p>
+      <div class="cardHeader">
+        <div>
+          <h3 class="title">Launchpad</h3>
+          <div class="sub">Click a feature — it drops into the dock below like an app.</div>
+        </div>
+        <div class="row" style="gap:8px">
+          <button class="btn sm ghost" id="closeDockBtn" disabled>Close</button>
+        </div>
+      </div>
 
-      <div style="height:10px"></div>
+      <div class="content">
+        <div class="grid" id="featureGrid"></div>
 
-      <div class="grid">
-        <input id="email" type="email" placeholder="Email" autocomplete="email"/>
-        <input id="password" type="password" placeholder="Password (6+ chars)" autocomplete="current-password"/>
+        <div class="dock" id="dock">
+          <div class="dockHead">
+            <div class="dockTitle">
+              <span class="floaty">⬇️</span>
+              <span id="dockName">Feature Dock</span>
+              <span class="small" id="dockHint">Click a tile above to open it here.</span>
+            </div>
+            <div class="row" style="gap:8px">
+              <button class="btn sm" id="openNewTabBtn" disabled>Open in new tab</button>
+            </div>
+          </div>
+          <div class="dockBody" id="dockBody">
+            <div class="dockEmpty">
+              <div style="font-size:26px">✨</div>
+              <div style="font-weight:1000;color:var(--text)">Nothing opened yet</div>
+              <div>Pick a feature tile. It’ll slide down here and load the tool.</div>
+            </div>
+          </div>
+        </div>
 
+      </div>
+    </div>
+
+    <!-- RIGHT: Quick actions / info -->
+    <div class="card">
+      <div class="cardHeader">
+        <div>
+          <h3 class="title">Quick actions</h3>
+          <div class="sub">These stay here. Your feature opens below the tiles.</div>
+        </div>
+      </div>
+      <div class="content">
         <div class="row">
-          <button class="btn primary" id="signupBtn">Create account</button>
-          <button class="btn" id="loginBtn">Login</button>
+          <button class="btn green" onclick="location.href='/focus/pomodoro.html'">Start Pomodoro</button>
+          <button class="btn" onclick="location.href='/community/index.html'">Ask a doubt</button>
+          <button class="btn" onclick="location.href='/planner/index.html'">Plan today</button>
         </div>
-
-        <button class="btn green" id="googleBtn">Continue with Google</button>
-
+        <div style="height:12px"></div>
         <div class="small">
-          If Google login fails on Netlify, add your domain in Firebase → Auth → Settings → Authorized domains.
+          Tip: This dock style is perfect for a “dashboard app” feel. If you want next-level polish,
+          we can add “minimize”, “split view”, and “recently opened”.
         </div>
       </div>
-
-      <div id="busy" class="small" style="margin-top:10px; display:none;">
-        Checking profile… <span class="loaderDot"></span>
-      </div>
     </div>
 
-    <div class="card">
-      <h2 style="margin:0 0 10px 0;">What Study Zone gives you</h2>
-      <div class="kpi">
-        <div class="k">⏱️ <b>Focus Tools</b><div class="small">Pomodoro + Stopwatch + session logging</div></div>
-        <div class="k">🗓️ <b>Planner</b><div class="small">Tasks + weekly plan + priorities</div></div>
-        <div class="k">📈 <b>Stats</b><div class="small">Daily totals + streaks + weekly chart</div></div>
-        <div class="k">💬 <b>Community</b><div class="small">Ask doubts + reply threads like Discord</div></div>
-      </div>
-    </div>
   </div>
+
 </div>
 
-<div id="toast" class="toast"></div>
+<script>
+  // Edit these if your paths differ
+  const FEATURES = [
+    { id:"pomodoro",  icon:"⏳", title:"Pomodoro",  desc:"Focus sessions + breaks.", hint:"Focus mode", href:"/focus/pomodoro.html" },
+    { id:"stopwatch", icon:"⏱️", title:"Stopwatch", desc:"Track study time live.", hint:"Time tracking", href:"/focus/stopwatch.html" },
+    { id:"planner",   icon:"🗓️", title:"Planner",   desc:"Plan tasks + schedule.", hint:"Daily planning", href:"/planner/index.html" },
+    { id:"stats",     icon:"📈", title:"Stats",     desc:"See your progress.", hint:"Analytics", href:"/stats/index.html" },
+    { id:"community", icon:"💬", title:"Community", desc:"Ask & answer doubts.", hint:"Realtime chat threads", href:"/community/index.html" },
+    { id:"settings",  icon:"⚙️", title:"Settings",  desc:"Profile & preferences.", hint:"Account", href:"/settings/index.html" },
+  ];
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import {
-  getAuth, onAuthStateChanged,
-  GoogleAuthProvider, signInWithPopup,
-  signInWithEmailAndPassword, createUserWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-import {
-  getFirestore, doc, setDoc, getDoc, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+  const grid = document.getElementById("featureGrid");
+  const dockBody = document.getElementById("dockBody");
+  const dockName = document.getElementById("dockName");
+  const dockHint = document.getElementById("dockHint");
+  const closeDockBtn = document.getElementById("closeDockBtn");
+  const openNewTabBtn = document.getElementById("openNewTabBtn");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
-  authDomain: "study-zone-438c4.firebaseapp.com",
-  projectId: "study-zone-438c4",
-  storageBucket: "study-zone-438c4.firebasestorage.app",
-  messagingSenderId: "320895535749",
-  appId: "1:320895535749:web:cab35a214ef7c22ae2f7ec"
-};
+  let active = null; // { id, href, tileEl, placeholderEl }
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  function makeTile(f){
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.dataset.id = f.id;
+    tile.dataset.href = f.href;
 
-const toastEl = document.getElementById("toast");
-const busyEl = document.getElementById("busy");
-function toast(msg){
-  toastEl.textContent = msg;
-  toastEl.style.display="block";
-  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2400);
-}
-function setBusy(v){ busyEl.style.display = v ? "block" : "none"; }
+    tile.innerHTML = `
+      <div class="shine"></div>
+      <div class="tileTop">
+        <div class="tileIcon">${f.icon}</div>
+        <div class="tileTitle">${f.title}</div>
+      </div>
+      <div class="tileDesc">${f.desc}</div>
+      <div class="tileHint">${f.hint}</div>
+    `;
 
-async function routeAfterLogin(user){
-  setBusy(true);
-  const pSnap = await getDoc(doc(db, "profiles", user.uid));
-  const profile = pSnap.exists() ? pSnap.data() : null;
-
-  // If profile missing OR missing username -> force setup in Settings page
-  if(!profile || !profile.username){
-    setBusy(false);
-    window.location.href = "/settings/index.html";
-    return;
+    tile.addEventListener("click", ()=> openFeature(f, tile));
+    return tile;
   }
 
-  setBusy(false);
-  window.location.href = "/home/index.html";
-}
+  FEATURES.forEach(f => grid.appendChild(makeTile(f)));
 
-// If already logged in, route properly (not instantly to home)
-onAuthStateChanged(auth, (user)=>{
-  if(user) routeAfterLogin(user);
-});
-
-const emailEl = document.getElementById("email");
-const passEl  = document.getElementById("password");
-
-document.getElementById("signupBtn").addEventListener("click", async()=>{
-  try{
-    const cred = await createUserWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
-
-    // Create minimal profile doc. Username setup happens in settings.
-    await setDoc(doc(db, "profiles", cred.user.uid), {
-      uid: cred.user.uid,
-      email: cred.user.email || "",
-      displayName: cred.user.displayName || "New User",
-      photoURL: cred.user.photoURL || "",
-      createdAt: serverTimestamp()
-    }, { merge:true });
-
-    await routeAfterLogin(cred.user);
-  }catch(e){
-    toast(e.message);
+  function rect(el){
+    const r = el.getBoundingClientRect();
+    return { left:r.left, top:r.top, width:r.width, height:r.height };
   }
-});
 
-document.getElementById("loginBtn").addEventListener("click", async()=>{
-  try{
-    const cred = await signInWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
-    await routeAfterLogin(cred.user);
-  }catch(e){
-    toast(e.message);
+  function animateGhost(fromRect, toRect, ghost){
+    const dx = toRect.left - fromRect.left;
+    const dy = toRect.top - fromRect.top;
+    const sx = toRect.width / fromRect.width;
+    const sy = toRect.height / fromRect.height;
+
+    ghost.style.left = fromRect.left + "px";
+    ghost.style.top = fromRect.top + "px";
+    ghost.style.width = fromRect.width + "px";
+    ghost.style.height = fromRect.height + "px";
+
+    // force reflow
+    ghost.getBoundingClientRect();
+
+    ghost.style.transition = "transform 520ms cubic-bezier(.2,.9,.2,1), width 520ms cubic-bezier(.2,.9,.2,1), height 520ms cubic-bezier(.2,.9,.2,1), left 520ms cubic-bezier(.2,.9,.2,1), top 520ms cubic-bezier(.2,.9,.2,1)";
+    ghost.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${sx}, ${sy})`;
   }
-});
 
-document.getElementById("googleBtn").addEventListener("click", async()=>{
-  try{
-    const provider = new GoogleAuthProvider();
-    const cred = await signInWithPopup(auth, provider);
-
-    await setDoc(doc(db, "profiles", cred.user.uid), {
-      uid: cred.user.uid,
-      email: cred.user.email || "",
-      displayName: cred.user.displayName || "User",
-      photoURL: cred.user.photoURL || "",
-      createdAt: serverTimestamp()
-    }, { merge:true });
-
-    await routeAfterLogin(cred.user);
-  }catch(e){
-    toast(e.message);
+  function buildGhostFromTile(tileEl){
+    const g = document.createElement("div");
+    g.className = "ghostTile";
+    g.innerHTML = `<div class="ghostInner">${tileEl.innerHTML}</div>`;
+    document.body.appendChild(g);
+    return g;
   }
-});
+
+  function placeIframe(href){
+    dockBody.innerHTML = `<iframe src="${href}" loading="lazy"></iframe>`;
+  }
+
+  function dockTargetRect(){
+    // We want the tile to land nicely under the dock header (inside body area top)
+    const dock = dockBody.getBoundingClientRect();
+    // target size is kinda "tile size" but we can land it at the top-left of dock body
+    const w = Math.min(520, dock.width - 18);
+    const h = 120;
+    return { left: dock.left + 12, top: dock.top + 12, width: w, height: h };
+  }
+
+  async function openFeature(f, tileEl){
+    // If clicking same active, do nothing
+    if(active && active.id === f.id) return;
+
+    // If another feature active, close it first (animate back)
+    if(active){
+      await closeActive();
+    }
+
+    // Create placeholder to keep grid layout stable
+    const ph = document.createElement("div");
+    ph.className = "placeholder";
+    tileEl.replaceWith(ph);
+
+    // Create a floating ghost and animate it down into dock
+    const from = rect(ph); // use placeholder rect (same spot as tile)
+    const ghost = buildGhostFromTile(tileEl);
+    const to = dockTargetRect();
+
+    animateGhost(from, to, ghost);
+
+    // Update dock UI immediately
+    dockName.textContent = f.title;
+    dockHint.textContent = f.href;
+    openNewTabBtn.disabled = false;
+    openNewTabBtn.onclick = ()=> window.open(f.href, "_blank");
+    closeDockBtn.disabled = false;
+
+    // After animation ends, remove ghost + load iframe
+    await new Promise(res=>{
+      ghost.addEventListener("transitionend", ()=> res(), { once:true });
+    });
+
+    ghost.remove();
+    placeIframe(f.href);
+
+    // Save state
+    active = { id:f.id, href:f.href, tileEl, placeholderEl: ph, feature:f };
+  }
+
+  function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+  async function closeActive(){
+    if(!active) return;
+
+    // Make a ghost from "active tile content" to animate back to placeholder spot
+    const ghost = document.createElement("div");
+    ghost.className = "ghostTile";
+    ghost.innerHTML = `<div class="ghostInner">${active.tileEl.innerHTML}</div>`;
+    document.body.appendChild(ghost);
+
+    // Start from dock target, go back to placeholder
+    const from = dockTargetRect();
+    const to = rect(active.placeholderEl);
+
+    ghost.style.left = from.left + "px";
+    ghost.style.top = from.top + "px";
+    ghost.style.width = from.width + "px";
+    ghost.style.height = from.height + "px";
+    ghost.style.transform = "translate3d(0,0,0) scale(1,1)";
+
+    // reflow
+    ghost.getBoundingClientRect();
+
+    const dx = to.left - from.left;
+    const dy = to.top - from.top;
+    const sx = to.width / from.width;
+    const sy = to.height / from.height;
+
+    ghost.style.transition = "transform 520ms cubic-bezier(.2,.9,.2,1), width 520ms cubic-bezier(.2,.9,.2,1), height 520ms cubic-bezier(.2,.9,.2,1), left 520ms cubic-bezier(.2,.9,.2,1), top 520ms cubic-bezier(.2,.9,.2,1)";
+    ghost.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${sx}, ${sy})`;
+
+    // Clear iframe after a tiny delay so it feels smooth
+    await sleep(100);
+    dockBody.innerHTML = `
+      <div class="dockEmpty">
+        <div style="font-size:26px">✨</div>
+        <div style="font-weight:1000;color:var(--text)">Closed</div>
+        <div>Pick another feature tile to open it.</div>
+      </div>
+    `;
+
+    await new Promise(res=>{
+      ghost.addEventListener("transitionend", ()=> res(), { once:true });
+    });
+    ghost.remove();
+
+    // Put tile back into the grid at placeholder position
+    active.placeholderEl.replaceWith(active.tileEl);
+
+    // Reset dock UI
+    dockName.textContent = "Feature Dock";
+    dockHint.textContent = "Click a tile above to open it here.";
+    openNewTabBtn.disabled = true;
+    closeDockBtn.disabled = true;
+
+    active = null;
+  }
+
+  closeDockBtn.addEventListener("click", closeActive);
 </script>
 </body>
 </html>

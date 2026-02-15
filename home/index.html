@@ -1,231 +1,554 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Study Zone • Home</title>
-<style>
-:root{
-  --bg:#0b1020; --card:#0f1730; --card2:#101a3a; --text:#e8ecff; --muted:#a8b0d8;
-  --brand:#7c5cff; --brand2:#19c37d; --danger:#ff4d6d;
-  --ring:rgba(124,92,255,.35); --shadow: 0 10px 35px rgba(0,0,0,.35); --radius:18px;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
-  background: radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
-              radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
-              radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.12), transparent 55%),
-              var(--bg);
-  color:var(--text);
-}
-a{color:inherit; text-decoration:none}
-.container{max-width:1050px; margin:0 auto; padding:24px}
-.nav{
-  display:flex; align-items:center; justify-content:space-between; gap:14px;
-  padding:14px 16px; border:1px solid rgba(255,255,255,.08);
-  background: rgba(15,23,48,.65); backdrop-filter: blur(10px);
-  border-radius: var(--radius); box-shadow: var(--shadow);
-  position:sticky; top:12px; z-index:50;
-}
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
-.badge{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.12); padding:4px 8px; border-radius:999px}
-.navlinks{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
-.pill{
-  padding:9px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.10);
-  background: rgba(16,26,58,.55); color:var(--text); font-size:13px;
-}
-.pill:hover{border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring)}
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:11px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
-  background: rgba(16,26,58,.75); color:var(--text); cursor:pointer; font-weight:650;
-}
-.btn:hover{border-color: rgba(124,92,255,.6); box-shadow:0 0 0 4px var(--ring)}
-.btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.55)); border-color: transparent}
-.btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.45)); border-color: transparent}
-.btn.danger{background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,77,109,.45)); border-color: transparent}
-.grid{display:grid; gap:16px}
-.grid.cols2{grid-template-columns: repeat(2, minmax(0,1fr))}
-.grid.cols3{grid-template-columns: repeat(3, minmax(0,1fr))}
-@media (max-width:900px){.grid.cols3{grid-template-columns:1fr 1fr}}
-@media (max-width:700px){.grid.cols2,.grid.cols3{grid-template-columns:1fr} .nav{position:static}}
-.card{
-  border:1px solid rgba(255,255,255,.10); background: rgba(15,23,48,.65);
-  backdrop-filter: blur(10px); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding:16px;
-}
-.card h2{margin:0 0 6px 0}
-.muted{color:var(--muted)}
-.kpi{display:flex; gap:12px; align-items:baseline}
-.kpi .big{font-size:36px; font-weight:900}
-.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-input, textarea, select{
-  width:100%; padding:12px 12px; border-radius:12px;
-  border:1px solid rgba(255,255,255,.12); background: rgba(16,26,58,.65);
-  color:var(--text); outline:none;
-}
-input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 4px var(--ring)}
-.small{font-size:12px}
-.hr{height:1px; background: rgba(255,255,255,.10); margin:14px 0}
-.toast{
-  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
-  background: rgba(15,23,48,.88); border:1px solid rgba(255,255,255,.12);
-  padding:10px 12px; border-radius:999px; box-shadow: var(--shadow);
-  color:var(--text); display:none; z-index:1000;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Zone • home · re:imagined</title>
+  <!-- Font Awesome for icons (lightweight) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0a0817;
+      --card-bg: rgba(18, 22, 45, 0.75);
+      --card-solid: #131b36;
+      --glass-edge: rgba(160, 140, 255, 0.25);
+      --brand-lavender: #9f8cff;
+      --brand-teal: #2ed9b0;
+      --brand-coral: #ff708d;
+      --text-bright: #f0f3ff;
+      --text-soft: #b6c1e6;
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --shadow-heavy: 0 30px 60px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --transition-smooth: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    body {
+      background: radial-gradient(145% 140% at 0% 0%, #2f286f 0%, #0d0b1a 45%),
+                  radial-gradient(90% 80% at 100% 20%, #1c3a4e, transparent 70%),
+                  #0a0817;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-bright);
+      min-height: 100vh;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    /* floating orbs (same as login) */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+      opacity: 0.5;
+      mix-blend-mode: soft-light;
+      animation: float 18s infinite alternate ease-in-out;
+    }
+    .orb1 { width: 55vmax; height: 55vmax; background: #3d2b9c; top: -15vh; left: -10vw; animation-duration: 25s; }
+    .orb2 { width: 40vmax; height: 40vmax; background: #197c63; bottom: -5vh; right: -5vw; animation-duration: 30s; animation-delay: -5s; }
+    .orb3 { width: 35vmax; height: 35vmax; background: #b3436b; top: 40vh; left: 40vw; filter: blur(130px); opacity: 0.35; animation: float-alt 20s infinite; }
+    @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(6%, 8%) scale(1.1); } }
+    @keyframes float-alt { 0% { transform: translate(-2%, -3%) scale(1); } 100% { transform: translate(4%, 5%) scale(1.2); } }
+
+    .glass-wrap {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1.8rem 2rem;
+    }
+
+    /* ---------- NAVIGATION (luxury pill bar) ---------- */
+    .nav-luxury {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(12, 15, 30, 0.55);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 0.5rem 1.8rem 0.5rem 1.5rem;
+      border-radius: 80px;
+      box-shadow: 0 20px 45px -20px black, 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      transition: 0.3s;
+      margin-bottom: 28px;
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+    }
+
+    .nav-luxury:hover {
+      border-color: rgba(159, 140, 255, 0.4);
+      box-shadow: 0 25px 50px -20px #5f4bc2;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.45rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-logo i {
+      font-size: 2rem;
+      background: linear-gradient(145deg, #b4a6ff, #7c5cff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 8px #7c5cff);
+    }
+    .pill-badge {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(159, 140, 255, 0.4);
+      border-radius: 40px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--brand-lavender);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+    .pill-badge i { font-size: 0.7rem; margin-right: 4px; }
+
+    /* navigation links as smooth chips */
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+    .nav-chip {
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition-smooth);
+      backdrop-filter: blur(5px);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .nav-chip i { font-size: 0.8rem; color: var(--brand-lavender); }
+    .nav-chip:hover {
+      border-color: rgba(159, 140, 255, 0.5);
+      background: rgba(30, 25, 60, 0.7);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px -10px #9f8cff;
+    }
+
+    /* main dashboard cards (glass + glow) */
+    .gem-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-heavy), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      transition: var(--transition-smooth);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .gem-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 70%);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .gem-card:hover {
+      border-color: rgba(159, 140, 255, 0.5);
+      box-shadow: 0 40px 70px -15px #2f1f7a, 0 0 0 1px rgba(159, 140, 255, 0.2) inset;
+      transform: translateY(-4px);
+    }
+    .card-glow {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle at 30% 30%, #9f8cff, transparent 70%);
+      top: -150px;
+      right: -150px;
+      opacity: 0.25;
+      filter: blur(60px);
+      pointer-events: none;
+      transition: 0.8s;
+    }
+    .gem-card:hover .card-glow {
+      opacity: 0.4;
+      transform: scale(1.2) rotate(8deg);
+    }
+
+    /* grid overrides */
+    .grid-cols-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .grid-cols-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1000px) { .grid-cols-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px) { .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; } }
+
+    /* welcome line */
+    .greet {
+      margin-bottom: 0.4rem;
+    }
+    .greet h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #ffffff, #d3caff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sub-text {
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* kpi tiles inside */
+    .kpi-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 20px 0 10px;
+    }
+    .kpi-tile {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      flex: 1 1 180px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(8px);
+      transition: 0.2s;
+    }
+    .kpi-tile:hover {
+      border-color: rgba(159, 140, 255, 0.3);
+      background: rgba(20, 20, 45, 0.5);
+    }
+    .kpi-number {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff, #cdc2ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .kpi-label {
+      color: var(--text-soft);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 0;
+    }
+    .btn-luxury {
+      background: rgba(20, 23, 45, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      transition: 0.25s ease;
+      cursor: pointer;
+      box-shadow: 0 8px 20px -12px black;
+      font-size: 1rem;
+    }
+    .btn-luxury i { font-size: 1.2rem; }
+    .btn-luxury:hover {
+      border-color: var(--brand-lavender);
+      background: rgba(38, 35, 70, 0.8);
+      box-shadow: 0 0 25px -5px #9f8cff, 0 8px 20px -12px black;
+      transform: translateY(-3px);
+    }
+    .btn-primary-grad {
+      background: linear-gradient(135deg, #8f7cff, #6f4fff);
+      border: none;
+      box-shadow: 0 10px 25px -5px #5842c0;
+    }
+    .btn-danger-grad {
+      background: linear-gradient(135deg, #ff708d, #f34b6e);
+      border: none;
+      box-shadow: 0 10px 25px -5px #ac3152;
+    }
+
+    /* quick action cards (mini tiles) */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .quick-tile {
+      background: rgba(10, 12, 26, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1rem;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .quick-tile:hover {
+      border-color: rgba(159, 140, 255, 0.4);
+      background: rgba(28, 25, 50, 0.7);
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 0 15px 30px -15px #1f1b3a;
+    }
+    .quick-tile i { font-size: 1.8rem; color: var(--brand-lavender); }
+    .quick-tile span { font-weight: 600; font-size: 1.1rem; }
+    .quick-tile small { color: var(--text-soft); }
+
+    .hr-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.05);
+      margin: 1.4rem 0;
+    }
+
+    .toast-premium {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 8, 22, 0.85);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(159, 140, 255, 0.5);
+      border-radius: 60px;
+      padding: 0.9rem 2rem;
+      box-shadow: 0 30px 50px -20px black;
+      color: white;
+      display: none;
+      z-index: 999;
+      align-items: center;
+      gap: 10px;
+    }
+    .toast-premium i { color: var(--brand-teal); }
+  </style>
 </head>
 <body>
-<div class="container">
-  <div class="nav">
-    <div class="brand">📚 Study Zone <span class="badge">beta</span></div>
-    <div class="navlinks">
-      <a class="pill" href="/home/index.html">Home</a>
-      <a class="pill" href="/focus/pomodoro.html">Pomodoro</a>
-      <a class="pill" href="/focus/stopwatch.html">Stopwatch</a>
-      <a class="pill" href="/planner/index.html">Planner</a>
-      <a class="pill" href="/ai/index.html">AI Chat</a>
-      <a class="pill" href="/friends/index.html">Friends</a>
-      <a class="pill" href="/stats/index.html">Stats</a>
-      <a class="pill" href="/community/index.html">Community</a>
-      <a class="pill" href="/settings/index.html">Settings</a>
-    </div>
-  </div>
-  <div style="height:16px"></div>
-  
-<div class="grid cols2">
-  <div class="card">
-    <h2 id="hello">Hey!</h2>
-    <p class="muted" id="sub">Loading your stuff…</p>
-    <div class="hr"></div>
-    <div class="grid cols2">
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <div class="muted small">Today</div>
-        <div class="kpi"><div class="big" id="todayMins">0</div><div><b>minutes studied</b><div class="muted small">auto-saved from timers</div></div></div>
+  <!-- background orbs (same as login) -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="glass-wrap">
+    <!-- sticky navigation (all pills intact) -->
+    <div class="nav-luxury">
+      <div class="brand-logo">
+        <i class="fas fa-meteor"></i> STUDY ZONE
+        <span class="pill-badge"><i class="fas fa-sparkles"></i> beta · home</span>
       </div>
-      <div class="card" style="background:rgba(16,26,58,.55)">
-        <div class="muted small">Streak</div>
-        <div class="kpi"><div class="big" id="streak">0</div><div><b>days</b><div class="muted small">keep it alive 🔥</div></div></div>
+      <div class="nav-links">
+        <a class="nav-chip" href="/home/index.html"><i class="fas fa-house"></i> Home</a>
+        <a class="nav-chip" href="/focus/pomodoro.html"><i class="fas fa-hourglass"></i> Pomodoro</a>
+        <a class="nav-chip" href="/focus/stopwatch.html"><i class="fas fa-stopwatch"></i> Stopwatch</a>
+        <a class="nav-chip" href="/planner/index.html"><i class="fas fa-calendar"></i> Planner</a>
+        <a class="nav-chip" href="/ai/index.html"><i class="fas fa-robot"></i> AI Chat</a>
+        <a class="nav-chip" href="/friends/index.html"><i class="fas fa-user-group"></i> Friends</a>
+        <a class="nav-chip" href="/stats/index.html"><i class="fas fa-chart-simple"></i> Stats</a>
+        <a class="nav-chip" href="/community/index.html"><i class="fas fa-comments"></i> Community</a>
+        <a class="nav-chip" href="/settings/index.html"><i class="fas fa-gear"></i> Settings</a>
       </div>
     </div>
-    <div class="hr"></div>
-    <div class="row">
-      <a class="btn primary" href="/focus/pomodoro.html">Start Pomodoro</a>
-      <a class="btn" href="/planner/index.html">Open Planner</a>
-      <button class="btn danger" id="logoutBtn">Logout</button>
+
+    <!-- main dashboard 2-col layout -->
+    <div class="grid-cols-2">
+      <!-- LEFT CARD: WELCOME + KPI -->
+      <div class="gem-card">
+        <div class="card-glow" style="background: radial-gradient(circle, #9f8cff, transparent 70%);"></div>
+        <div class="greet">
+          <h1 id="hello">Hey, <span class="user-placeholder">studier</span> 👋</h1>
+          <div class="sub-text" id="sub"><i class="fas fa-envelope" style="opacity: 0.6;"></i> Loading your stuff…</div>
+        </div>
+
+        <!-- kpi numbers (today & streak) -->
+        <div class="kpi-row">
+          <div class="kpi-tile">
+            <div class="kpi-label"><i class="fas fa-clock" style="color: var(--brand-teal);"></i> Today studied</div>
+            <div class="kpi-number" id="todayMins">0</div>
+            <span class="small" style="color: var(--text-soft);">minutes auto‑logged</span>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label"><i class="fas fa-fire" style="color: var(--brand-coral);"></i> Current streak</div>
+            <div class="kpi-number" id="streak">0</div>
+            <span class="small" style="color: var(--text-soft);">days · keep it alive 🔥</span>
+          </div>
+        </div>
+
+        <div class="hr-divider"></div>
+
+        <!-- action buttons (start pomodoro, planner, logout) -->
+        <div class="action-buttons">
+          <a class="btn-luxury btn-primary-grad" href="/focus/pomodoro.html"><i class="fas fa-play"></i> Start Pomodoro</a>
+          <a class="btn-luxury" href="/planner/index.html"><i class="fas fa-clipboard-list"></i> Open Planner</a>
+          <button class="btn-luxury btn-danger-grad" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+      </div>
+
+      <!-- RIGHT CARD: QUICK ACTIONS (more polished) -->
+      <div class="gem-card">
+        <div class="card-glow" style="background: radial-gradient(circle, #2ed9b0, transparent 70%); opacity: 0.2; right: auto; left: -50px; top: auto; bottom: -30px;"></div>
+        <h2 style="font-size: 1.9rem; font-weight: 700; display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+          <i class="fas fa-bolt" style="color: var(--brand-lavender);"></i> quick actions
+        </h2>
+        <p class="sub-text" style="margin-bottom: 10px;">organized pages for each feature</p>
+
+        <!-- 2x2 grid of mini cards -->
+        <div class="quick-grid">
+          <a class="quick-tile" href="/focus/stopwatch.html">
+            <i class="fas fa-stopwatch"></i> <span>Stopwatch</span>
+            <small>track raw study time</small>
+          </a>
+          <a class="quick-tile" href="/stats/index.html">
+            <i class="fas fa-chart-line"></i> <span>Stats</span>
+            <small>totals, streaks, graphs</small>
+          </a>
+          <a class="quick-tile" href="/community/index.html">
+            <i class="fas fa-brain"></i> <span>Doubts Board</span>
+            <small>ask / answer questions</small>
+          </a>
+          <a class="quick-tile" href="/settings/index.html">
+            <i class="fas fa-sliders"></i> <span>Settings</span>
+            <small>profile + logout</small>
+          </a>
+        </div>
+
+        <!-- extra spark: community note -->
+        <div style="margin-top: 24px; border-top: 1px dashed rgba(255,255,255,0.06); padding-top: 18px; display: flex; gap: 12px; flex-wrap: wrap;">
+          <span class="pill-badge"><i class="fas fa-hashtag"></i> 12 online now</span>
+          <span class="pill-badge"><i class="fas fa-rocket"></i> 8 study sessions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- optional micro footer (transparent) -->
+    <div style="margin-top: 40px; text-align: center; opacity: 0.4; font-size: 0.8rem; letter-spacing: 0.4px;">
+      ⚡ re:imagined dashboard · fluid depth ⚡
     </div>
   </div>
 
-  <div class="card">
-    <h2>Quick actions</h2>
-    <p class="muted">Organized pages for each feature. Add more later without breaking the whole site.</p>
-    <div class="hr"></div>
-    <div class="grid cols2">
-      <a class="card" href="/focus/stopwatch.html" style="background:rgba(16,26,58,.55)">
-        <b>⏱️ Stopwatch</b><div class="muted small">Track raw study time</div>
-      </a>
-      <a class="card" href="/stats/index.html" style="background:rgba(16,26,58,.55)">
-        <b>📈 Stats</b><div class="muted small">Totals, streaks, graphs</div>
-      </a>
-      <a class="card" href="/community/index.html" style="background:rgba(16,26,58,.55)">
-        <b>🧠 Doubts Board</b><div class="muted small">Ask / answer questions</div>
-      </a>
-      <a class="card" href="/settings/index.html" style="background:rgba(16,26,58,.55)">
-        <b>⚙️ Settings</b><div class="muted small">Profile + logout</div>
-      </a>
-    </div>
-  </div>
-</div>
+  <!-- toast -->
+  <div id="toast" class="toast-premium"><i class="fas fa-circle-check"></i> <span></span></div>
 
-</div>
-<div id="toast" class="toast"></div>
-<script type="module">
+  <!-- firebase module (functionality identical, only UI changed) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+    import {
+      getAuth, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+    import {
+      getFirestore, doc, setDoc, getDoc, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import {
-  getAuth, onAuthStateChanged, signOut,
-  GoogleAuthProvider, signInWithPopup,
-  signInWithEmailAndPassword, createUserWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-import {
-  getFirestore, doc, setDoc, getDoc, increment,
-  collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+      authDomain: "study-zone-438c4.firebaseapp.com",
+      projectId: "study-zone-438c4",
+      storageBucket: "study-zone-438c4.firebasestorage.app",
+      messagingSenderId: "320895535749",
+      appId: "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+    };
 
-const firebaseConfig = {
-  "apiKey": "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
-  "authDomain": "study-zone-438c4.firebaseapp.com",
-  "projectId": "study-zone-438c4",
-  "storageBucket": "study-zone-438c4.firebasestorage.app",
-  "messagingSenderId": "320895535749",
-  "appId": "1:320895535749:web:cab35a214ef7c22ae2f7ec"
-};
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    const toastEl = document.getElementById("toast");
+    function toast(msg) {
+      const span = toastEl.querySelector('span') || toastEl.appendChild(document.createElement('span'));
+      toastEl.style.display = "flex";
+      span.textContent = msg;
+      clearTimeout(window.__t); 
+      window.__t = setTimeout(() => toastEl.style.display = "none", 2400);
+    }
 
-const toastEl = document.getElementById("toast");
-function toast(msg){
-  if(!toastEl) return;
-  toastEl.textContent = msg;
-  toastEl.style.display="block";
-  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2200);
-}
+    function requireAuth(redirectTo = "/index.html") {
+      return new Promise((resolve) => {
+        onAuthStateChanged(auth, (user) => {
+          if (!user) {
+            window.location.href = redirectTo;
+            return;
+          }
+          resolve(user);
+        });
+      });
+    }
 
-function requireAuth(redirectTo="/index.html"){
-  return new Promise((resolve)=>{
-    onAuthStateChanged(auth, (user)=>{
-      if(!user){
-        window.location.href = redirectTo;
-        return;
-      }
-      resolve(user);
-    });
-  });
-}
+    function wireLogout(btnId = "logoutBtn") {
+      const b = document.getElementById(btnId);
+      if (!b) return;
+      b.addEventListener("click", async () => {
+        await signOut(auth);
+        window.location.href = "/index.html";
+      });
+    }
 
-function wireLogout(btnId="logoutBtn"){
-  const b = document.getElementById(btnId);
-  if(!b) return;
-  b.addEventListener("click", async()=>{
-    await signOut(auth);
-    window.location.href="/index.html";
-  });
-}
+    const user = await requireAuth("/index.html");
+    wireLogout("logoutBtn");
 
-const user = await requireAuth("/index.html");
-wireLogout("logoutBtn");
+    function ymd(d = new Date()) {
+      const z = (n) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`;
+    }
+    const todayKey = ymd();
 
-function ymd(d=new Date()){
-  const z=(n)=>String(n).padStart(2,"0");
-  return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;
-}
-const todayKey = ymd();
+    document.getElementById("hello").innerHTML = `Hey, ${user.displayName || "studier"} 👋`;
+    document.getElementById("sub").innerHTML = `<i class="fas fa-envelope" style="opacity:0.6;"></i> ${user.email}`;
 
-document.getElementById("hello").textContent = `Hey, ${user.displayName || "studier"} 👋`;
-document.getElementById("sub").textContent = `Signed in as ${user.email}`;
+    const statsRef = doc(db, "stats", user.uid);
+    const snap = await getDoc(statsRef);
+    if (!snap.exists()) {
+      await setDoc(statsRef, {
+        uid: user.uid,
+        today: { [todayKey]: 0 },
+        streak: 0,
+        lastStudiedDate: "",
+        updatedAt: serverTimestamp()
+      });
+    }
 
-const statsRef = doc(db, "stats", user.uid);
-const snap = await getDoc(statsRef);
-if(!snap.exists()){
-  await setDoc(statsRef, {
-    uid:user.uid,
-    today: { [todayKey]: 0 },
-    streak: 0,
-    lastStudiedDate: "",
-    updatedAt: serverTimestamp()
-  });
-}
-
-const data = (await getDoc(statsRef)).data();
-const todayMins = (data.today && data.today[todayKey]) ? data.today[todayKey] : 0;
-document.getElementById("todayMins").textContent = todayMins;
-document.getElementById("streak").textContent = data.streak || 0;
-
-</script>
+    const data = (await getDoc(statsRef)).data();
+    const todayMins = (data.today && data.today[todayKey]) ? data.today[todayKey] : 0;
+    document.getElementById("todayMins").textContent = todayMins;
+    document.getElementById("streak").textContent = data.streak || 0;
+  </script>
 </body>
 </html>

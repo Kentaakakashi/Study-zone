@@ -5,79 +5,287 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Study Zone • Community</title>
 <style>
-:root{
-  --bg:#0b1020; --card:#0f1730; --card2:#101a3a; --text:#e8ecff; --muted:#a8b0d8;
-  --brand:#7c5cff; --brand2:#19c37d; --danger:#ff4d6d;
-  --ring:rgba(124,92,255,.35); --shadow: 0 10px 35px rgba(0,0,0,.35); --radius:18px;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
-  background: radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
-              radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
-              radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.12), transparent 55%),
-              var(--bg);
-  color:var(--text);
-}
-a{color:inherit; text-decoration:none}
-.container{max-width:1050px; margin:0 auto; padding:24px}
-.nav{
-  display:flex; align-items:center; justify-content:space-between; gap:14px;
-  padding:14px 16px; border:1px solid rgba(255,255,255,.08);
-  background: rgba(15,23,48,.65); backdrop-filter: blur(10px);
-  border-radius: var(--radius); box-shadow: var(--shadow);
-  position:sticky; top:12px; z-index:50;
-}
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
-.badge{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.12); padding:4px 8px; border-radius:999px}
-.navlinks{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
-.pill{
-  padding:9px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.10);
-  background: rgba(16,26,58,.55); color:var(--text); font-size:13px;
-}
-.pill:hover{border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring)}
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:11px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
-  background: rgba(16,26,58,.75); color:var(--text); cursor:pointer; font-weight:650;
-}
-.btn:hover{border-color: rgba(124,92,255,.6); box-shadow:0 0 0 4px var(--ring)}
-.btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.55)); border-color: transparent}
-.btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.45)); border-color: transparent}
-.btn.danger{background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,77,109,.45)); border-color: transparent}
-.grid{display:grid; gap:16px}
-.grid.cols2{grid-template-columns: repeat(2, minmax(0,1fr))}
-.grid.cols3{grid-template-columns: repeat(3, minmax(0,1fr))}
-@media (max-width:900px){.grid.cols3{grid-template-columns:1fr 1fr}}
-@media (max-width:700px){.grid.cols2,.grid.cols3{grid-template-columns:1fr} .nav{position:static}}
-.card{
-  border:1px solid rgba(255,255,255,.10); background: rgba(15,23,48,.65);
-  backdrop-filter: blur(10px); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding:16px;
-}
-.card h2{margin:0 0 6px 0}
-.muted{color:var(--muted)}
-.kpi{display:flex; gap:12px; align-items:baseline}
-.kpi .big{font-size:36px; font-weight:900}
-.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-input, textarea, select{
-  width:100%; padding:12px 12px; border-radius:12px;
-  border:1px solid rgba(255,255,255,.12); background: rgba(16,26,58,.65);
-  color:var(--text); outline:none;
-}
-input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 4px var(--ring)}
-.small{font-size:12px}
-.hr{height:1px; background: rgba(255,255,255,.10); margin:14px 0}
-.toast{
-  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
-  background: rgba(15,23,48,.88); border:1px solid rgba(255,255,255,.12);
-  padding:10px 12px; border-radius:999px; box-shadow: var(--shadow);
-  color:var(--text); display:none; z-index:1000;
-}
+  :root{
+    --bg:#0b1020;
+    --card:rgba(15,23,48,.68);
+    --card2:rgba(16,26,58,.58);
+    --stroke:rgba(255,255,255,.10);
+    --text:#e8ecff;
+    --muted:#a8b0d8;
+    --brand:#7c5cff;
+    --brand2:#19c37d;
+    --danger:#ff4d6d;
+    --ring:rgba(124,92,255,.33);
+    --shadow: 0 20px 55px rgba(0,0,0,.42);
+    --r:22px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+    background:
+      radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
+      radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
+      radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.10), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:18px}
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 16px;
+    border:1px solid var(--stroke);
+    background:rgba(15,23,48,.62);
+    backdrop-filter: blur(12px);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    position:sticky;top:12px;z-index:50;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
+  .badge{
+    font-size:12px;color:var(--muted);
+    border:1px solid rgba(255,255,255,.12);
+    padding:4px 10px;border-radius:999px
+  }
+  .navlinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .pill{
+    padding:9px 11px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(16,26,58,.55);
+    font-size:13px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .pill:hover{border-color: rgba(124,92,255,.55); box-shadow: 0 0 0 4px var(--ring); transform: translateY(-1px)}
+  .layout{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap:14px;
+    align-items:stretch;
+  }
+  @media (max-width: 980px){
+    .layout{grid-template-columns:1fr}
+  }
+
+  .card{
+    border:1px solid var(--stroke);
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .cardHeader{
+    padding:14px 14px 10px 14px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  }
+  .title{
+    margin:0;
+    font-size:16px;
+    letter-spacing:.2px;
+  }
+  .sub{color:var(--muted);font-size:12px;line-height:1.4;margin-top:4px}
+  .content{padding:14px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  input, textarea, select{
+    width:100%;
+    padding:12px 12px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(16,26,58,.65);
+    color:var(--text);
+    outline:none;
+  }
+  textarea{min-height:90px;resize:vertical}
+  input:focus, textarea:focus, select:focus{
+    border-color: rgba(124,92,255,.65);
+    box-shadow: 0 0 0 5px var(--ring);
+  }
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 12px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(16,26,58,.75);
+    color:var(--text);cursor:pointer;font-weight:800;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
+    user-select:none;
+  }
+  .btn:hover{border-color: rgba(124,92,255,.60); box-shadow:0 0 0 4px var(--ring); transform: translateY(-1px)}
+  .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.50)); border-color: transparent}
+  .btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.40)); border-color: transparent}
+  .btn.ghost{background: transparent}
+  .btn:disabled{opacity:.6;cursor:not-allowed;filter:saturate(.3)}
+  .hr{height:1px;background:rgba(255,255,255,.10);margin:12px 0}
+  .small{font-size:12px;color:var(--muted);line-height:1.45}
+
+  /* Posts list */
+  .posts{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    max-height: 60vh;
+    overflow:auto;
+    padding-right:4px;
+  }
+  .posts::-webkit-scrollbar{width:10px}
+  .posts::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:999px}
+  .postItem{
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(16,26,58,.55);
+    border-radius:18px;
+    padding:12px;
+    cursor:pointer;
+    transition: transform .18s ease, border-color .18s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .postItem:hover{transform: translateY(-1px); border-color: rgba(124,92,255,.45)}
+  .postItem.active{border-color: rgba(124,92,255,.75); box-shadow: 0 0 0 4px var(--ring)}
+  .postTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .postMeta{display:flex;align-items:center;gap:10px;min-width:0}
+  .avatar{
+    width:38px;height:38px;border-radius:50%;
+    object-fit:cover;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.06);
+  }
+  .names{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .displayName{font-weight:900;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .username{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .time{font-size:12px;color:var(--muted);white-space:nowrap}
+  .postText{
+    margin-top:10px;
+    font-size:13px;
+    line-height:1.45;
+    color:rgba(232,236,255,.95);
+    display:-webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow:hidden;
+  }
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .chip{
+    font-size:11px;color:rgba(232,236,255,.95);
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(0,0,0,.10);
+    padding:4px 9px;border-radius:999px;
+  }
+  .count{
+    position:absolute; top:10px; right:10px;
+    font-size:11px; color:rgba(232,236,255,.95);
+    background:rgba(124,92,255,.18);
+    border:1px solid rgba(124,92,255,.35);
+    padding:3px 8px;border-radius:999px;
+  }
+
+  /* Thread */
+  .threadWrap{
+    display:flex;
+    flex-direction:column;
+    min-height: 68vh;
+  }
+  .threadHeader{
+    padding:14px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .threadTitle{
+    margin:0;
+    font-size:15px;
+    font-weight:900;
+  }
+  .threadBody{
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    flex:1;
+    overflow:auto;
+    max-height: 52vh;
+    padding-right:4px;
+  }
+  .threadBody::-webkit-scrollbar{width:10px}
+  .threadBody::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:999px}
+
+  .msg{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    animation: pop .18s ease;
+  }
+  @keyframes pop{
+    from{opacity:0;transform: translateY(6px)}
+    to{opacity:1;transform: translateY(0)}
+  }
+  .msgMain{flex:1;min-width:0}
+  .msgHead{
+    display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;
+  }
+  .msgName{font-weight:900;font-size:13px}
+  .msgUser{font-size:12px;color:var(--muted)}
+  .msgTime{font-size:12px;color:var(--muted)}
+  .bubble{
+    margin-top:5px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(16,26,58,.55);
+    border-radius:16px;
+    padding:10px 11px;
+    line-height:1.45;
+    font-size:13px;
+    word-wrap:break-word;
+    white-space:pre-wrap;
+  }
+
+  .composer{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:12px 14px;
+    display:flex;gap:10px;align-items:flex-end;
+  }
+  .composer textarea{min-height:46px;max-height:140px}
+  .hintBar{
+    padding:10px 14px;
+    border-top:1px solid rgba(255,255,255,.08);
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  /* Mobile thread modal-ish behavior */
+  .mobileThreadTop{
+    display:none;
+  }
+  @media (max-width: 980px){
+    .threadWrap{min-height:auto}
+    .threadBody{max-height: 46vh}
+  }
+
+  .toast{
+    position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+    background: rgba(15,23,48,.88);
+    border:1px solid rgba(255,255,255,.12);
+    padding:10px 12px;
+    border-radius:999px;
+    box-shadow: var(--shadow);
+    color:var(--text);
+    display:none; z-index:1000;
+  }
+  .glowDot{
+    width:9px;height:9px;border-radius:50%;
+    background:rgba(25,195,125,.95);
+    box-shadow: 0 0 0 0 rgba(25,195,125,.45);
+    animation: pulse 1.3s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(25,195,125,.45)}
+    70%{box-shadow:0 0 0 12px rgba(25,195,125,0)}
+    100%{box-shadow:0 0 0 0 rgba(25,195,125,0)}
+  }
 </style>
 </head>
+
 <body>
 <div class="container">
   <div class="nav">
@@ -92,148 +300,484 @@ input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); bo
       <a class="pill" href="/settings/index.html">Settings</a>
     </div>
   </div>
-  <div style="height:16px"></div>
-  
-<div class="grid cols2">
-  <div class="card">
-    <h2>🧠 Doubts Board</h2>
-    <p class="muted">Ask a question, get help from the server community. (Basic version)</p>
-    <div class="hr"></div>
 
-    <div class="grid" style="gap:10px">
-      <select id="subject">
-        <option value="Maths">Maths</option>
-        <option value="Physics">Physics</option>
-        <option value="Chemistry">Chemistry</option>
-        <option value="Computer Science">Computer Science</option>
-        <option value="Tamil">Tamil</option>
-        <option value="Other">Other</option>
-      </select>
-      <input id="title" placeholder="Title (e.g., Need help with trigonometry identities)"/>
-      <textarea id="body" rows="5" placeholder="Explain your doubt…"></textarea>
-      <button class="btn primary" id="postBtn">Post question</button>
-    </div>
+  <div class="layout">
 
-    <div class="hr"></div>
-    <div class="row">
-      <button class="btn danger" id="logoutBtn">Logout</button>
-      <span class="muted small">Realtime updates. Don’t spam 🗿</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Latest</h2>
-    <p class="muted small">Stored in Firestore collection <b>posts</b>.</p>
-    <div class="hr"></div>
-    <div id="feed" class="grid" style="gap:10px"></div>
-  </div>
-</div>
-
-</div>
-<div id="toast" class="toast"></div>
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import {
-  getAuth, onAuthStateChanged, signOut,
-  GoogleAuthProvider, signInWithPopup,
-  signInWithEmailAndPassword, createUserWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-import {
-  getFirestore, doc, setDoc, getDoc, increment,
-  collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  "apiKey": "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
-  "authDomain": "study-zone-438c4.firebaseapp.com",
-  "projectId": "study-zone-438c4",
-  "storageBucket": "study-zone-438c4.firebasestorage.app",
-  "messagingSenderId": "320895535749",
-  "appId": "1:320895535749:web:cab35a214ef7c22ae2f7ec"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const toastEl = document.getElementById("toast");
-function toast(msg){
-  if(!toastEl) return;
-  toastEl.textContent = msg;
-  toastEl.style.display="block";
-  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2200);
-}
-
-function requireAuth(redirectTo="/index.html"){
-  return new Promise((resolve)=>{
-    onAuthStateChanged(auth, (user)=>{
-      if(!user){
-        window.location.href = redirectTo;
-        return;
-      }
-      resolve(user);
-    });
-  });
-}
-
-function wireLogout(btnId="logoutBtn"){
-  const b = document.getElementById(btnId);
-  if(!b) return;
-  b.addEventListener("click", async()=>{
-    await signOut(auth);
-    window.location.href="/index.html";
-  });
-}
-
-const user = await requireAuth("/index.html");
-wireLogout("logoutBtn");
-
-const feed = document.getElementById("feed");
-const postsRef = collection(db, "posts");
-
-document.getElementById("postBtn").addEventListener("click", async()=>{
-  const subject = document.getElementById("subject").value;
-  const title = document.getElementById("title").value.trim();
-  const body = document.getElementById("body").value.trim();
-  if(!title || !body) return toast("Title + body required");
-  await addDoc(postsRef, {
-    uid: user.uid,
-    author: user.displayName || user.email,
-    subject,
-    title,
-    body,
-    createdAt: serverTimestamp()
-  });
-  document.getElementById("title").value="";
-  document.getElementById("body").value="";
-  toast("Posted ✅");
-});
-
-const q = query(postsRef, orderBy("createdAt","desc"), limit(20));
-onSnapshot(q, (snap)=>{
-  feed.innerHTML="";
-  if(snap.empty){
-    feed.innerHTML = '<div class="muted">No posts yet. Be the first.</div>';
-    return;
-  }
-  snap.forEach((docu)=>{
-    const p = docu.data();
-    const card=document.createElement("div");
-    card.className="card";
-    card.style.background="rgba(16,26,58,.55)";
-    const when = p.createdAt && p.createdAt.toDate ? p.createdAt.toDate().toLocaleString() : "";
-    card.innerHTML = `
-      <div class="row" style="justify-content:space-between">
-        <b>${p.title}</b>
-        <span class="badge">${p.subject}</span>
+    <!-- LEFT: Create + Posts -->
+    <div class="card">
+      <div class="cardHeader">
+        <div>
+          <h3 class="title">Community</h3>
+          <div class="sub">Ask doubts, help others. Replies show full profiles like Discord/WhatsApp.</div>
+        </div>
+        <div class="row" style="gap:8px">
+          <div class="glowDot" title="Online"></div>
+          <button class="btn ghost" id="refreshBtn" title="Refresh list">↻</button>
+        </div>
       </div>
-      <div class="muted small" style="margin:6px 0">by ${p.author} • ${when}</div>
-      <div style="white-space:pre-wrap; line-height:1.45">${p.body}</div>
+
+      <div class="content">
+        <div class="card" style="background:var(--card2); box-shadow:none; margin-bottom:12px;">
+          <div class="content">
+            <div class="row" style="justify-content:space-between; align-items:flex-end;">
+              <div style="flex:1; min-width:240px;">
+                <label class="small">Subject tag</label>
+                <select id="tag">
+                  <option value="General">General</option>
+                  <option value="Maths">Maths</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Tamil">Tamil</option>
+                  <option value="English">English</option>
+                </select>
+              </div>
+              <div style="flex:1; min-width:240px;">
+                <label class="small">Title</label>
+                <input id="title" placeholder="Short title (e.g., 'Need help with vectors')" maxlength="90">
+              </div>
+            </div>
+            <div style="height:10px"></div>
+            <label class="small">Your doubt / question</label>
+            <textarea id="body" placeholder="Write your question clearly. Add what you've tried." maxlength="1200"></textarea>
+            <div class="row" style="justify-content:space-between; margin-top:10px;">
+              <div class="small" id="charCount">0 / 1200</div>
+              <button class="btn primary" id="postBtn">Post</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="justify-content:space-between;">
+          <div class="small" id="listInfo">Loading posts…</div>
+          <div class="row" style="gap:8px">
+            <input id="search" placeholder="Search…" style="width:220px">
+          </div>
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="posts" id="posts"></div>
+
+        <div class="small" style="margin-top:10px;">
+          Tip: If you haven’t set a username yet, go to <b>Settings</b> first.
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Thread -->
+    <div class="card threadWrap">
+      <div class="threadHeader">
+        <div>
+          <h3 class="threadTitle" id="threadTitle">Select a post</h3>
+          <div class="sub" id="threadSub">Open a post from the left to see replies.</div>
+        </div>
+        <button class="btn" id="copyLinkBtn" disabled>Copy link</button>
+      </div>
+
+      <div class="threadBody" id="threadBody">
+        <div class="small">No thread selected.</div>
+      </div>
+
+      <div class="composer">
+        <textarea id="replyText" placeholder="Write a reply… (Shift+Enter = new line)" disabled></textarea>
+        <button class="btn green" id="replyBtn" disabled>Send</button>
+      </div>
+      <div class="hintBar" id="hintBar">Log in required. Profile required for full display.</div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+  import {
+    getFirestore, collection, doc, getDoc, setDoc, addDoc,
+    serverTimestamp, query, orderBy, limit, onSnapshot
+  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+  // ✅ Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+    authDomain: "study-zone-438c4.firebaseapp.com",
+    projectId: "study-zone-438c4",
+    storageBucket: "study-zone-438c4.firebasestorage.app",
+    messagingSenderId: "320895535749",
+    appId: "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // UI refs
+  const toastEl = document.getElementById("toast");
+  const postsEl = document.getElementById("posts");
+  const listInfo = document.getElementById("listInfo");
+  const searchEl = document.getElementById("search");
+  const titleEl = document.getElementById("title");
+  const bodyEl = document.getElementById("body");
+  const tagEl = document.getElementById("tag");
+  const postBtn = document.getElementById("postBtn");
+  const charCount = document.getElementById("charCount");
+
+  const threadTitleEl = document.getElementById("threadTitle");
+  const threadSubEl = document.getElementById("threadSub");
+  const threadBodyEl = document.getElementById("threadBody");
+  const replyTextEl = document.getElementById("replyText");
+  const replyBtn = document.getElementById("replyBtn");
+  const hintBar = document.getElementById("hintBar");
+  const copyLinkBtn = document.getElementById("copyLinkBtn");
+  const refreshBtn = document.getElementById("refreshBtn");
+
+  // State
+  let currentUser = null;
+  let myProfile = null;
+  let selectedPostId = null;
+  let selectedPostData = null;
+  let unsubReplies = null;
+  let latestPosts = [];
+  const profileCache = new Map(); // uid -> profile
+
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.style.display="block";
+    clearTimeout(window.__t);
+    window.__t = setTimeout(()=> toastEl.style.display="none", 2400);
+  }
+
+  function dice(seed){
+    seed = encodeURIComponent(seed || "user");
+    return `https://api.dicebear.com/7.x/initials/svg?seed=${seed}`;
+  }
+
+  function tsToDate(ts){
+    if(!ts) return null;
+    if(typeof ts.toDate === "function") return ts.toDate();
+    return null;
+  }
+
+  function timeAgo(date){
+    if(!date) return "just now";
+    const s = Math.max(1, Math.floor((Date.now() - date.getTime())/1000));
+    if(s < 60) return `${s}s ago`;
+    const m = Math.floor(s/60);
+    if(m < 60) return `${m}m ago`;
+    const h = Math.floor(m/60);
+    if(h < 24) return `${h}h ago`;
+    const d = Math.floor(h/24);
+    return `${d}d ago`;
+  }
+
+  async function getProfile(uid){
+    if(!uid) return null;
+    if(profileCache.has(uid)) return profileCache.get(uid);
+
+    const snap = await getDoc(doc(db, "profiles", uid));
+    const profile = snap.exists() ? snap.data() : null;
+    profileCache.set(uid, profile);
+    return profile;
+  }
+
+  function requireProfileOrRedirect(){
+    // If user has no username set, community still works, but shows fallback
+    // You can enforce redirect if you want:
+    // if(!myProfile?.username) window.location.href="/settings/index.html";
+  }
+
+  function renderPosts(){
+    const q = searchEl.value.trim().toLowerCase();
+    const filtered = !q ? latestPosts : latestPosts.filter(p=>{
+      const t = (p.title||"").toLowerCase();
+      const b = (p.body||"").toLowerCase();
+      const tg = (p.tag||"").toLowerCase();
+      return t.includes(q) || b.includes(q) || tg.includes(q);
+    });
+
+    listInfo.textContent = `${filtered.length} post(s)`;
+
+    postsEl.innerHTML = "";
+    filtered.forEach(p=>{
+      const active = p.id === selectedPostId ? "active" : "";
+      const el = document.createElement("div");
+      el.className = `postItem ${active}`;
+      el.dataset.id = p.id;
+
+      // placeholders until profile loads
+      const avatar = dice(p.authorUid || "user");
+      const dn = "Loading…";
+      const un = "@user";
+
+      const created = tsToDate(p.createdAt);
+      const when = timeAgo(created);
+
+      el.innerHTML = `
+        <div class="count">${p.replyCount || 0} replies</div>
+        <div class="postTop">
+          <div class="postMeta">
+            <img class="avatar" data-avatar src="${avatar}">
+            <div class="names">
+              <div class="displayName" data-dn>${dn}</div>
+              <div class="username" data-un>${un}</div>
+            </div>
+          </div>
+          <div class="time">${when}</div>
+        </div>
+        <div class="postText"><b>${escapeHtml(p.title || "Untitled")}</b><br>${escapeHtml(p.body || "")}</div>
+        <div class="chips">
+          <span class="chip">${escapeHtml(p.tag || "General")}</span>
+        </div>
+      `;
+
+      el.addEventListener("click", ()=> openThread(p.id));
+      postsEl.appendChild(el);
+
+      // async fill author profile
+      getProfile(p.authorUid).then(profile=>{
+        const avEl = el.querySelector("[data-avatar]");
+        const dnEl = el.querySelector("[data-dn]");
+        const unEl = el.querySelector("[data-un]");
+        const disp = profile?.displayName || "User";
+        const uname = profile?.username ? `@${profile.username}` : "@no-username";
+        const pfp = profile?.pfp || profile?.photoURL || dice(profile?.username || disp);
+        avEl.src = pfp;
+        dnEl.textContent = disp;
+        unEl.textContent = uname;
+      });
+    });
+
+    if(filtered.length === 0){
+      postsEl.innerHTML = `<div class="small">No posts yet. Be the first to ask something.</div>`;
+    }
+  }
+
+  function escapeHtml(s){
+    return String(s || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  async function openThread(postId){
+    if(!postId) return;
+    const p = latestPosts.find(x=>x.id===postId);
+    if(!p) return;
+
+    selectedPostId = postId;
+    selectedPostData = p;
+
+    // highlight
+    renderPosts();
+
+    // thread header
+    threadTitleEl.textContent = p.title || "Untitled";
+    const created = tsToDate(p.createdAt);
+    threadSubEl.textContent = `${p.tag || "General"} • ${created ? created.toLocaleString() : "just now"}`;
+    copyLinkBtn.disabled = false;
+    replyTextEl.disabled = false;
+    replyBtn.disabled = false;
+
+    // render main post at top
+    threadBodyEl.innerHTML = "";
+    const mainWrap = document.createElement("div");
+    mainWrap.className = "msg";
+    mainWrap.innerHTML = `
+      <img class="avatar" id="mainAvatar" src="${dice(p.authorUid)}">
+      <div class="msgMain">
+        <div class="msgHead">
+          <span class="msgName" id="mainName">Loading…</span>
+          <span class="msgUser" id="mainUser">@user</span>
+          <span class="msgTime">${timeAgo(created)}</span>
+        </div>
+        <div class="bubble">${escapeHtml(p.body || "")}</div>
+      </div>
     `;
-    feed.appendChild(card);
+    threadBodyEl.appendChild(mainWrap);
+
+    // fill author
+    const authorProfile = await getProfile(p.authorUid);
+    document.getElementById("mainName").textContent = authorProfile?.displayName || "User";
+    document.getElementById("mainUser").textContent = authorProfile?.username ? `@${authorProfile.username}` : "@no-username";
+    document.getElementById("mainAvatar").src = (authorProfile?.pfp || authorProfile?.photoURL || dice(authorProfile?.username || authorProfile?.displayName || "user"));
+
+    // replies live
+    if(unsubReplies) unsubReplies();
+    const repliesRef = collection(db, "posts", postId, "replies");
+    const q = query(repliesRef, orderBy("createdAt","asc"));
+    unsubReplies = onSnapshot(q, async (snap)=>{
+      // remove old rendered replies but keep main post first
+      // easiest: rebuild below main post
+      const keep = [mainWrap];
+      threadBodyEl.innerHTML = "";
+      keep.forEach(k=>threadBodyEl.appendChild(k));
+
+      if(snap.empty){
+        const empty = document.createElement("div");
+        empty.className = "small";
+        empty.textContent = "No replies yet. Be the first to reply.";
+        threadBodyEl.appendChild(empty);
+      } else {
+        for(const docSnap of snap.docs){
+          const r = { id: docSnap.id, ...docSnap.data() };
+          const rDate = tsToDate(r.createdAt);
+          const profile = await getProfile(r.authorUid);
+
+          const msg = document.createElement("div");
+          msg.className = "msg";
+          const disp = profile?.displayName || "User";
+          const uname = profile?.username ? `@${profile.username}` : "@no-username";
+          const pfp = profile?.pfp || profile?.photoURL || dice(profile?.username || disp);
+
+          msg.innerHTML = `
+            <img class="avatar" src="${pfp}">
+            <div class="msgMain">
+              <div class="msgHead">
+                <span class="msgName">${escapeHtml(disp)}</span>
+                <span class="msgUser">${escapeHtml(uname)}</span>
+                <span class="msgTime">${timeAgo(rDate)}</span>
+              </div>
+              <div class="bubble">${escapeHtml(r.text || "")}</div>
+            </div>
+          `;
+          threadBodyEl.appendChild(msg);
+        }
+      }
+
+      // auto scroll to bottom
+      threadBodyEl.scrollTop = threadBodyEl.scrollHeight;
+    });
+
+    // update hint bar
+    const me = myProfile?.username ? `@${myProfile.username}` : "no username yet";
+    hintBar.textContent = `You are replying as ${myProfile?.displayName || "User"} (${me}). Shift+Enter = new line.`;
+  }
+
+  async function createPost(){
+    if(!currentUser) { toast("Login required."); return; }
+    if(!myProfile) { toast("Profile loading…"); return; }
+
+    const title = titleEl.value.trim();
+    const body = bodyEl.value.trim();
+    const tag = tagEl.value;
+
+    if(title.length < 3){ toast("Title is too short."); return; }
+    if(body.length < 10){ toast("Write a bit more detail."); return; }
+
+    postBtn.disabled = true;
+    try{
+      await addDoc(collection(db,"posts"), {
+        authorUid: currentUser.uid,
+        title,
+        body,
+        tag,
+        createdAt: serverTimestamp(),
+        replyCount: 0
+      });
+      titleEl.value = "";
+      bodyEl.value = "";
+      charCount.textContent = `0 / 1200`;
+      toast("Posted ✅");
+    }catch(e){
+      toast(e.message || "Failed to post.");
+    }finally{
+      postBtn.disabled = false;
+    }
+  }
+
+  async function sendReply(){
+    if(!currentUser) { toast("Login required."); return; }
+    if(!selectedPostId) { toast("Select a post first."); return; }
+
+    const text = replyTextEl.value.trim();
+    if(text.length < 1) return;
+
+    replyBtn.disabled = true;
+    try{
+      await addDoc(collection(db, "posts", selectedPostId, "replies"), {
+        authorUid: currentUser.uid,
+        text,
+        createdAt: serverTimestamp()
+      });
+      replyTextEl.value = "";
+      toast("Sent ✅");
+      // We keep replyCount simple: not updating here to avoid rules complexity.
+      // If you want replyCount updated reliably, we can add a Cloud Function later
+      // OR allow update with security rules based on request.auth (advanced).
+    }catch(e){
+      toast(e.message || "Failed to send.");
+    }finally{
+      replyBtn.disabled = false;
+    }
+  }
+
+  // Character counter
+  bodyEl.addEventListener("input", ()=>{
+    charCount.textContent = `${bodyEl.value.length} / 1200`;
   });
-});
+
+  // Buttons
+  postBtn.addEventListener("click", createPost);
+  replyBtn.addEventListener("click", sendReply);
+  refreshBtn.addEventListener("click", ()=> renderPosts());
+  searchEl.addEventListener("input", ()=> renderPosts());
+
+  // Enter to send reply (Shift+Enter for newline)
+  replyTextEl.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter" && !e.shiftKey){
+      e.preventDefault();
+      sendReply();
+    }
+  });
+
+  // Copy link
+  copyLinkBtn.addEventListener("click", async()=>{
+    if(!selectedPostId) return;
+    const url = `${window.location.origin}${window.location.pathname}?post=${encodeURIComponent(selectedPostId)}`;
+    try{
+      await navigator.clipboard.writeText(url);
+      toast("Link copied ✅");
+    }catch{
+      toast("Copy failed (browser blocked).");
+    }
+  });
+
+  // Auth guard + load my profile
+  onAuthStateChanged(auth, async(user)=>{
+    if(!user){
+      window.location.href = "/index.html";
+      return;
+    }
+    currentUser = user;
+
+    const snap = await getDoc(doc(db,"profiles", user.uid));
+    myProfile = snap.exists() ? snap.data() : null;
+
+    // if profile missing username, they can still read/post, but name will show fallback
+    // If you want to force them:
+    // if(!myProfile?.username) window.location.href="/settings/index.html";
+
+    requireProfileOrRedirect();
+    hintBar.textContent = "Loading…";
+  });
+
+  // Live posts feed
+  const postsQuery = query(collection(db,"posts"), orderBy("createdAt","desc"), limit(80));
+  onSnapshot(postsQuery, (snap)=>{
+    latestPosts = snap.docs.map(d=>({ id:d.id, ...d.data() }));
+    renderPosts();
+
+    // Auto-open post from URL param if present
+    const url = new URL(window.location.href);
+    const postParam = url.searchParams.get("post");
+    if(postParam && !selectedPostId){
+      const exists = latestPosts.find(x=>x.id===postParam);
+      if(exists) openThread(postParam);
+    }
+  });
 
 </script>
 </body>

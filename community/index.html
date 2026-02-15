@@ -472,14 +472,22 @@
   }
 
   async function getProfile(uid){
+  try{
     if(!uid) return null;
     if(profileCache.has(uid)) return profileCache.get(uid);
 
     const snap = await getDoc(doc(db, "profiles", uid));
     const profile = snap.exists() ? snap.data() : null;
+
     profileCache.set(uid, profile);
     return profile;
+  }catch(err){
+    // If profile can't be read for any reason, don't break the chat.
+    profileCache.set(uid, null);
+    return null;
   }
+}
+
 
   function requireProfileOrRedirect(){
     // If user has no username set, community still works, but shows fallback

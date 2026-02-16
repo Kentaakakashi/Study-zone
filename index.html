@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Study Zone • login · re:imagined</title>
-  <!-- Font & smooth icons (minimal) -->
+  <title>Study Zone • login </title>
+  <!-- Font & icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     * {
@@ -465,7 +465,7 @@
   <div class="orb orb3"></div>
 
   <div class="glass-wrap">
-    <!-- premium bar with microinteractions -->
+    <!-- bar with microinteractions -->
     <div class="nav-premium">
       <div class="brand-logo">
         <i class="fas fa-meteor"></i> 
@@ -479,13 +479,13 @@
 
     <!-- main hero split -->
     <div class="hero-split">
-      <!-- left card — login area (with extra shine) -->
+      <!-- left card — login area -->
       <div class="gem-card">
         <div class="card-glow"></div>
         <h1 class="h1-premium">Lock in.<br>Track it.<span style="color: var(--brand-teal);"> Win.</span></h1>
         <p class="sub-muted"><i class="fas fa-feather" style="margin-right: 6px;"></i>Login to access timers, planner, stats & community.</p>
 
-        <!-- inputs with animation on focus -->
+        <!-- animation  -->
         <div style="display: flex; flex-direction: column; gap: 18px;">
           <input type="email" id="email" class="input-luxury" placeholder="Email address" autocomplete="email">
           <input type="password" id="password" class="input-luxury" placeholder="Password (6+ characters)" autocomplete="current-password">
@@ -496,7 +496,7 @@
             <button class="btn-premium" id="loginBtn"><i class="fas fa-arrow-right-to-bracket"></i> Login</button>
           </div>
 
-          <!-- google sign in (premium teal) -->
+          <!-- google sign in -->
           <button class="btn-premium btn-teal-grad" id="googleBtn"><i class="fab fa-google"></i> Continue with Google</button>
 
           <!-- helper message with shine -->
@@ -512,7 +512,7 @@
         </div>
       </div>
 
-      <!-- right card — features / KPI (redesigned with tile style) -->
+      <!-- right card — features / KPI -->
       <div class="gem-card" style="background: rgba(18, 22, 45, 0.6);">
         <div class="card-glow" style="background: radial-gradient(circle, #2ed9b0, transparent 70%); opacity: 0.15; top: auto; bottom: -100px; left: -100px;"></div>
         <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.8rem; letter-spacing: -0.02em; display: flex; gap: 8px;">
@@ -566,7 +566,7 @@
   <!-- toast notifier -->
   <div id="toast" class="toast-premium"><i class="fas fa-circle-info"></i> <span></span></div>
 
-  <!-- firebase module (keep exactly same functionality, only design) -->
+  <!-- firebase module -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
     import {

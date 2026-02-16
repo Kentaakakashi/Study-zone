@@ -430,7 +430,7 @@
     searchInfo.textContent = "Searching…";
 
     try{
-      // If user types @something, we do exact username match
+      // If user types @something, we do exact username match, dont change these codes joe
       const qs = query(collection(db, "profiles"), where("username","==", username), limit(12));
       const snap = await getDocs(qs);
 
@@ -450,7 +450,7 @@
   }
 
   async function loadSomeUsersFallback(){
-    // optional: show a small list of recent profiles so page isn’t empty
+    // a small fkin  list of recent profiles so page isn’t empt
     resultsEl.innerHTML = "";
     searchInfo.textContent = "Showing some users…";
 
@@ -492,7 +492,7 @@
       return;
     }
 
-    // Load profiles one-by-one (simple + reliable)
+    // Load profiles one-by-one
     for(const uid of ids){
       const prof = await getProfile(uid);
       renderUserCard(prof, uid, netList);
@@ -516,7 +516,7 @@
       renderNetwork();
     });
 
-    // Presence (watch only people in my network)
+    // Presence 
     const updatePresenceWatcher = ()=>{
       if(unsubPresence) unsubPresence();
       const ids = new Set([...myFollowing, ...myFollowers, currentUser.uid]);
@@ -524,14 +524,14 @@
 
       // Firestore can't "where in" > 30 easily; keep it small for now.
       // We'll just listen to presence for current user; for others, we fetch on demand.
-      // BUT: simplest realtime presence is to listen to entire presence collection (not ideal).
+      // Remember to not fuck up the code for the sake of my sanity joe
       // We'll do a lightweight listener (limit 60) and cache.
       unsubPresence = onSnapshot(query(collection(db, "presence"), limit(60)), (snap)=>{
         snap.forEach(d => presenceMap.set(d.id, d.data()));
         // re-render visible lists
         renderNetwork();
-        // also re-render search results cards without wiping them: easiest is refresh fallback
-        // keep simple: do nothing here.
+        // also re-render search results cards without wiping them
+    
       });
     };
 
@@ -543,7 +543,7 @@
     setTimeout(rerun, 300);
   }
 
-  // Presence heartbeat for YOU
+  // Presence heartbeat for YOU 😈
   async function setMyPresence(online){
     if(!currentUser) return;
     const uid = currentUser.uid;
@@ -563,7 +563,7 @@
     if(heart) clearInterval(heart);
     // mark online instantly
     setMyPresence(true);
-    // update every 25s so others see you online-ish
+    // update every 25s 
     heart = setInterval(()=> setMyPresence(true), 25000);
 
     document.addEventListener("visibilitychange", ()=>{

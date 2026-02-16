@@ -245,9 +245,9 @@ onAuthStateChanged(auth, async(user)=>{
   // Pre-fill
   elDisplay.value = currentProfile.displayName || user.displayName || "";
   elUsername.value = currentProfile.username || "";
-  elUsername.disabled = !!currentProfile.username; // lock if already set
+  elUsername.disabled = !!currentProfile.username; 
 
-  // Avatar priority: pfp(base64) > photoURL (google) > dicebear
+  // Avatar priority: pfp(base64) > photoURL (google) > dicebear (was a pain in my ass to make)
   const avatarSrc = currentProfile.pfp || currentProfile.photoURL || user.photoURL || dice(currentProfile.username || elDisplay.value || "user");
   elAvatar.src = avatarSrc;
 
@@ -258,7 +258,7 @@ onAuthStateChanged(auth, async(user)=>{
   }
 });
 
-// Live preview on file select
+// Live preview
 elFile.addEventListener("change", async()=>{
   if(elFile.files.length > 0){
     const compressed = await compressImage(elFile.files[0]);
@@ -283,7 +283,7 @@ document.getElementById("saveBtn").addEventListener("click", async()=>{
       return;
     }
 
-    // If username not set yet, enforce rules + uniqueness
+    // enforce rules + uniqueness
     if(!currentProfile?.username){
       if(!desiredUsername){
         toast("Set a username (one time).");

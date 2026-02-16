@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Study Zone • home · relayout</title>
-  <!-- Font Awesome icons (lightweight) -->
+  <!-- Font icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     * {
@@ -40,7 +40,7 @@
       line-height: 1.5;
     }
 
-    /* floating orbs (same signature) */
+    /* floating orbs  */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -62,7 +62,7 @@
       padding: 2rem 2rem 1.5rem;
     }
 
-    /* ----- STICKY NAVIGATION (CLEAN, COMPACT) ----- */
+    /* ----- STICKY NAVIGATION  ----- */
     .nav-luxury {
       display: flex;
       align-items: center;
@@ -107,7 +107,7 @@
       backdrop-filter: blur(8px);
     }
 
-    /* navigation row — now CENTERED with flex wrap, but we also use a separate container */
+    /* navigation row  */
     .nav-links {
       display: flex;
       flex-wrap: wrap;
@@ -138,7 +138,7 @@
       transform: translateY(-2px);
     }
 
-    /* MAIN DASHBOARD — fresh 2‑column layout */
+    /* MAIN DASHBOARD  */
     .dashboard-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.9fr;
@@ -147,7 +147,7 @@
     }
     @media (max-width: 900px) { .dashboard-grid { grid-template-columns: 1fr; } }
 
-    /* premium cards (same glow) */
+    /* premium cards  */
     .gem-card {
       background: var(--card-bg);
       backdrop-filter: blur(20px) saturate(200%);
@@ -205,7 +205,7 @@
       font-size: 1rem;
     }
 
-    /* KPI row — more balanced */
+    /* KPI row  */
     .kpi-row {
       display: flex;
       gap: 20px;
@@ -230,7 +230,7 @@
     }
     .kpi-label { color: var(--text-soft); display: flex; gap: 6px; align-items: center; }
 
-    /* ACTION BUTTONS — repositioned: now on the left side in a compact column */
+    /* ACTION BUTTONS  */
     .action-strip {
       display: flex;
       flex-direction: column;
@@ -265,7 +265,7 @@
     .btn-planner { background: linear-gradient(135deg, #5f7c9c, #3f5a7a); border: none; }
     .btn-logout { background: linear-gradient(135deg, #ff708d, #f34b6e); border: none; }
 
-    /* quick links grid (right card) — compact */
+    /* quick links grid  */
     .quick-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -308,7 +308,7 @@
   <div class="orb orb3"></div>
 
   <div class="glass-wrap">
-    <!-- STICKY NAVIGATION (refined) -->
+    <!-- STICKY NAVIGATION -->
     <div class="nav-luxury">
       <div class="brand-logo">
         <i class="fas fa-meteor"></i> STUDY ZONE
@@ -325,13 +325,13 @@
         <a class="nav-chip" href="/community/index.html"><i class="fas fa-comments"></i> Community</a>
         <a class="nav-chip" href="/settings/index.html"><i class="fas fa-gear"></i> Settings</a>
       </div>
-      <!-- extra spacer (empty) to keep brand/links balanced -->
+      <!-- extra space so shits can look clean-->
       <div style="width:40px;"></div>
     </div>
 
-    <!-- NEW DASHBOARD LAYOUT: actions are now prominent on left in a column -->
+    <!-- prominent left action -->
     <div class="dashboard-grid">
-      <!-- LEFT COLUMN: greeting + KPI + big action buttons (vertical) -->
+      <!-- LEFT COLUMN-->
       <div class="gem-card">
         <div class="card-glow" style="background: radial-gradient(circle, #9f8cff, transparent 70%);"></div>
         <div class="greet">
@@ -339,7 +339,7 @@
           <div class="sub-text" id="sub"><i class="fas fa-envelope"></i> loading…</div>
         </div>
 
-        <!-- KPI numbers (today / streak) -->
+        <!-- KPI numbers -->
         <div class="kpi-row">
           <div class="kpi-tile">
             <div class="kpi-label"><i class="fas fa-clock" style="color:var(--brand-teal);"></i> Today studied</div>
@@ -353,20 +353,20 @@
           </div>
         </div>
 
-        <!-- ACTION BUTTONS — now vertical stack, left aligned (way better) -->
+        <!-- ACTION BUTTONS -->
         <div class="action-strip">
           <a class="action-btn btn-pomodoro" href="/focus/pomodoro.html"><i class="fas fa-play"></i> Start Pomodoro</a>
           <a class="action-btn btn-planner" href="/planner/index.html"><i class="fas fa-clipboard-list"></i> Open Planner</a>
           <button class="action-btn btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
 
-        <!-- extra hint (optional) -->
+        <!-- extra hint -->
         <div style="margin-top: 28px; color: var(--text-soft); font-size:0.85rem;">
           <i class="fas fa-circle-check" style="color:var(--brand-teal);"></i> focus tools ready
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: quick actions (tiles) + additional micro -->
+      <!-- RIGHT COLUMN -->
       <div class="gem-card">
         <div class="card-glow" style="background: radial-gradient(circle, #2ed9b0, transparent 70%); opacity:0.2; right:auto; left:-50px; bottom:-30px;"></div>
         <h2 style="font-size:2rem; font-weight:700; display:flex; gap:8px; margin-bottom:8px;">
@@ -416,7 +416,7 @@
   <!-- toast -->
   <div id="toast" class="toast-premium"><i class="fas fa-circle-check"></i> <span></span></div>
 
-  <!-- firebase module (identical logic, only UI changed) -->
+  <!-- firebase module -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";

@@ -1,4 +1,4 @@
-// netlify/functions/gemini-chat.js
+//joe if you're reading ts, istg you gotta fix that API issue in netlify brlther you fucked it up real good, and make sure to command out each block of code next time so its easy to find those block once again, you know the drill mf stop slacking
 
 export default async (req) => {
   try {
@@ -6,7 +6,7 @@ export default async (req) => {
       return json(405, { error: "Method not allowed" });
     }
 
-    // Basic auth presence check (lightweight). Real verification needs firebase-admin.
+    // auth presence check
     const auth = req.headers.get("authorization") || "";
     if (!auth.startsWith("Bearer ")) {
       return json(401, { error: "Missing auth token" });
@@ -27,13 +27,13 @@ export default async (req) => {
 
     if (!userText) return json(400, { error: "Empty message" });
 
-    // Keep context small & safe
+    // Keep context small nd safe
     const safeHistory = history.slice(-12).map(m => ({
       role: m.role === "user" ? "user" : "model",
       parts: [{ text: String(m.text || "").slice(0, 2000) }]
     }));
 
-    // System instruction: make it a study assistant
+    // make it a study assistant
     const system = `
 You are "Study Zone AI", a helpful study assistant for students.
 Mode: ${mode}. Level: ${level}.

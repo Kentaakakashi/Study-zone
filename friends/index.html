@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Zone • Friends</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --card:rgba(15,23,48,.68);
+    --card2:rgba(16,26,58,.58);
+    --stroke:rgba(255,255,255,.10);
+    --text:#e8ecff;
+    --muted:#a8b0d8;
+    --brand:#7c5cff;
+    --brand2:#19c37d;
+    --danger:#ff4d6d;
+    --ring:rgba(124,92,255,.33);
+    --shadow: 0 20px 55px rgba(0,0,0,.42);
+    --r:22px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+    background:
+      radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
+      radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
+      radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.10), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:18px}
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 16px;
+    border:1px solid var(--stroke);
+    background:rgba(15,23,48,.62);
+    backdrop-filter: blur(12px);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    position:sticky;top:12px;z-index:50;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
+  .badge{
+    font-size:12px;color:var(--muted);
+    border:1px solid rgba(255,255,255,.12);
+    padding:4px 10px;border-radius:999px
+  }
+  .navlinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .pill{
+    padding:9px 11px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(16,26,58,.55);
+    font-size:13px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .pill:hover{border-color: rgba(124,92,255,.55); box-shadow: 0 0 0 4px var(--ring); transform: translateY(-1px)}
+  .layout{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:14px;
+    align-items:start;
+  }
+  @media (max-width: 980px){
+    .layout{grid-template-columns:1fr}
+  }
+  .card{
+    border:1px solid var(--stroke);
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .cardHeader{
+    padding:14px 14px 10px 14px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  }
+  .title{margin:0;font-size:16px;letter-spacing:.2px}
+  .sub{color:var(--muted);font-size:12px;line-height:1.4;margin-top:4px}
+  .content{padding:14px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  input{
+    width:100%;
+    padding:12px 12px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(16,26,58,.65);
+    color:var(--text);
+    outline:none;
+  }
+  input:focus{
+    border-color: rgba(124,92,255,.65);
+    box-shadow: 0 0 0 5px var(--ring);
+  }
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 12px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(16,26,58,.75);
+    color:var(--text);cursor:pointer;font-weight:800;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
+    user-select:none;
+  }
+  .btn:hover{border-color: rgba(124,92,255,.60); box-shadow:0 0 0 4px var(--ring); transform: translateY(-1px)}
+  .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.50)); border-color: transparent}
+  .btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.40)); border-color: transparent}
+  .btn.danger{background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,77,109,.40)); border-color: transparent}
+  .btn:disabled{opacity:.6;cursor:not-allowed;filter:saturate(.3)}
+  .small{font-size:12px;color:var(--muted);line-height:1.45}
+
+  .list{display:flex;flex-direction:column;gap:10px;max-height:62vh;overflow:auto;padding-right:4px}
+  .list::-webkit-scrollbar{width:10px}
+  .list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:999px}
+  .item{
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(16,26,58,.55);
+    border-radius:18px;
+    padding:12px;
+    display:flex;gap:12px;align-items:center;justify-content:space-between;
+  }
+  .left{display:flex;gap:10px;align-items:center;min-width:0}
+  .avatar{
+    width:42px;height:42px;border-radius:50%;
+    object-fit:cover;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.06);
+    flex:0 0 auto;
+  }
+  .names{min-width:0}
+  .dn{font-weight:900;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .un{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .statusRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:rgba(168,176,216,.45);
+    box-shadow:0 0 0 0 rgba(168,176,216,.18);
+  }
+  .dot.online{background:rgba(25,195,125,.95); box-shadow:0 0 0 6px rgba(25,195,125,.15)}
+  .dot.studying{background:rgba(124,92,255,.95); box-shadow:0 0 0 6px rgba(124,92,255,.18)}
+  .tag{
+    font-size:11px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(0,0,0,.12);
+    padding:3px 8px;border-radius:999px;
+  }
+
+  .toast{
+    position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+    background: rgba(15,23,48,.88);
+    border:1px solid rgba(255,255,255,.12);
+    padding:10px 12px;
+    border-radius:999px;
+    box-shadow: var(--shadow);
+    color:var(--text);
+    display:none; z-index:1000;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="nav">
+    <div class="brand">👥 Friends <span class="badge">beta</span></div>
+    <div class="navlinks">
+      <a class="pill" href="/home/index.html">Home</a>
+      <a class="pill" href="/focus/pomodoro.html">Pomodoro</a>
+      <a class="pill" href="/focus/stopwatch.html">Stopwatch</a>
+      <a class="pill" href="/planner/index.html">Planner</a>
+      <a class="pill" href="/stats/index.html">Stats</a>
+      <a class="pill" href="/community/index.html">Community</a>
+      <a class="pill" href="/friends/index.html">Friends</a>
+      <a class="pill" href="/settings/index.html">Settings</a>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- LEFT: Search + Add -->
+    <div class="card">
+      <div class="cardHeader">
+        <div>
+          <h3 class="title">Add friends</h3>
+          <div class="sub">Search by <b>@username</b> and send a request.</div>
+        </div>
+      </div>
+      <div class="content">
+        <label class="small">Username</label>
+        <div class="row">
+          <input id="searchUser" placeholder="@kenta  (no spaces)" />
+          <button class="btn primary" id="searchBtn">Search</button>
+        </div>
+        <div style="height:12px"></div>
+
+        <div id="searchResult" class="small">Search someone to see results.</div>
+
+        <div style="height:16px"></div>
+        <div class="card" style="background:var(--card2); box-shadow:none">
+          <div class="cardHeader">
+            <div>
+              <h3 class="title" style="font-size:14px">Incoming requests</h3>
+              <div class="sub">Accept or decline.</div>
+            </div>
+          </div>
+          <div class="content">
+            <div id="incomingList" class="list" style="max-height:26vh"></div>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+        <div class="card" style="background:var(--card2); box-shadow:none">
+          <div class="cardHeader">
+            <div>
+              <h3 class="title" style="font-size:14px">Sent requests</h3>
+              <div class="sub">Pending requests you sent.</div>
+            </div>
+          </div>
+          <div class="content">
+            <div id="outgoingList" class="list" style="max-height:26vh"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Friends -->
+    <div class="card">
+      <div class="cardHeader">
+        <div>
+          <h3 class="title">Your friends</h3>
+          <div class="sub" id="friendsCount">Loading…</div>
+        </div>
+        <button class="btn" id="refreshBtn">↻</button>
+      </div>
+      <div class="content">
+        <div id="friendsList" class="list"></div>
+        <div class="small" style="margin-top:10px">
+          Status colors: <span class="tag"><span class="dot online" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>online</span>
+          <span class="tag"><span class="dot studying" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>studying</span>
+          <span class="tag"><span class="dot" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>offline/idle</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc, getDoc, setDoc, deleteDoc,
+    collection, addDoc,
+    query, where, onSnapshot,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+    authDomain: "study-zone-438c4.firebaseapp.com",
+    projectId: "study-zone-438c4",
+    storageBucket: "study-zone-438c4.firebasestorage.app",
+    messagingSenderId: "320895535749",
+    appId: "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // UI
+  const toastEl = document.getElementById("toast");
+  const searchUserEl = document.getElementById("searchUser");
+  const searchBtn = document.getElementById("searchBtn");
+  const searchResult = document.getElementById("searchResult");
+
+  const incomingList = document.getElementById("incomingList");
+  const outgoingList = document.getElementById("outgoingList");
+
+  const friendsList = document.getElementById("friendsList");
+  const friendsCount = document.getElementById("friendsCount");
+  const refreshBtn = document.getElementById("refreshBtn");
+
+  // State
+  let currentUser = null;
+  let myProfile = null;
+
+  const presenceUnsubs = new Map(); // friendUid -> unsub
+
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.style.display="block";
+    clearTimeout(window.__t);
+    window.__t = setTimeout(()=> toastEl.style.display="none", 2400);
+  }
+
+  function escapeHtml(s){
+    return String(s || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function dice(seed){
+    seed = encodeURIComponent(seed || "user");
+    return `https://api.dicebear.com/7.x/initials/svg?seed=${seed}`;
+  }
+
+  async function getProfile(uid){
+    try{
+      const snap = await getDoc(doc(db,"profiles", uid));
+      return snap.exists()? snap.data() : null;
+    }catch{
+      return null;
+    }
+  }
+
+  function normUsername(input){
+    return String(input||"")
+      .trim()
+      .replace(/^@+/,"")
+      .replace(/\s+/g,"")
+      .toLowerCase();
+  }
+
+  function clearPresenceListeners(){
+    for(const [,unsub] of presenceUnsubs){
+      try{ unsub(); }catch{}
+    }
+    presenceUnsubs.clear();
+  }
+
+  function statusDotClass(pres){
+    if(!pres?.online) return "";
+    if(pres?.status === "studying") return "studying";
+    if(pres?.status === "online") return "online";
+    return "";
+  }
+
+  function statusLabel(pres){
+    if(!pres?.online) return "offline";
+    if(pres?.status === "studying") return "studying";
+    if(pres?.status === "online") return "online";
+    return "idle";
+  }
+
+  // --- Presence heartbeat on this page (optional but nice) ---
+  let presenceTimer = null;
+  async function startPresenceHeartbeat(){
+    const ref = doc(db, "presence", currentUser.uid);
+    const write = async (online, status="online", current=null) => {
+      await setDoc(ref, {
+        online: !!online,
+        status,
+        current,
+        lastSeen: serverTimestamp()
+      }, { merge: true });
+    };
+    await write(true, "online", null);
+    presenceTimer = setInterval(()=> write(true, "online", null), 25000);
+
+    document.addEventListener("visibilitychange", ()=>{
+      if(document.hidden) write(true, "idle", null);
+      else write(true, "online", null);
+    });
+
+    window.addEventListener("beforeunload", ()=>{
+      try{ write(false, "idle", null); }catch{}
+    });
+  }
+
+  // --- Friend system ---
+  function requestId(fromUid,toUid){ return `${fromUid}_${toUid}`; }
+
+  async function sendRequest(toUid){
+    if(toUid === currentUser.uid){ toast("That’s you 💀"); return; }
+
+    const rid = requestId(currentUser.uid, toUid);
+    try{
+      // prevent duplicates
+      const existing = await getDoc(doc(db,"friendRequests", rid));
+      if(existing.exists()){ toast("Request already sent."); return; }
+
+      // already friends?
+      const fr = await getDoc(doc(db,"friends", currentUser.uid, "list", toUid));
+      if(fr.exists()){ toast("Already friends."); return; }
+
+      await setDoc(doc(db,"friendRequests", rid), {
+        fromUid: currentUser.uid,
+        toUid,
+        createdAt: serverTimestamp()
+      });
+
+      toast("Friend request sent ✅");
+    }catch(e){
+      toast(e?.message || "Failed to send request.");
+    }
+  }
+
+  async function cancelRequest(fromUid,toUid){
+    const rid = requestId(fromUid,toUid);
+    try{
+      await deleteDoc(doc(db,"friendRequests", rid));
+      toast("Request cancelled.");
+    }catch(e){
+      toast(e?.message || "Cancel failed.");
+    }
+  }
+
+  async function acceptRequest(fromUid){
+    const rid = requestId(fromUid, currentUser.uid);
+    try{
+      // Create both sides
+      await setDoc(doc(db,"friends", currentUser.uid, "list", fromUid), { since: serverTimestamp() });
+      await setDoc(doc(db,"friends", fromUid, "list", currentUser.uid), { since: serverTimestamp() });
+
+      // delete request
+      await deleteDoc(doc(db,"friendRequests", rid));
+
+      toast("Friend added ✅");
+    }catch(e){
+      toast(e?.message || "Accept failed.");
+    }
+  }
+
+  async function declineRequest(fromUid){
+    const rid = requestId(fromUid, currentUser.uid);
+    try{
+      await deleteDoc(doc(db,"friendRequests", rid));
+      toast("Declined.");
+    }catch(e){
+      toast(e?.message || "Decline failed.");
+    }
+  }
+
+  async function removeFriend(friendUid){
+    if(!confirm("Remove this friend?")) return;
+    try{
+      await deleteDoc(doc(db,"friends", currentUser.uid, "list", friendUid));
+      await deleteDoc(doc(db,"friends", friendUid, "list", currentUser.uid));
+      toast("Removed.");
+    }catch(e){
+      toast(e?.message || "Remove failed.");
+    }
+  }
+
+  async function lookupByUsername(username){
+    // uses usernames collection (recommended)
+    const u = normUsername(username);
+    if(!u) return null;
+
+    // Try usernames/{lowercase}
+    const snap1 = await getDoc(doc(db,"usernames", u));
+    if(snap1.exists() && snap1.data()?.uid) return snap1.data().uid;
+
+    // fallback: scan profiles is not allowed without indexes & is expensive; so we stop here
+    return null;
+  }
+
+  async function renderUserCard(uid, mode){
+    // mode: "search" | "incoming" | "outgoing" | "friend"
+    const prof = await getProfile(uid);
+    const disp = prof?.displayName || "User";
+    const uname = prof?.username ? `@${prof.username}` : "@no-username";
+    const pfp = prof?.pfp || prof?.photoURL || dice(prof?.username || disp || uid);
+
+    const wrap = document.createElement("div");
+    wrap.className="item";
+    wrap.innerHTML = `
+      <div class="left">
+        <img class="avatar" src="${pfp}">
+        <div class="names">
+          <div class="dn">${escapeHtml(disp)}</div>
+          <div class="un">${escapeHtml(uname)}</div>
+          <div class="small" data-status></div>
+        </div>
+      </div>
+      <div class="row" style="justify-content:flex-end">
+        <span class="dot" data-dot title="status"></span>
+        <span class="tag" data-tag>…</span>
+        <span data-actions></span>
+      </div>
+    `;
+
+    const dot = wrap.querySelector("[data-dot]");
+    const tag = wrap.querySelector("[data-tag]");
+    const statusText = wrap.querySelector("[data-status]");
+
+    // attach presence listener only for friends list (or search result)
+    // (If you want presence for incoming/outgoing too, flip this on)
+    const shouldPresence = (mode === "friend" || mode === "search");
+    if(shouldPresence && !presenceUnsubs.has(uid)){
+      const unsub = onSnapshot(doc(db,"presence", uid), (ps)=>{
+        const pres = ps.exists()? ps.data() : null;
+        dot.className = "dot " + statusDotClass(pres);
+        tag.textContent = statusLabel(pres);
+        statusText.textContent = pres?.status === "studying" ? "Studying now" : (pres?.online ? "Online" : "Offline");
+      });
+      presenceUnsubs.set(uid, unsub);
+    }
+
+    // actions
+    const actions = wrap.querySelector("[data-actions]");
+    if(mode === "search"){
+      const b = document.createElement("button");
+      b.className = "btn green";
+      b.textContent = "Add";
+      b.addEventListener("click", ()=> sendRequest(uid));
+      actions.appendChild(b);
+    }
+    if(mode === "incoming"){
+      const a = document.createElement("button");
+      a.className="btn green";
+      a.textContent="Accept";
+      a.addEventListener("click", ()=> acceptRequest(uid));
+
+      const d = document.createElement("button");
+      d.className="btn danger";
+      d.textContent="Decline";
+      d.addEventListener("click", ()=> declineRequest(uid));
+      actions.appendChild(a); actions.appendChild(d);
+    }
+    if(mode === "outgoing"){
+      const c = document.createElement("button");
+      c.className="btn danger";
+      c.textContent="Cancel";
+      c.addEventListener("click", ()=> cancelRequest(currentUser.uid, uid));
+      actions.appendChild(c);
+    }
+    if(mode === "friend"){
+      const r = document.createElement("button");
+      r.className="btn danger";
+      r.textContent="Remove";
+      r.addEventListener("click", ()=> removeFriend(uid));
+      actions.appendChild(r);
+    }
+
+    return wrap;
+  }
+
+  // Live: incoming requests
+  function watchIncoming(){
+    const qIn = query(collection(db,"friendRequests"), where("toUid","==", currentUser.uid));
+    onSnapshot(qIn, async(snap)=>{
+      incomingList.innerHTML = "";
+      if(snap.empty){
+        incomingList.innerHTML = `<div class="small">No incoming requests.</div>`;
+        return;
+      }
+      for(const d of snap.docs){
+        const data = d.data();
+        const fromUid = data.fromUid;
+        incomingList.appendChild(await renderUserCard(fromUid, "incoming"));
+      }
+    });
+  }
+
+  // Live: outgoing requests
+  function watchOutgoing(){
+    const qOut = query(collection(db,"friendRequests"), where("fromUid","==", currentUser.uid));
+    onSnapshot(qOut, async(snap)=>{
+      outgoingList.innerHTML = "";
+      if(snap.empty){
+        outgoingList.innerHTML = `<div class="small">No pending requests.</div>`;
+        return;
+      }
+      for(const d of snap.docs){
+        const data = d.data();
+        const toUid = data.toUid;
+        outgoingList.appendChild(await renderUserCard(toUid, "outgoing"));
+      }
+    });
+  }
+
+  // Live: friends list
+  function watchFriends(){
+    const qF = collection(db,"friends", currentUser.uid, "list");
+    onSnapshot(qF, async(snap)=>{
+      clearPresenceListeners(); // refresh listeners
+      friendsList.innerHTML = "";
+      friendsCount.textContent = `${snap.size} friend(s)`;
+
+      if(snap.empty){
+        friendsList.innerHTML = `<div class="small">No friends yet. Add someone from the left.</div>`;
+        return;
+      }
+
+      for(const d of snap.docs){
+        const friendUid = d.id;
+        friendsList.appendChild(await renderUserCard(friendUid, "friend"));
+      }
+    });
+  }
+
+  // Search handler
+  async function doSearch(){
+    if(!currentUser){ toast("Login required."); return; }
+    const u = normUsername(searchUserEl.value);
+    if(!u){ toast("Type a username."); return; }
+
+    searchBtn.disabled = true;
+    searchResult.innerHTML = `<div class="small">Searching…</div>`;
+    try{
+      const uid = await lookupByUsername(u);
+      if(!uid){
+        searchResult.innerHTML = `<div class="small">No user found for <b>@${escapeHtml(u)}</b>. (They must set username in Settings)</div>`;
+        return;
+      }
+      const card = await renderUserCard(uid, "search");
+      searchResult.innerHTML = "";
+      searchResult.appendChild(card);
+    }catch(e){
+      searchResult.innerHTML = `<div class="small">Search failed.</div>`;
+    }finally{
+      searchBtn.disabled = false;
+    }
+  }
+
+  searchBtn.addEventListener("click", doSearch);
+  searchUserEl.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter") doSearch();
+  });
+  refreshBtn.addEventListener("click", ()=>{
+    toast("Live updates are already on ✅");
+  });
+
+  // Auth
+  onAuthStateChanged(auth, async(user)=>{
+    if(!user){
+      window.location.href = "/index.html";
+      return;
+    }
+    currentUser = user;
+
+    // Load profile (optional)
+    const snap = await getDoc(doc(db,"profiles", user.uid));
+    myProfile = snap.exists()? snap.data() : null;
+
+    await startPresenceHeartbeat();
+
+    watchIncoming();
+    watchOutgoing();
+    watchFriends();
+
+    toast("Friends loaded ✅");
+  });
+</script>
+</body>
+</html>

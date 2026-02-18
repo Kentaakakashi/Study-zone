@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Zone • Stopwatch</title>
+<style>
+:root{
+  --bg:#0b1020; --card:#0f1730; --card2:#101a3a; --text:#e8ecff; --muted:#a8b0d8;
+  --brand:#7c5cff; --brand2:#19c37d; --danger:#ff4d6d;
+  --ring:rgba(124,92,255,.35); --shadow: 0 10px 35px rgba(0,0,0,.35); --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+  background: radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
+              radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
+              radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.12), transparent 55%),
+              var(--bg);
+  color:var(--text);
+}
+a{color:inherit; text-decoration:none}
+.container{max-width:1050px; margin:0 auto; padding:24px}
+.nav{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:14px 16px; border:1px solid rgba(255,255,255,.08);
+  background: rgba(15,23,48,.65); backdrop-filter: blur(10px);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  position:sticky; top:12px; z-index:50;
+}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+.badge{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.12); padding:4px 8px; border-radius:999px}
+.navlinks{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
+.pill{
+  padding:9px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.10);
+  background: rgba(16,26,58,.55); color:var(--text); font-size:13px;
+}
+.pill:hover{border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
+  background: rgba(16,26,58,.75); color:var(--text); cursor:pointer; font-weight:650;
+}
+.btn:hover{border-color: rgba(124,92,255,.6); box-shadow:0 0 0 4px var(--ring)}
+.btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.55)); border-color: transparent}
+.btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.45)); border-color: transparent}
+.btn.danger{background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,77,109,.45)); border-color: transparent}
+.grid{display:grid; gap:16px}
+.grid.cols2{grid-template-columns: repeat(2, minmax(0,1fr))}
+.grid.cols3{grid-template-columns: repeat(3, minmax(0,1fr))}
+@media (max-width:900px){.grid.cols3{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.grid.cols2,.grid.cols3{grid-template-columns:1fr} .nav{position:static}}
+.card{
+  border:1px solid rgba(255,255,255,.10); background: rgba(15,23,48,.65);
+  backdrop-filter: blur(10px); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding:16px;
+}
+.card h2{margin:0 0 6px 0}
+.muted{color:var(--muted)}
+.kpi{display:flex; gap:12px; align-items:baseline}
+.kpi .big{font-size:36px; font-weight:900}
+.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+input, textarea, select{
+  width:100%; padding:12px 12px; border-radius:12px;
+  border:1px solid rgba(255,255,255,.12); background: rgba(16,26,58,.65);
+  color:var(--text); outline:none;
+}
+input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 4px var(--ring)}
+.small{font-size:12px}
+.hr{height:1px; background: rgba(255,255,255,.10); margin:14px 0}
+.toast{
+  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+  background: rgba(15,23,48,.88); border:1px solid rgba(255,255,255,.12);
+  padding:10px 12px; border-radius:999px; box-shadow: var(--shadow);
+  color:var(--text); display:none; z-index:1000;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nav">
+    <div class="brand">📚 Study Zone <span class="badge">beta</span></div>
+    <div class="navlinks">
+      <a class="pill" href="/home/index.html">Home</a>
+      <a class="pill" href="/focus/pomodoro.html">Pomodoro</a>
+      <a class="pill" href="/focus/stopwatch.html">Stopwatch</a>
+      <a class="pill" href="/planner/index.html">Planner</a>
+      <a class="pill" href="/stats/index.html">Stats</a>
+      <a class="pill" href="/community/index.html">Community</a>      <a class="pill" href="/friends/index.html">Friends</a>
+
+      <a class="pill" href="/settings/index.html">Settings</a>
+    </div>
+  </div>
+  <div style="height:16px"></div>
+  
+<div class="grid cols2">
+  <div class="card">
+    <h2>⏱️ Stopwatch</h2>
+    <p class="muted">Use this when you’re doing long sessions without Pomodoro. Save to today when you stop.</p>
+    <div class="hr"></div>
+
+    <div class="kpi">
+      <div class="big" id="swTime">00:00:00</div>
+      <div>
+        <b>Session</b>
+        <div class="muted small" id="swHint">Hit Start, study, then Stop to save.</div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+    <div class="row">
+      <button class="btn green" id="swStart">Start</button>
+      <button class="btn" id="swPause">Pause</button>
+      <button class="btn primary" id="swStop">Stop & Save</button>
+      <button class="btn danger" id="logoutBtn">Logout</button>
+    </div>
+    <div class="small muted" id="swSaved"></div>
+  </div>
+
+  <div class="card">
+    <h2>Today</h2>
+    <div class="hr"></div>
+    <div class="kpi"><div class="big" id="todayMins">0</div><div><b>minutes</b><div class="muted small">from all tools</div></div></div>
+  </div>
+</div>
+
+</div>
+<div id="toast" class="toast"></div>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, signOut,
+  GoogleAuthProvider, signInWithPopup,
+  signInWithEmailAndPassword, createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, increment,
+  collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  "apiKey": "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+  "authDomain": "study-zone-438c4.firebaseapp.com",
+  "projectId": "study-zone-438c4",
+  "storageBucket": "study-zone-438c4.firebasestorage.app",
+  "messagingSenderId": "320895535749",
+  "appId": "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const toastEl = document.getElementById("toast");
+function toast(msg){
+  if(!toastEl) return;
+  toastEl.textContent = msg;
+  toastEl.style.display="block";
+  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2200);
+}
+
+function requireAuth(redirectTo="/index.html"){
+  return new Promise((resolve)=>{
+    onAuthStateChanged(auth, (user)=>{
+      if(!user){
+        window.location.href = redirectTo;
+        return;
+      }
+      resolve(user);
+    });
+  });
+}
+
+function wireLogout(btnId="logoutBtn"){
+  const b = document.getElementById(btnId);
+  if(!b) return;
+  b.addEventListener("click", async()=>{
+    await signOut(auth);
+    window.location.href="/index.html";
+  });
+}
+
+const user = await requireAuth("/index.html");
+wireLogout("logoutBtn");
+
+function ymd(d=new Date()){
+  const z=(n)=>String(n).padStart(2,"0");
+  return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;
+}
+const todayKey = ymd();
+
+const statsRef = doc(db, "stats", user.uid);
+const statsSnap = await getDoc(statsRef);
+if(!statsSnap.exists()){
+  await setDoc(statsRef, {
+    uid:user.uid,
+    today: { [todayKey]: 0 },
+    streak: 0,
+    lastStudiedDate: "",
+    updatedAt: serverTimestamp()
+  });
+}
+
+const swTime = document.getElementById("swTime");
+const swSaved = document.getElementById("swSaved");
+let running=false;
+let startMs=0;
+let elapsedMs=0;
+let t=null;
+
+function fmt(ms){
+  const totalSec = Math.floor(ms/1000);
+  const h = Math.floor(totalSec/3600);
+  const m = Math.floor((totalSec%3600)/60);
+  const s = totalSec%60;
+  return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+function tick(){
+  if(!running) return;
+  const now = Date.now();
+  swTime.textContent = fmt(elapsedMs + (now - startMs));
+}
+function start(){
+  if(running) return;
+  running=true;
+  startMs=Date.now();
+  if(!t) t=setInterval(tick, 250);
+}
+function pause(){
+  if(!running) return;
+  elapsedMs += Date.now()-startMs;
+  running=false;
+}
+async function stopAndSave(){
+  if(running) pause();
+  const mins = Math.round(elapsedMs/60000);
+  if(mins>0){
+    const snap = await getDoc(statsRef);
+    const data = snap.data();
+    const last = data.lastStudiedDate || "";
+    let streak = data.streak || 0;
+
+    if(last !== todayKey){
+      const d0 = new Date(todayKey);
+      const d1 = new Date(last || todayKey);
+      const diffDays = Math.round((d0 - d1) / (1000*60*60*24));
+      if(last && diffDays === 1) streak += 1;
+      else streak = 1;
+    }
+
+    await setDoc(statsRef, {
+      today: { [todayKey]: increment(mins) },
+      streak,
+      lastStudiedDate: todayKey,
+      updatedAt: serverTimestamp()
+    }, { merge:true });
+
+    swSaved.textContent = `Saved +${mins} min ✅`;
+    toast(`Saved +${mins} min`);
+  } else {
+    swSaved.textContent = "Nothing to save.";
+  }
+  elapsedMs=0;
+  swTime.textContent="00:00:00";
+}
+
+document.getElementById("swStart").addEventListener("click", start);
+document.getElementById("swPause").addEventListener("click", pause);
+document.getElementById("swStop").addEventListener("click", stopAndSave);
+
+const d = (await getDoc(statsRef)).data();
+document.getElementById("todayMins").textContent = (d.today && d.today[todayKey]) ? d.today[todayKey] : 0;
+
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Zone • Community</title>
+<style>
+:root{
+  --bg:#0b1020; --card:#0f1730; --card2:#101a3a; --text:#e8ecff; --muted:#a8b0d8;
+  --brand:#7c5cff; --brand2:#19c37d; --danger:#ff4d6d;
+  --ring:rgba(124,92,255,.35); --shadow: 0 10px 35px rgba(0,0,0,.35); --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+  background: radial-gradient(1200px 900px at 10% 10%, rgba(124,92,255,.25), transparent 60%),
+              radial-gradient(900px 700px at 90% 20%, rgba(25,195,125,.14), transparent 55%),
+              radial-gradient(800px 700px at 50% 110%, rgba(255,77,109,.12), transparent 55%),
+              var(--bg);
+  color:var(--text);
+}
+a{color:inherit; text-decoration:none}
+.container{max-width:1050px; margin:0 auto; padding:24px}
+.nav{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:14px 16px; border:1px solid rgba(255,255,255,.08);
+  background: rgba(15,23,48,.65); backdrop-filter: blur(10px);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  position:sticky; top:12px; z-index:50;
+}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+.badge{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.12); padding:4px 8px; border-radius:999px}
+.navlinks{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
+.pill{
+  padding:9px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.10);
+  background: rgba(16,26,58,.55); color:var(--text); font-size:13px;
+}
+.pill:hover{border-color: rgba(124,92,255,.55); box-shadow:0 0 0 4px var(--ring)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
+  background: rgba(16,26,58,.75); color:var(--text); cursor:pointer; font-weight:650;
+}
+.btn:hover{border-color: rgba(124,92,255,.6); box-shadow:0 0 0 4px var(--ring)}
+.btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.55)); border-color: transparent}
+.btn.green{background: linear-gradient(135deg, rgba(25,195,125,.95), rgba(25,195,125,.45)); border-color: transparent}
+.btn.danger{background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,77,109,.45)); border-color: transparent}
+.grid{display:grid; gap:16px}
+.grid.cols2{grid-template-columns: repeat(2, minmax(0,1fr))}
+.grid.cols3{grid-template-columns: repeat(3, minmax(0,1fr))}
+@media (max-width:900px){.grid.cols3{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.grid.cols2,.grid.cols3{grid-template-columns:1fr} .nav{position:static}}
+.card{
+  border:1px solid rgba(255,255,255,.10); background: rgba(15,23,48,.65);
+  backdrop-filter: blur(10px); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding:16px;
+}
+.card h2{margin:0 0 6px 0}
+.muted{color:var(--muted)}
+.kpi{display:flex; gap:12px; align-items:baseline}
+.kpi .big{font-size:36px; font-weight:900}
+.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+input, textarea, select{
+  width:100%; padding:12px 12px; border-radius:12px;
+  border:1px solid rgba(255,255,255,.12); background: rgba(16,26,58,.65);
+  color:var(--text); outline:none;
+}
+input:focus, textarea:focus, select:focus{border-color: rgba(124,92,255,.65); box-shadow:0 0 0 4px var(--ring)}
+.small{font-size:12px}
+.hr{height:1px; background: rgba(255,255,255,.10); margin:14px 0}
+.toast{
+  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+  background: rgba(15,23,48,.88); border:1px solid rgba(255,255,255,.12);
+  padding:10px 12px; border-radius:999px; box-shadow: var(--shadow);
+  color:var(--text); display:none; z-index:1000;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nav">
+    <div class="brand">📚 Study Zone <span class="badge">beta</span></div>
+    <div class="navlinks">
+      <a class="pill" href="/home/index.html">Home</a>
+      <a class="pill" href="/focus/pomodoro.html">Pomodoro</a>
+      <a class="pill" href="/focus/stopwatch.html">Stopwatch</a>
+      <a class="pill" href="/planner/index.html">Planner</a>
+      <a class="pill" href="/stats/index.html">Stats</a>
+      <a class="pill" href="/community/index.html">Community</a>      <a class="pill" href="/friends/index.html">Friends</a>
+
+      <a class="pill" href="/settings/index.html">Settings</a>
+    </div>
+  </div>
+  <div style="height:16px"></div>
+  
+<div class="grid cols2">
+  <div class="card">
+    <h2>🧠 Doubts Board</h2>
+    <p class="muted">Ask a question, get help from the server community. (Basic version)</p>
+    <div class="hr"></div>
+
+    <div class="grid" style="gap:10px">
+      <select id="subject">
+        <option value="Maths">Maths</option>
+        <option value="Physics">Physics</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="Tamil">Tamil</option>
+        <option value="Other">Other</option>
+      </select>
+      <input id="title" placeholder="Title (e.g., Need help with trigonometry identities)"/>
+      <textarea id="body" rows="5" placeholder="Explain your doubt…"></textarea>
+      <button class="btn primary" id="postBtn">Post question</button>
+    </div>
+
+    <div class="hr"></div>
+    <div class="row">
+      <button class="btn danger" id="logoutBtn">Logout</button>
+      <span class="muted small">Realtime updates. Don’t spam 🗿</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Latest</h2>
+    <p class="muted small">Stored in Firestore collection <b>posts</b>.</p>
+    <div class="hr"></div>
+    <div id="feed" class="grid" style="gap:10px"></div>
+  </div>
+</div>
+
+</div>
+<div id="toast" class="toast"></div>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, signOut,
+  GoogleAuthProvider, signInWithPopup,
+  signInWithEmailAndPassword, createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, increment,
+  collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  "apiKey": "AIzaSyCQZ36IQVFEm-rqyD0WlPO23Sf8Lih5Fo8",
+  "authDomain": "study-zone-438c4.firebaseapp.com",
+  "projectId": "study-zone-438c4",
+  "storageBucket": "study-zone-438c4.firebasestorage.app",
+  "messagingSenderId": "320895535749",
+  "appId": "1:320895535749:web:cab35a214ef7c22ae2f7ec"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const toastEl = document.getElementById("toast");
+function toast(msg){
+  if(!toastEl) return;
+  toastEl.textContent = msg;
+  toastEl.style.display="block";
+  clearTimeout(window.__t); window.__t=setTimeout(()=>toastEl.style.display="none", 2200);
+}
+
+function requireAuth(redirectTo="/index.html"){
+  return new Promise((resolve)=>{
+    onAuthStateChanged(auth, (user)=>{
+      if(!user){
+        window.location.href = redirectTo;
+        return;
+      }
+      resolve(user);
+    });
+  });
+}
+
+function wireLogout(btnId="logoutBtn"){
+  const b = document.getElementById(btnId);
+  if(!b) return;
+  b.addEventListener("click", async()=>{
+    await signOut(auth);
+    window.location.href="/index.html";
+  });
+}
+
+const user = await requireAuth("/index.html");
+wireLogout("logoutBtn");
+
+const feed = document.getElementById("feed");
+const postsRef = collection(db, "posts");
+
+document.getElementById("postBtn").addEventListener("click", async()=>{
+  const subject = document.getElementById("subject").value;
+  const title = document.getElementById("title").value.trim();
+  const body = document.getElementById("body").value.trim();
+  if(!title || !body) return toast("Title + body required");
+  await addDoc(postsRef, {
+    uid: user.uid,
+    author: user.displayName || user.email,
+    subject,
+    title,
+    body,
+    createdAt: serverTimestamp()
+  });
+  document.getElementById("title").value="";
+  document.getElementById("body").value="";
+  toast("Posted ✅");
+});
+
+const q = query(postsRef, orderBy("createdAt","desc"), limit(20));
+onSnapshot(q, (snap)=>{
+  feed.innerHTML="";
+  if(snap.empty){
+    feed.innerHTML = '<div class="muted">No posts yet. Be the first.</div>';
+    return;
+  }
+  snap.forEach((docu)=>{
+    const p = docu.data();
+    const card=document.createElement("div");
+    card.className="card";
+    card.style.background="rgba(16,26,58,.55)";
+    const when = p.createdAt && p.createdAt.toDate ? p.createdAt.toDate().toLocaleString() : "";
+    card.innerHTML = `
+      <div class="row" style="justify-content:space-between">
+        <b>${p.title}</b>
+        <span class="badge">${p.subject}</span>
+      </div>
+      <div class="muted small" style="margin:6px 0">by ${p.author} • ${when}</div>
+      <div style="white-space:pre-wrap; line-height:1.45">${p.body}</div>
+    `;
+    feed.appendChild(card);
+  });
+});
+
+</script>
+</body>
+</html>
